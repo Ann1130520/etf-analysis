@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台股 ETF 四強戰情室 | 0050 vs 0056 vs 00981A vs 00940 • 買賣建議與全球大盤連動</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ocean: {
+              900: '#061325',
+              850: '#0a1a33',
+              800: '#0f2442',
+              700: '#173661',
+              600: '#234d85',
+              500: '#3268ad',
+              400: '#4a8cd4',
+              300: '#75b0ef',
+              200: '#aed2f9',
+              100: '#dbeafe'
+            },
+            etf0050: '#10B981',
+            etf0056: '#3B82F6',
+            etf00981a: '#A855F7',
+            etf00940: '#F59E0B',
+            bull: '#EF4444',
+            bear: '#10B981',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css?v=20261110a">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Global Market & ETF Ticker Bar -->
+  <div class="bg-slate-900 border-b border-slate-800 text-xs py-1.5 px-4 sticky top-0 z-50 shadow-md backdrop-blur-md bg-opacity-95">
+    <div class="max-w-7xl mx-auto space-y-1.5">
+      <!-- Row 1: 4 ETFs + Global Indices -->
+      <div class="flex items-center space-x-2.5 overflow-x-auto no-scrollbar py-0.5">
+        <span class="inline-flex items-center gap-1.5 font-bold text-sky-400 uppercase tracking-wider text-[11px] shrink-0">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          四強與全球大盤
+        </span>
+
+        <!-- 0050 Ticker -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2 py-0.5 rounded border border-emerald-900/50">
+          <span class="font-bold text-emerald-400">0050</span>
+          <span class="font-mono font-semibold text-white" id="ticker-0050-price">99.7</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-0050-change">+2.31%</span>
+        </div>
+
+        <!-- 0056 Ticker -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2 py-0.5 rounded border border-blue-900/50">
+          <span class="font-bold text-blue-400">0056</span>
+          <span class="font-mono font-semibold text-white" id="ticker-0056-price">52.3</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-0056-change">+1.06%</span>
+        </div>
+
+        <!-- 00981A Ticker -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2 py-0.5 rounded border border-purple-900/50">
+          <span class="font-bold text-purple-400">00981A</span>
+          <span class="font-mono font-semibold text-white" id="ticker-00981A-price">24.27</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-00981A-change">+5.25%</span>
+        </div>
+
+        <!-- 00940 Ticker -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2 py-0.5 rounded border border-amber-900/50">
+          <span class="font-bold text-amber-400">00940</span>
+          <span class="font-mono font-semibold text-white" id="ticker-00940-price">12.13</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-00940-change">+0.33%</span>
+        </div>
+
+        <span class="text-slate-600">|</span>
+
+        <!-- Taiwan TAIEX -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
+          <span class="text-slate-300 font-medium">🇹🇼 加權</span>
+          <span class="font-mono font-semibold text-white" id="ticker-idx-tw">42,712</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-idx-tw-change">+2.52%</span>
+        </div>
+
+        <!-- US S&P 500 -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
+          <span class="text-slate-300 font-medium">🇺🇸 S&amp;P500</span>
+          <span class="font-mono font-semibold text-white" id="ticker-idx-us">7,516</span>
+          <span class="text-emerald-400 font-mono text-[10px]" id="ticker-idx-us-change">-0.45%</span>
+        </div>
+
+        <!-- US SOX -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
+          <span class="text-slate-300 font-medium">💾 費半SOX</span>
+          <span class="font-mono font-semibold text-white" id="ticker-idx-sox">10,081</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-idx-sox-change">+0.47%</span>
+        </div>
+
+        <!-- Japan Nikkei 225 -->
+        <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
+          <span class="text-slate-300 font-medium">🇯🇵 日經225</span>
+          <span class="font-mono font-semibold text-white" id="ticker-idx-jp">60,460</span>
+          <span class="text-rose-400 font-mono text-[10px]" id="ticker-idx-jp-change">+2.87%</span>
+        </div>
+      </div>
+
+      <!-- Row 2: TSMC + Macro FX/Bond Yield + Update Timestamp -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-800/70">
+        <div id="benchmark-row-content" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-0.5 w-full md:w-auto">
+          <span class="inline-flex items-center gap-1 font-bold text-amber-400 text-[11px] shrink-0">
+            <i class="fa-solid fa-star text-[10px]"></i> 權值與資金風向
+          </span>
+
+          <!-- 2330 台積電 -->
+          <div class="flex items-center gap-2 shrink-0 bg-slate-800/90 px-2.5 py-0.5 rounded border border-cyan-800/60">
+            <span class="font-bold text-cyan-300">台積電(2330)</span>
+            <span class="font-mono font-bold text-white" id="ticker-2330-price">NT$ 2,285</span>
+            <span class="text-rose-400 font-mono text-[10px] flex items-center" id="ticker-2330-change"><i class="fa-solid fa-caret-up mr-0.5"></i>+50.0 (+2.24%)</span>
+            <span class="text-slate-400 text-[10px] border-l border-slate-700 pl-2 hidden md:inline" id="ticker-2330-range">高/低: 2,285 / 2,230</span>
+            <span class="text-slate-400 text-[10px] border-l border-slate-700 pl-2 hidden lg:inline" id="ticker-2330-vol">量: 36,333張</span>
+          </div>
+
+          <!-- USD/TWD -->
+          <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2.5 py-0.5 rounded border border-teal-800/60">
+            <span class="font-bold text-teal-300">美元/台幣</span>
+            <span class="font-mono font-bold text-white" id="ticker-fx-price">32.95</span>
+            <span class="text-rose-400 font-mono text-[10px]" id="ticker-fx-change">+0.58%</span>
+          </div>
+
+          <!-- US 10Y -->
+          <div class="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2.5 py-0.5 rounded border border-indigo-800/60">
+            <span class="font-bold text-indigo-300">美10年債殖利率</span>
+            <span class="font-mono font-bold text-white" id="ticker-us10y-price">4.98%</span>
+            <span class="text-rose-400 font-mono text-[10px]" id="ticker-us10y-change">+1.74%</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-[11px] text-slate-400">更新: <span id="last-update-time">2026-11-10 22:56</span></span>
+          <button id="toggle-benchmark-bar" class="md:hidden px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:text-white text-[10px] border border-slate-700 transition">
+            收合基準
+          </button>
+          <button id="refresh-data-btn" class="p-1.5 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition" title="重新整理最新數據">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-ocean-900 to-slate-900 border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-500 via-blue-600 to-purple-500 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white text-2xl">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-2xl font-black tracking-tight text-white">台股 ETF 四強情報戰情室</h1>
+              <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1">
+                <i class="fa-solid fa-signal"></i> 市值 × 高息 × 主動 × 月配
+              </span>
+              <button id="etf-cursor-badge" class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:scale-105 transition flex items-center gap-1" title="點擊切換四強 ETF 專屬鼠標">
+                <i class="fa-solid fa-rocket"></i> 鼠標：0050領航箭
+              </button>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">
+              元大台灣50 (0050) • 元大高股息 (0056) • 主動統一台股增長 (00981A) • 元大臺灣價值高息 (00940) • 買賣區間 • 複利試算
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab Navigation (6x2 Thematic Grid: Row 1 = 看盤與實戰買賣決策 / Row 2 = 選股邏輯、領息節稅與研究) -->
+        <nav class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800/80 w-full xl:w-auto">
+          <!-- Row 1: 看盤與實戰買賣決策流 -->
+          <button data-tab="overview" class="tab-btn active justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-white bg-blue-600 shadow-sm whitespace-nowrap">
+            <i class="fa-solid fa-chart-pie"></i> 戰情總覽
+          </button>
+          <button data-tab="comparison" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-code-compare"></i> 四強對決
+          </button>
+          <button data-tab="technicals" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-chart-column text-emerald-400"></i> 技術與籌碼面
+          </button>
+          <button data-tab="signals" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-rose-300 bg-rose-950/40 border border-rose-700/60 hover:bg-rose-900/60 whitespace-nowrap">
+            <i class="fa-solid fa-traffic-light text-rose-400"></i> 買賣建議專區
+          </button>
+          <button data-tab="checklist" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-list-check text-purple-400"></i> 進場檢核與筆記
+          </button>
+          <button data-tab="calculator" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-calculator"></i> 報酬情境試算
+          </button>
+
+          <!-- Row 2: 成分股、總經資金、領息節稅與研究 -->
+          <button data-tab="industry" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-cubes"></i> 選股與成分股
+          </button>
+          <button data-tab="geopolitics" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-earth-americas"></i> 全球資金風向
+          </button>
+          <button data-tab="macro" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-scale-balanced text-cyan-400"></i> 費用與主被動對比
+          </button>
+          <button data-tab="dividend" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-sack-dollar text-amber-400"></i> 除息節稅與現金流
+          </button>
+          <button data-tab="news" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-newspaper"></i> ETF 新聞情報
+          </button>
+          <button data-tab="literature" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
+            <i class="fa-solid fa-book-bookmark text-indigo-400"></i> 權威文獻回顧
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+    <!-- ========================================== -->
+    <!-- SECTION 0: BUY/SELL TRADING SIGNALS (買賣建議專區) -->
+    <!-- ========================================== -->
+    <div id="tab-signals" class="tab-content hidden space-y-6">
+
+      <!-- Top Signal Guide Banner -->
+      <div class="bg-gradient-to-r from-rose-950/40 via-slate-900 to-emerald-950/40 border border-slate-800 rounded-xl p-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center gap-1.5">
+                <i class="fa-solid fa-compass"></i> 實戰配置儀表板
+              </span>
+              <h2 class="text-xl font-black text-white">台股四強 ETF【加碼 / 定投 / 減碼】操作建議與價位防線</h2>
+            </div>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              綜合「<strong>均線乖離率 (20MA/60MA/240MA)</strong>」、「<strong>RSI(14) 動能位階</strong>」、「<strong>近一年現金殖利率防護網</strong>」與「<strong>三大法人籌碼流向</strong>」四維模型，即時動態標記四檔 ETF 的【逢低加碼區】、【定期定額續抱區】與【過熱再平衡區】。
+            </p>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="text-xs text-slate-400">當前台股 ETF 整體位階</span>
+            <div id="signals-overall-status" class="text-lg font-bold text-amber-400 flex items-center gap-1.5 justify-end mt-0.5">
+              <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
+              均線回測整理 • 逢低分批承接
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Cards for the 4 ETFs -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+        <!-- Signal Card 1: 0050 -->
+        <div class="bg-slate-900/90 border-2 border-emerald-800/70 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-emerald-500"></span>
+                <h3 class="font-bold text-white text-base">元大台灣50 (0050)</h3>
+              </div>
+              <span id="signals-0050-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                🟢 逢低布局
+              </span>
+            </div>
+
+            <div class="py-3 flex items-baseline justify-between">
+              <div>
+                <span class="text-xs text-slate-400">即時市價</span>
+                <div id="signals-0050-price" class="text-2xl font-black text-white font-mono">NT$ 99.7</div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400">1Y殖利率 / 費用率</span>
+                <div id="signals-0050-metric" class="text-xs font-bold text-amber-400 font-mono">1.60% / 0.35%</div>
+              </div>
+            </div>
+
+            <div id="signals-0050-tech-inst" class="grid grid-cols-2 gap-2 text-[11px] bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 mb-2">
+              <div><span class="text-slate-400">20MA月線:</span> <strong class="text-white font-mono">104.97</strong></div>
+              <div><span class="text-slate-400">RSI(14):</span> <strong class="text-amber-300 font-mono">39.5</strong></div>
+              <div class="col-span-2 text-slate-300 border-t border-slate-800/80 pt-1">三大法人: <strong class="text-emerald-400 font-mono">-15,562張</strong></div>
+            </div>
+
+            <div class="space-y-2 text-xs bg-slate-950/80 p-3 rounded-lg border border-slate-800/80 my-2">
+              <div class="flex justify-between items-center text-emerald-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-down"></i> 強力加碼區</span>
+                <strong class="font-mono text-sm">90 ~ 99 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">回測年線(89.99)與百元關卡下緣，RSI&lt;40 屬極佳中長線買點</div>
+
+              <div class="flex justify-between items-center text-blue-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrows-left-right"></i> 定期定額區</span>
+                <strong class="font-mono text-sm">100 ~ 112 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">沿月季線震盪，無腦定期定額累積張數</div>
+
+              <div class="flex justify-between items-center text-rose-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-up"></i> 減碼再平衡區</span>
+                <strong class="font-mono text-sm">120 元 以上</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4">年線正乖離逾 30% 且 RSI&gt;75 時，可局部調節轉入債券或現金</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs space-y-1.5">
+            <div class="font-bold text-slate-200 flex items-center gap-1">
+              <i class="fa-solid fa-shield text-emerald-400"></i> 操作策略指引：
+            </div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              台積電佔比 58.3%，為台股大盤最純的複利機器。<strong>分割後百元內入手門檻親民，跌破百元適合核心資產分批加碼</strong>。
+            </p>
+          </div>
+        </div>
+
+        <!-- Signal Card 2: 0056 -->
+        <div class="bg-slate-900/90 border-2 border-blue-800/70 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-blue-500"></span>
+                <h3 class="font-bold text-white text-base">元大高股息 (0056)</h3>
+              </div>
+              <span id="signals-0056-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">
+                🟢 高息甜甜區
+              </span>
+            </div>
+
+            <div class="py-3 flex items-baseline justify-between">
+              <div>
+                <span class="text-xs text-slate-400">即時市價</span>
+                <div id="signals-0056-price" class="text-2xl font-black text-white font-mono">NT$ 52.3</div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400">1Y殖利率 / 費用率</span>
+                <div id="signals-0056-metric" class="text-xs font-bold text-blue-400 font-mono">9.44% / 0.34%</div>
+              </div>
+            </div>
+
+            <div id="signals-0056-tech-inst" class="grid grid-cols-2 gap-2 text-[11px] bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 mb-2">
+              <div><span class="text-slate-400">20MA月線:</span> <strong class="text-white font-mono">55.82</strong></div>
+              <div><span class="text-slate-400">RSI(14):</span> <strong class="text-amber-300 font-mono">37.4</strong></div>
+              <div class="col-span-2 text-slate-300 border-t border-slate-800/80 pt-1">三大法人: <strong class="text-emerald-400 font-mono">-12,918張</strong></div>
+            </div>
+
+            <div class="space-y-2 text-xs bg-slate-950/80 p-3 rounded-lg border border-slate-800/80 my-2">
+              <div class="flex justify-between items-center text-emerald-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-down"></i> 強力加碼區</span>
+                <strong class="font-mono text-sm">46 ~ 52.5 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">現價正處買區！近4季配息合計 4.94 元，殖利率逾 9% 防禦極厚</div>
+
+              <div class="flex justify-between items-center text-blue-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrows-left-right"></i> 領息續抱區</span>
+                <strong class="font-mono text-sm">53 ~ 58 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">季配息現金流穩定（1/4/7/10月），安穩抱緊等填息</div>
+
+              <div class="flex justify-between items-center text-rose-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-up"></i> 警戒獲利了結區</span>
+                <strong class="font-mono text-sm">62 元 以上</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4">當含息年化殖利率壓縮至 6% 以下時，高息吸引力下降</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs space-y-1.5">
+            <div class="font-bold text-slate-200 flex items-center gap-1">
+              <i class="fa-solid fa-shield text-blue-400"></i> 操作策略指引：
+            </div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              結合金融(18%)+AI硬體+航運(長榮3.38%)，與0050互補性極高。<strong>回測 52 元附近可趁除息後貼息期大膽撿便宜</strong>。
+            </p>
+          </div>
+        </div>
+
+        <!-- Signal Card 3: 00981A -->
+        <div class="bg-slate-900/90 border-2 border-purple-800/70 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-purple-500"></span>
+                <h3 class="font-bold text-white text-base">主動統一台股增長 (00981A)</h3>
+              </div>
+              <span id="signals-00981A-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                🟣 年線回測搶反彈
+              </span>
+            </div>
+
+            <div class="py-3 flex items-baseline justify-between">
+              <div>
+                <span class="text-xs text-slate-400">即時市價</span>
+                <div id="signals-00981A-price" class="text-2xl font-black text-white font-mono">NT$ 24.27</div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400">1Y殖利率 / 費用率</span>
+                <div id="signals-00981A-metric" class="text-xs font-bold text-purple-400 font-mono">6.88% / 1.10%</div>
+              </div>
+            </div>
+
+            <div id="signals-00981A-tech-inst" class="grid grid-cols-2 gap-2 text-[11px] bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 mb-2">
+              <div><span class="text-slate-400">20MA月線:</span> <strong class="text-white font-mono">27.17</strong></div>
+              <div><span class="text-slate-400">RSI(14):</span> <strong class="text-amber-300 font-mono">37.2</strong></div>
+              <div class="col-span-2 text-slate-300 border-t border-slate-800/80 pt-1">三大法人: <strong class="text-emerald-400 font-mono">-1,380張</strong></div>
+            </div>
+
+            <div class="space-y-2 text-xs bg-slate-950/80 p-3 rounded-lg border border-slate-800/80 my-2">
+              <div class="flex justify-between items-center text-emerald-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-down"></i> 強力加碼區</span>
+                <strong class="font-mono text-sm">22.5 ~ 24.5 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">現價測試年線(24.6)與季線大乖離(-16.5%)，AI 權值反彈先鋒</div>
+
+              <div class="flex justify-between items-center text-blue-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrows-left-right"></i> 動能續抱區</span>
+                <strong class="font-mono text-sm">25 ~ 29 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">重押散熱/PCB/ASIC(奇鋐、台光電、健策)，靠經理人創造 Alpha</div>
+
+              <div class="flex justify-between items-center text-rose-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-up"></i> 逢高停利調節區</span>
+                <strong class="font-mono text-sm">31.5 元 以上</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4">主動股波動大，創波段新高且正乖離過大時宜分批鎖住獲利</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs space-y-1.5">
+            <div class="font-bold text-slate-200 flex items-center gap-1">
+              <i class="fa-solid fa-shield text-purple-400"></i> 操作策略指引：
+            </div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              主動式選股重押 AI 伺服器與關鍵零組件，<strong>Beta 值最高、漲跌速度最快</strong>，適合積極型投資人搭配 0050 做衛星進攻部位。
+            </p>
+          </div>
+        </div>
+
+        <!-- Signal Card 4: 00940 -->
+        <div class="bg-slate-900/90 border-2 border-amber-800/70 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-amber-500"></span>
+                <h3 class="font-bold text-white text-base">元大臺灣價值高息 (00940)</h3>
+              </div>
+              <span id="signals-00940-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                🟡 低接月配存張
+              </span>
+            </div>
+
+            <div class="py-3 flex items-baseline justify-between">
+              <div>
+                <span class="text-xs text-slate-400">即時市價</span>
+                <div id="signals-00940-price" class="text-2xl font-black text-white font-mono">NT$ 12.13</div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400">年化配息 / 費用率</span>
+                <div id="signals-00940-metric" class="text-xs font-bold text-amber-400 font-mono">4.80% / 0.34%</div>
+              </div>
+            </div>
+
+            <div id="signals-00940-tech-inst" class="grid grid-cols-2 gap-2 text-[11px] bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 mb-2">
+              <div><span class="text-slate-400">20MA月線:</span> <strong class="text-white font-mono">12.99</strong></div>
+              <div><span class="text-slate-400">RSI(14):</span> <strong class="text-emerald-400 font-mono">31.9</strong></div>
+              <div class="col-span-2 text-slate-300 border-t border-slate-800/80 pt-1">三大法人: <strong class="text-rose-400 font-mono">+2,961張</strong></div>
+            </div>
+
+            <div class="space-y-2 text-xs bg-slate-950/80 p-3 rounded-lg border border-slate-800/80 my-2">
+              <div class="flex justify-between items-center text-emerald-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-down"></i> 強力加碼區</span>
+                <strong class="font-mono text-sm">11.0 ~ 12.2 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">RSI 降至 31.9 逼近超賣區且外資轉買，低單價好累積張數</div>
+
+              <div class="flex justify-between items-center text-blue-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrows-left-right"></i> 月配存股區</span>
+                <strong class="font-mono text-sm">12.3 ~ 13.5 元</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4 pb-1 border-b border-slate-800">月配 0.05~0.055 元穩步入帳，單筆配息不易被扣二代健保</div>
+
+              <div class="flex justify-between items-center text-rose-400">
+                <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-arrow-up"></i> 漲多調節轉換區</span>
+                <strong class="font-mono text-sm">14.2 元 以上</strong>
+              </div>
+              <div class="text-[10px] text-slate-400 pl-4">若大幅跑贏自身股息收益率，可將部分價差獲利轉回 0050</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs space-y-1.5">
+            <div class="font-bold text-slate-200 flex items-center gap-1">
+              <i class="fa-solid fa-shield text-amber-400"></i> 操作策略指引：
+            </div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              選股偏重低本益比價值股（華碩、長榮航、金融與IC設計），波動較 00981A 溫和，<strong>適合追求每月穩定領零用金的小資存股族</strong>。
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Critical Rebalancing / Exit Triggers -->
+      <div class="bg-slate-900/90 border border-rose-900/40 rounded-xl p-5">
+        <h3 class="text-sm font-bold text-rose-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          什麼時候該對 ETF 執行再平衡或減碼停利？三大核心決策警訊
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+            <div class="font-bold text-white mb-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> 警訊 1：市價大幅溢價 (&gt;1.5%)
+            </div>
+            <p class="text-slate-400 leading-relaxed">
+              當市場搶買熱潮導致 ETF <strong>折溢價率超過 +1.5%~2%</strong>（買在遠高於真實淨值 NAV 的價格）時，切勿追價！待造市商釋出籌碼收斂溢價後再進場，避免一買就現賠溢價差。
+            </p>
+          </div>
+
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+            <div class="font-bold text-white mb-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> 警訊 2：主動式與高息選股換股鈍化
+            </div>
+            <p class="text-slate-400 leading-relaxed">
+              00981A 若連續兩季績效落後大盤 0050（無法覆蓋 1.1% 較高內扣費用），或高股息 0056/00940 連續多期未能填息且動用本金配息時，應檢視是否需要將資金比重移回市值型 0050。
+            </p>
+          </div>
+
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+            <div class="font-bold text-white mb-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> 警訊 3：年線正乖離過熱與目標比例失衡
+            </div>
+            <p class="text-slate-400 leading-relaxed">
+              當 0050 或 00981A 股價與 240 日年線正乖離超過 25%~30%、RSI 站上 75 以上，且核心市值部位佔總資產遠超預設目標（例如從 50% 漲成 70%）時，應紀律性再平衡賣高買低。
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: OVERVIEW TAB (戰情總覽) -->
+    <!-- ========================================== -->
+    <div id="tab-overview" class="tab-content space-y-6">
+
+      <!-- Key Summary Highlights Cards (4 ETFs) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <!-- Card 1: 0050 -->
+        <div class="bg-gradient-to-br from-slate-900 to-emerald-950/30 border border-emerald-900/40 rounded-xl p-4 relative overflow-hidden group hover:border-emerald-700/60 transition">
+          <div class="flex items-center justify-between text-emerald-400 text-xs mb-2">
+            <span class="font-bold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 元大台灣50 (0050)
+            </span>
+            <span class="text-[10px] bg-emerald-900/40 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-700/50">市值旗艦 • 半年配</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-black text-white font-mono" id="overview-0050-price">99.7</span>
+              <span id="overview-0050-change" class="px-1.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">+2.31%</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-slate-400">20MA 月線 / RSI</span>
+              <div id="overview-0050-tech" class="text-xs font-bold text-slate-200 font-mono">105.0 / 39.5</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+            <span>費用: <strong class="text-white">0.35%</strong></span>
+            <span>配息: <strong id="overview-0050-div" class="text-white">1.60元</strong></span>
+            <span>殖利率: <strong id="overview-0050-yield" class="text-amber-400">1.60%</strong></span>
+            <span>法人: <strong id="overview-0050-inst" class="text-emerald-400 font-mono">-15,562張</strong></span>
+          </div>
+        </div>
+
+        <!-- Card 2: 0056 -->
+        <div class="bg-gradient-to-br from-slate-900 to-blue-950/30 border border-blue-900/40 rounded-xl p-4 relative overflow-hidden group hover:border-blue-700/60 transition">
+          <div class="flex items-center justify-between text-blue-400 text-xs mb-2">
+            <span class="font-bold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span> 元大高股息 (0056)
+            </span>
+            <span class="text-[10px] bg-blue-900/40 text-blue-300 px-1.5 py-0.5 rounded border border-blue-700/50">高息始祖 • 季配</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-black text-white font-mono" id="overview-0056-price">52.3</span>
+              <span id="overview-0056-change" class="px-1.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">+1.06%</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-slate-400">20MA 月線 / RSI</span>
+              <div id="overview-0056-tech" class="text-xs font-bold text-slate-200 font-mono">55.8 / 37.4</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+            <span>費用: <strong class="text-white">0.34%</strong></span>
+            <span>配息: <strong id="overview-0056-div" class="text-white">4.94元</strong></span>
+            <span>殖利率: <strong id="overview-0056-yield" class="text-amber-400">9.44%</strong></span>
+            <span>法人: <strong id="overview-0056-inst" class="text-emerald-400 font-mono">-12,918張</strong></span>
+          </div>
+        </div>
+
+        <!-- Card 3: 00981A -->
+        <div class="bg-gradient-to-br from-slate-900 to-purple-950/30 border border-purple-900/40 rounded-xl p-4 relative overflow-hidden group hover:border-purple-700/60 transition">
+          <div class="flex items-center justify-between text-purple-400 text-xs mb-2">
+            <span class="font-bold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span> 主動統一台股增長 (00981A)
+            </span>
+            <span class="text-[10px] bg-purple-900/40 text-purple-300 px-1.5 py-0.5 rounded border border-purple-700/50">主動選股 • 季配</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-black text-white font-mono" id="overview-00981A-price">24.27</span>
+              <span id="overview-00981A-change" class="px-1.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">+5.25%</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-slate-400">20MA 月線 / RSI</span>
+              <div id="overview-00981A-tech" class="text-xs font-bold text-slate-200 font-mono">27.2 / 37.2</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+            <span>費用: <strong class="text-purple-300">1.10%</strong></span>
+            <span>配息: <strong id="overview-00981A-div" class="text-white">1.67元</strong></span>
+            <span>殖利率: <strong id="overview-00981A-yield" class="text-amber-400">6.88%</strong></span>
+            <span>法人: <strong id="overview-00981A-inst" class="text-emerald-400 font-mono">-1,380張</strong></span>
+          </div>
+        </div>
+
+        <!-- Card 4: 00940 -->
+        <div class="bg-gradient-to-br from-slate-900 to-amber-950/30 border border-amber-900/40 rounded-xl p-4 relative overflow-hidden group hover:border-amber-700/60 transition">
+          <div class="flex items-center justify-between text-amber-400 text-xs mb-2">
+            <span class="font-bold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span> 元大臺灣價值高息 (00940)
+            </span>
+            <span class="text-[10px] bg-amber-900/40 text-amber-300 px-1.5 py-0.5 rounded border border-amber-700/50">價值高息 • 月配</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-black text-white font-mono" id="overview-00940-price">12.13</span>
+              <span id="overview-00940-change" class="px-1.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">+0.33%</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-slate-400">20MA 月線 / RSI</span>
+              <div id="overview-00940-tech" class="text-xs font-bold text-slate-200 font-mono">13.0 / 31.9</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+            <span>費用: <strong class="text-white">0.34%</strong></span>
+            <span>配息: <strong id="overview-00940-div" class="text-white">0.58元</strong></span>
+            <span>殖利率: <strong id="overview-00940-yield" class="text-amber-400">4.78%</strong></span>
+            <span>法人: <strong id="overview-00940-inst" class="text-rose-400 font-mono">+2,961張</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Interactive Chart: ETF Big 4 vs Global Market Comparison -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-chart-line text-blue-400"></i>
+                四強 ETF vs 台積電、台灣加權、美國 S&amp;P 500、費半、日經 走勢連動對照
+              </h2>
+              <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-500/30">可自由勾選項目</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">
+              以<strong>累積價格報酬率（%）</strong>標準化對照，一眼比較「市值型 0050」、「主動式 00981A」、「高息 0056/00940」與全球大盤的強弱與 Alpha！（註：00981A 於 2025/05 掛牌，2Y 視角將自掛牌日起算）
+            </p>
+          </div>
+
+          <!-- Chart Controls: Mode & Timeframe -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+              <button id="chart-mode-pct" class="px-2.5 py-1 rounded bg-blue-600 text-white font-medium transition">累積報酬率(%)</button>
+              <button id="chart-mode-raw" class="px-2.5 py-1 rounded hover:text-white text-slate-400 font-medium transition">價格與指數點位</button>
+            </div>
+            <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+              <button class="px-2.5 py-1 rounded bg-blue-600 text-white font-medium chart-timeframe-btn" data-range="1Y">近1年</button>
+              <button class="px-2.5 py-1 rounded hover:text-white text-slate-400 font-medium chart-timeframe-btn" data-range="2Y">近2年</button>
+              <button class="px-2.5 py-1 rounded hover:text-white text-slate-400 font-medium chart-timeframe-btn" data-range="CYCLE">多空大週期</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Legend / Checkbox Chips -->
+        <div class="flex flex-wrap items-center gap-2 mb-4 p-2.5 bg-slate-950/80 rounded-lg border border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium mr-1 text-[11px]"><i class="fa-solid fa-eye text-blue-400 mr-1"></i>顯示項目開關：</span>
+
+          <button data-dataset-index="0" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 0050 台灣50
+          </button>
+
+          <button data-dataset-index="1" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-blue-500/50 bg-blue-500/20 text-blue-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-blue-400"></span> 0056 高股息
+          </button>
+
+          <button data-dataset-index="2" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-purple-500/50 bg-purple-500/20 text-purple-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span> 00981A 主動統一
+          </button>
+
+          <button data-dataset-index="3" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-amber-500/50 bg-amber-500/20 text-amber-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span> 00940 價值高息
+          </button>
+
+          <span class="text-slate-600">|</span>
+
+          <button data-dataset-index="4" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-cyan-500/50 bg-cyan-500/20 text-cyan-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span> 台積電 (2330)
+          </button>
+
+          <button data-dataset-index="5" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-rose-500/50 bg-rose-500/20 text-rose-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-rose-400"></span> 🇹🇼 台股加權
+          </button>
+
+          <button data-dataset-index="6" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-yellow-500/50 bg-yellow-500/20 text-yellow-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-yellow-400"></span> 🇺🇸 S&amp;P500
+          </button>
+
+          <button data-dataset-index="7" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-orange-500/50 bg-orange-500/20 text-orange-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-orange-400"></span> 💾 費半 SOX
+          </button>
+
+          <button data-dataset-index="8" class="chart-toggle-chip active px-2.5 py-1 rounded-full border border-pink-500/50 bg-pink-500/20 text-pink-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-pink-400"></span> 🇯🇵 日經225
+          </button>
+        </div>
+
+        <!-- Canvas -->
+        <div class="h-80 w-full relative">
+          <canvas id="overviewCombinedChart"></canvas>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800">
+          <div class="text-[11px] text-slate-400">
+            *提示：可點擊上方色塊標籤切換顯示單一或多個市場指數；「0056 / 00940 / 00981A」含息總報酬請同時參考配息紀錄與殖利率。
+          </div>
+          <div class="text-[11px] text-slate-500">
+            資料來源：臺灣證券交易所、Yahoo Finance、各投信官網公告
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: COMPARISON TAB (四強對決) -->
+    <!-- ========================================== -->
+    <div id="tab-comparison" class="tab-content hidden space-y-6">
+
+      <!-- Comparison Header Banner -->
+      <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-purple-950/40 border border-slate-800 rounded-xl p-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4 text-center md:text-left">
+            <div class="w-16 h-16 rounded-2xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-3xl text-blue-400">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white">台股 ETF 四強全景大對決：0050 vs 0056 vs 00981A vs 00940</h2>
+              <p class="text-xs text-slate-400 mt-1">從指數追蹤/主動選股、規模與費用率、產業集中度、配息頻率到籌碼流向的完整立體比對</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-2">
+            <div class="px-3 py-1.5 rounded-lg bg-emerald-900/30 border border-emerald-700/50 text-center">
+              <div class="text-[9px] text-emerald-400 font-bold uppercase">0050</div>
+              <div class="text-xs font-bold text-white">市值霸主</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-lg bg-blue-900/30 border border-blue-700/50 text-center">
+              <div class="text-[9px] text-blue-400 font-bold uppercase">0056</div>
+              <div class="text-xs font-bold text-white">高息始祖</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-lg bg-purple-900/30 border border-purple-700/50 text-center">
+              <div class="text-[9px] text-purple-400 font-bold uppercase">00981A</div>
+              <div class="text-xs font-bold text-white">主動先鋒</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-lg bg-amber-900/30 border border-amber-700/50 text-center">
+              <div class="text-[9px] text-amber-400 font-bold uppercase">00940</div>
+              <div class="text-xs font-bold text-white">月配價值</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quantitative Comparison Table (四強完整對照) -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-table-columns text-blue-400"></i> 關鍵營運結構與績效指標四強對比表
+          </h3>
+          <span class="text-xs text-slate-400">資料基準：2026 年 11 月</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-slate-950/70 text-slate-400 border-b border-slate-800">
+                <th class="py-3 px-3 font-semibold w-1/6">比較維度 / 指標</th>
+                <th class="py-3 px-3 font-bold text-emerald-400 bg-emerald-950/10">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>0050 元大台灣50</div>
+                </th>
+                <th class="py-3 px-3 font-bold text-blue-400 bg-blue-950/10">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>0056 元大高股息</div>
+                </th>
+                <th class="py-3 px-3 font-bold text-purple-400 bg-purple-950/10">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>00981A 主動統一增長</div>
+                </th>
+                <th class="py-3 px-3 font-bold text-amber-400 bg-amber-950/10">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>00940 元大價值高息</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80">
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">商品類型與策略</span>
+                  <div class="text-[10px] text-slate-500">被動指數 vs 主動管理</div>
+                </td>
+                <td class="py-3 px-3 text-white bg-emerald-950/5">
+                  <strong class="text-emerald-400">被動市值型</strong>
+                  <div class="text-[10px] text-slate-400">追蹤臺灣50指數 (前50大市值)</div>
+                </td>
+                <td class="py-3 px-3 text-white bg-blue-950/5">
+                  <strong class="text-blue-400">被動預測高息型</strong>
+                  <div class="text-[10px] text-slate-400">預測未來1年殖利率前50大</div>
+                </td>
+                <td class="py-3 px-3 text-white bg-purple-950/5">
+                  <strong class="text-purple-400">主動成長型 ETF</strong>
+                  <div class="text-[10px] text-slate-400">經理人動態選股 (市值前300大)</div>
+                </td>
+                <td class="py-3 px-3 text-white bg-amber-950/5">
+                  <strong class="text-amber-400">被動價值高息型</strong>
+                  <div class="text-[10px] text-slate-400">巴菲特自由現金流+高殖利率</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">基金規模 (AUM)</span>
+                  <div class="text-[10px] text-slate-500">規模越大流動性越佳</div>
+                </td>
+                <td class="py-3 px-3 font-mono text-emerald-300 font-bold bg-emerald-950/5">逾 2.3 兆元 <span class="text-[10px] text-slate-400 font-normal">(全台最大)</span></td>
+                <td class="py-3 px-3 font-mono text-blue-300 font-bold bg-blue-950/5">約 7,800 億元</td>
+                <td class="py-3 px-3 font-mono text-purple-300 font-bold bg-purple-950/5">逾 2,000 億元 <span class="text-[10px] text-slate-400 font-normal">(主動王)</span></td>
+                <td class="py-3 px-3 font-mono text-amber-300 font-bold bg-amber-950/5">約 650~850 億元</td>
+              </tr>
+
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">經理費 + 保管費</span>
+                  <div class="text-[10px] text-slate-500">每年內扣固定成本</div>
+                </td>
+                <td class="py-3 px-3 font-mono text-slate-200 bg-emerald-950/5">~0.32% + 0.035% <strong class="text-emerald-400">(~0.355%)</strong></td>
+                <td class="py-3 px-3 font-mono text-slate-200 bg-blue-950/5">0.30% + 0.035% <strong class="text-blue-400">(0.335%)</strong></td>
+                <td class="py-3 px-3 font-mono text-slate-200 bg-purple-950/5">1.00% + 0.10% <strong class="text-purple-400">(1.10%)</strong></td>
+                <td class="py-3 px-3 font-mono text-slate-200 bg-amber-950/5">0.30% + 0.035% <strong class="text-amber-400">(0.335%)</strong></td>
+              </tr>
+
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">配息頻率與平準金</span>
+                  <div class="text-[10px] text-slate-500">現金流與健保規劃</div>
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-emerald-950/5">
+                  <strong class="text-white">半年配</strong> (1、7月)
+                  <div class="text-[10px] text-slate-400">無平準金 • 重資本利得</div>
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-blue-950/5">
+                  <strong class="text-white">季配息</strong> (1、4、7、10月)
+                  <div class="text-[10px] text-slate-400">有收益平準金</div>
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-purple-950/5">
+                  <strong class="text-white">季配息</strong> (3、6、9、12月)
+                  <div class="text-[10px] text-slate-400">有收益平準金</div>
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-amber-950/5">
+                  <strong class="text-white">月配息</strong> (每月除息)
+                  <div class="text-[10px] text-slate-400">有收益平準金</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">前三大核心持股</span>
+                  <div class="text-[10px] text-slate-500">權重集中度透視</div>
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-emerald-950/5">
+                  台積電 <strong class="text-emerald-400">58.3%</strong> • 聯發科 5.9% • 鴻海 3.1%
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-blue-950/5">
+                  南亞 8.6% • 華南金 4.8% • 中信金 4.5%
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-purple-950/5">
+                  台積電 15.0% • 聯發科 8.1% • 奇鋐 7.1%
+                </td>
+                <td class="py-3 px-3 text-slate-200 bg-amber-950/5">
+                  華碩 4.9% • 長榮航 3.7% • 富邦金 3.7%
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-850/50 transition">
+                <td class="py-3 px-3 font-medium text-slate-300">
+                  <span class="font-bold">即時價格與近1年配息</span>
+                  <div class="text-[10px] text-slate-500">Yahoo Finance 實盤統計</div>
+                </td>
+                <td id="comp-0050-val" class="py-3 px-3 font-mono text-slate-200 bg-emerald-950/5">現價 <strong class="text-white">99.7元</strong> | 1Y配息 1.60元 | 殖利率 1.60%</td>
+                <td id="comp-0056-val" class="py-3 px-3 font-mono text-slate-200 bg-blue-950/5">現價 <strong class="text-white">52.3元</strong> | 1Y配息 4.94元 | 殖利率 9.44%</td>
+                <td id="comp-00981A-val" class="py-3 px-3 font-mono text-slate-200 bg-purple-950/5">現價 <strong class="text-white">24.27元</strong> | 1Y配息 1.67元 | 殖利率 6.88%</td>
+                <td id="comp-00940-val" class="py-3 px-3 font-mono text-slate-200 bg-amber-950/5">現價 <strong class="text-white">12.13元</strong> | 1Y配息 ~0.58元 | 殖利率 4.78%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Radar & Sector Allocation Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-radar text-blue-400"></i> 四強六大維度戰力雷達圖
+            </h3>
+            <span class="text-xs text-slate-400">滿分 100 分</span>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="comparisonRadarChart"></canvas>
+          </div>
+          <p class="mt-3 text-xs text-slate-400 text-center">
+            0050 長期總報酬與低費用最強；0056 高現金殖利率最穩；00981A 成長動能與彈性最高；00940 月配親民防禦佳。
+          </p>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-sitemap text-teal-400"></i> 四強 ETF 產業板塊曝險佔比對照
+            </h3>
+            <span class="text-xs text-slate-400">科技集中 vs 金融傳產分散</span>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="sectorAllocationChart"></canvas>
+          </div>
+          <div class="mt-3 flex flex-wrap items-center justify-around text-xs text-slate-300 border-t border-slate-800 pt-2 gap-2">
+            <div><span class="font-bold text-emerald-400">0050:</span> 半導體極度集中</div>
+            <div><span class="font-bold text-blue-400">0056:</span> 電金傳均勻配置</div>
+            <div><span class="font-bold text-purple-400">00981A:</span> AI 散熱/PCB 主動超配</div>
+            <div><span class="font-bold text-amber-400">00940:</span> 價值金融/航空防禦</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Institutional Flows & Recent Dividend Efficiency -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-building-columns text-amber-400"></i> 三大法人最新籌碼動向 (證交所 T86)
+            </h3>
+            <span id="inst-report-date" class="text-[11px] font-mono text-slate-400">最新交易日</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-950/70 text-slate-400 border-b border-slate-800">
+                  <th class="py-2 px-2">標的</th>
+                  <th class="py-2 px-2 text-right">外資 (張)</th>
+                  <th class="py-2 px-2 text-right">投信 (張)</th>
+                  <th class="py-2 px-2 text-right">自營商 (張)</th>
+                  <th class="py-2 px-2 text-right">三大法人合計</th>
+                </tr>
+              </thead>
+              <tbody id="inst-table-body" class="divide-y divide-slate-800/80 font-mono">
+                <tr><td colspan="5" class="py-4 text-center text-slate-500">載入三大法人數據中...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[10px] text-slate-500 mt-2">*註：ETF 自營商買賣超常包含造市商避險與申贖套利部位，判讀方向宜搭配折溢價與淨申購。</p>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-calendar-check text-emerald-400"></i> 四強 ETF 2026 年度配息實績摘要
+            </h3>
+            <span class="text-[11px] text-slate-400">實際除息紀錄對照</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-950/70 text-slate-400 border-b border-slate-800">
+                  <th class="py-2 px-2">標的</th>
+                  <th class="py-2 px-2 text-right">配息頻率</th>
+                  <th class="py-2 px-2 text-right">2026 已除息累計</th>
+                  <th class="py-2 px-2 text-right">最近一次除息 / 填息概況</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/80 font-mono text-[11px]">
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-2 font-sans font-bold text-emerald-400">0050 台灣50</td>
+                  <td class="py-2.5 px-2 text-right font-sans text-slate-300">半年配</td>
+                  <td class="py-2.5 px-2 text-right text-white">1.60 元 (2次)</td>
+                  <td class="py-2.5 px-2 text-right text-emerald-400">07/21 配 0.60元 (當日秒填)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-2 font-sans font-bold text-blue-400">0056 高股息</td>
+                  <td class="py-2.5 px-2 text-right font-sans text-slate-300">季配息</td>
+                  <td class="py-2.5 px-2 text-right text-white">4.936 元 (4次)</td>
+                  <td class="py-2.5 px-2 text-right text-amber-300">10/22 配 1.72元 (填息中)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-2 font-sans font-bold text-purple-400">00981A 主動統一</td>
+                  <td class="py-2.5 px-2 text-right font-sans text-slate-300">季配息</td>
+                  <td class="py-2.5 px-2 text-right text-white">1.67 元 (3次*)</td>
+                  <td class="py-2.5 px-2 text-right text-emerald-400">09/16 配 0.63元 (12月將再配)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-2 font-sans font-bold text-amber-400">00940 價值高息</td>
+                  <td class="py-2.5 px-2 text-right font-sans text-slate-300">月配息</td>
+                  <td class="py-2.5 px-2 text-right text-white">~0.58 元 (月配)</td>
+                  <td class="py-2.5 px-2 text-right text-amber-300">10/07 配 0.055元 (穩定月配)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[10px] text-slate-500 mt-2">*註：00981A 為 2025/05 掛牌之主動式 ETF，2026 年採 3、6、9、12 月季配機制。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: HOLDINGS & SELECTION LOGIC (選股與成分股) -->
+    <!-- ========================================== -->
+    <div id="tab-industry" class="tab-content hidden space-y-6">
+
+      <!-- Four ETF Core Strategy Architecture -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+        <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-compass-drafting text-blue-400"></i>
+          四強 ETF 核心選股基因解碼：被動市值 × 預測高息 × 主動選股 × 自由現金流
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          同樣投資台股，四檔 ETF 背後代表四套截然不同的投資哲學。了解它們「如何挑選成分股與調整權重」，才能在大盤震盪時決定加碼誰、減碼誰。
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+          <div class="bg-slate-950/80 p-4 rounded-lg border border-emerald-900/50">
+            <div class="text-emerald-400 font-bold text-xs mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-crown"></i> 0050：市值加權純粹派
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              直接買進台股市值前 50 大公司，<strong>強者越強、贏家權重自動放大</strong>（台積電佔 58.3%）。周轉率極低、幾乎不猜測市場，長期勝過多數主動基金。
+            </p>
+          </div>
+
+          <div class="bg-slate-950/80 p-4 rounded-lg border border-blue-900/50">
+            <div class="text-blue-400 font-bold text-xs mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-magnifying-glass-dollar"></i> 0056：未來殖利率預測派
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              從台灣 50 + 中型 100 指數中，挑選「預測未來一年現金殖利率最高」的前 50 檔。涵蓋塑化(南亞)、金融(華南/中信/永豐)、AI組裝與貨櫃航運(長榮)。
+            </p>
+          </div>
+
+          <div class="bg-slate-950/80 p-4 rounded-lg border border-purple-900/50">
+            <div class="text-purple-400 font-bold text-xs mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-bolt"></i> 00981A：主動選股動能派
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              台灣主動式 ETF 代表，不追蹤被動指數，由統一投信研究團隊從前 300 大市值中重押 AI 散熱(奇鋐、健策)、銅箔基板(台光電)、ABF(欣興) 等高成長黑馬，追求超額報酬。
+            </p>
+          </div>
+
+          <div class="bg-slate-950/80 p-4 rounded-lg border border-amber-900/50">
+            <div class="text-amber-400 font-bold text-xs mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-gem"></i> 00940：巴菲特價值現金流派
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              強調低本益比、高自由現金流量收益率與負債比健檢，單一成分股權重上限 8% 分散風險，納入華碩、長榮航、富邦金、聯詠與電信股，每月提供現金流。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Top 10 Holdings Inspector -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-list-ol text-amber-400"></i> 前十大成分股與持股權重透視（2026/11 最新）
+            </h3>
+            <p class="text-xs text-slate-400">點擊切換四檔 ETF，檢視真正替您賺錢的底層股票組合</p>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <button data-hold-etf="0050" class="hold-switch-btn active px-3 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white transition">0050 台灣50</button>
+            <button data-hold-etf="0056" class="hold-switch-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">0056 高股息</button>
+            <button data-hold-etf="00981A" class="hold-switch-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">00981A 主動統一</button>
+            <button data-hold-etf="00940" class="hold-switch-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">00940 價值高息</button>
+          </div>
+        </div>
+
+        <div id="holdings-table-container" class="overflow-x-auto">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- Two Charts: Concentration vs Diversification & Trailing Yield vs Volatility -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-bar text-emerald-400"></i> 前十大持股集中度 &amp; 台積電權重對照 (%)
+            </h3>
+            <p class="text-xs text-slate-400">檢視各檔 ETF 對「護國神山 2330」與少數權值股的依賴程度</p>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="concentrationChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-money-bill-trend-up text-amber-400"></i> 近一年殖利率 vs 內扣費用率結構對比 (%)
+            </h3>
+            <p class="text-xs text-slate-400">高配息不等於高總報酬，需同時權衡股息、資本利得與費用成本</p>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="yieldExpenseChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 4: GLOBAL CAPITAL FLOWS (全球資金風向) -->
+    <!-- ========================================== -->
+    <div id="tab-geopolitics" class="tab-content hidden space-y-6">
+
+      <!-- 1. Interactive Macro Regime Stress-Test Bar -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-xl p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> 全球總經壓力測試
+              </span>
+              <h2 class="text-lg font-black text-white">全球資金流向與台股 ETF 景氣傳導戰略地圖</h2>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">點擊下方總經情境或傳導地圖節點，即時檢視 0050、0056、00981A、00940 的受惠/防禦評分</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5 bg-slate-950/80 p-1.5 rounded-xl border border-slate-800 text-xs">
+            <button data-geo-scenario="ai_boom" class="geo-scenario-btn active px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold transition">
+              A. AI 資本支出擴張 (基準)
+            </button>
+            <button data-geo-scenario="rate_cut" class="geo-scenario-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 font-semibold transition">
+              B. 美債殖利率回落 (高息受惠)
+            </button>
+            <button data-geo-scenario="tariff_shock" class="geo-scenario-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 font-semibold transition">
+              C. 關稅衝擊與回測 (防禦)
+            </button>
+          </div>
+        </div>
+
+        <!-- Scenario Live KPI Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-800/80 text-xs">
+          <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[11px]">加權與費半風險偏好</span>
+            <div id="geo-kpi-absorb" class="text-base font-black font-mono text-emerald-400 mt-0.5">科技動能偏多 • 逢回承接</div>
+          </div>
+          <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[11px]">外資資金動能預期</span>
+            <div id="geo-kpi-scfi" class="text-base font-black font-mono text-amber-400 mt-0.5">聚焦半導體與AI權值</div>
+          </div>
+          <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[11px]">四強領跑首選</span>
+            <div id="geo-kpi-winner" class="text-base font-bold text-white mt-0.5">0050 (核心) • 00981A (進攻)</div>
+          </div>
+          <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[11px]">戰略配置指令</span>
+            <div id="geo-kpi-action" class="text-sm font-bold text-rose-400 mt-1">核心 60% 成長 + 40% 高息緩衝</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Interactive SVG Global Capital Flow Map + Detail Inspector -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project text-sky-400"></i>
+              全球六大資金與產業傳導節點互動圖（點擊節點切換情資）
+            </h3>
+            <div class="flex items-center gap-3 text-[10px] text-slate-400">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span> 科技成長驅動</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> 利率匯率資金</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-400"></span> ETF 結構效應</span>
+            </div>
+          </div>
+
+          <!-- Stylized Capital Flow Radar SVG -->
+          <div class="relative bg-slate-950 rounded-xl border border-slate-800/90 overflow-hidden p-2">
+            <svg viewBox="0 0 800 380" class="w-full h-auto select-none">
+              <defs>
+                <pattern id="etfGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(51,65,85,0.22)" stroke-width="1"/>
+                </pattern>
+                <filter id="glowEtf">
+                  <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                  <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <rect width="800" height="380" fill="url(#etfGrid)" />
+
+              <!-- Central Hub: Taiwan ETF Market -->
+              <circle cx="400" cy="190" r="56" fill="rgba(30, 58, 138, 0.25)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,3"/>
+              <circle cx="400" cy="190" r="36" fill="#0f2442" stroke="#10b981" stroke-width="2"/>
+              <text x="400" y="186" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">台股 ETF</text>
+              <text x="400" y="203" text-anchor="middle" fill="#38bdf8" font-size="10">四強資金池</text>
+
+              <!-- Connecting Transmission Lines -->
+              <path d="M 145,95 Q 270,115 355,168" fill="none" stroke="#a855f7" stroke-width="2.2" filter="url(#glowEtf)"/>
+              <path d="M 145,285 Q 270,260 355,212" fill="none" stroke="#f59e0b" stroke-width="2.2"/>
+              <path d="M 400,65 L 400,134" fill="none" stroke="#10b981" stroke-width="2.2"/>
+              <path d="M 655,95 Q 530,115 445,168" fill="none" stroke="#3b82f6" stroke-width="2.2"/>
+              <path d="M 655,285 Q 530,260 445,212" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="5,4"/>
+              <path d="M 400,315 L 400,246" fill="none" stroke="#14b8a6" stroke-width="2.2"/>
+
+              <!-- Hotspot 1: US SOX / AI CapEx -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="sox_ai" onclick="window.selectGeoHotspot && window.selectGeoHotspot('sox_ai')">
+                <circle cx="145" cy="95" r="26" fill="transparent"/>
+                <circle cx="145" cy="95" r="14" fill="rgba(168,85,247,0.28)" class="animate-ping" style="transform-box: fill-box; transform-origin: center;"/>
+                <circle cx="145" cy="95" r="9" fill="#a855f7" stroke="#fff" stroke-width="2"/>
+                <text x="145" y="70" text-anchor="middle" fill="#e9d5ff" font-size="11" font-weight="bold">費半與 AI 資本支出</text>
+              </g>
+
+              <!-- Hotspot 2: Fed Rate & US 10Y -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="fed_yield" onclick="window.selectGeoHotspot && window.selectGeoHotspot('fed_yield')">
+                <circle cx="145" cy="285" r="26" fill="transparent"/>
+                <circle cx="145" cy="285" r="9" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+                <text x="145" y="314" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="bold">美10年債與 Fed 利率</text>
+              </g>
+
+              <!-- Hotspot 3: TSMC Weight -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="tsmc_core" onclick="window.selectGeoHotspot && window.selectGeoHotspot('tsmc_core')">
+                <circle cx="400" cy="65" r="26" fill="transparent"/>
+                <circle cx="400" cy="65" r="9" fill="#10b981" stroke="#fff" stroke-width="2"/>
+                <text x="400" y="42" text-anchor="middle" fill="#a7f3d0" font-size="11" font-weight="bold">台積電先進製程與權重</text>
+              </g>
+
+              <!-- Hotspot 4: High Dividend Rebalance -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="etf_rebalance" onclick="window.selectGeoHotspot && window.selectGeoHotspot('etf_rebalance')">
+                <circle cx="655" cy="95" r="26" fill="transparent"/>
+                <circle cx="655" cy="95" r="9" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
+                <text x="655" y="70" text-anchor="middle" fill="#bfdbfe" font-size="11" font-weight="bold">5/11月高股息換股潮</text>
+              </g>
+
+              <!-- Hotspot 5: USD/TWD & Foreign Flows -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="fx_foreign" onclick="window.selectGeoHotspot && window.selectGeoHotspot('fx_foreign')">
+                <circle cx="400" cy="315" r="26" fill="transparent"/>
+                <circle cx="400" cy="315" r="9" fill="#14b8a6" stroke="#fff" stroke-width="2"/>
+                <text x="400" y="344" text-anchor="middle" fill="#99f6e4" font-size="11" font-weight="bold">台幣匯率與外資期現貨</text>
+              </g>
+
+              <!-- Hotspot 6: Active Alpha vs Cost -->
+              <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="active_alpha" onclick="window.selectGeoHotspot && window.selectGeoHotspot('active_alpha')">
+                <circle cx="655" cy="285" r="26" fill="transparent"/>
+                <circle cx="655" cy="285" r="9" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                <text x="655" y="314" text-anchor="middle" fill="#fecaca" font-size="11" font-weight="bold">主動選股 Alpha 與內扣</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Quick Hotspot Selector Pills -->
+          <div class="flex flex-wrap items-center gap-1.5 mt-3">
+            <button data-chokepoint="sox_ai" class="geo-hotspot-btn active px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-600 text-white transition">費半與 AI 浪潮</button>
+            <button data-chokepoint="fed_yield" class="geo-hotspot-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-800 text-slate-300 hover:text-white transition">美債利率與殖利率比價</button>
+            <button data-chokepoint="tsmc_core" class="geo-hotspot-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-800 text-slate-300 hover:text-white transition">台積電「含積量」效應</button>
+            <button data-chokepoint="etf_rebalance" class="geo-hotspot-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-800 text-slate-300 hover:text-white transition">高股息換股吃豆腐效應</button>
+            <button data-chokepoint="fx_foreign" class="geo-hotspot-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-800 text-slate-300 hover:text-white transition">台幣匯率與外資流向</button>
+            <button data-chokepoint="active_alpha" class="geo-hotspot-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-800 text-slate-300 hover:text-white transition">主動式超額報酬考驗</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Inspector Panel (Right 5 cols) -->
+        <div id="geo-detail-panel" class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <span id="geo-detail-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">科技主軸 • 核心引擎</span>
+                <h3 id="geo-detail-title" class="text-base font-black text-white mt-1.5">費城半導體指數 (SOX) 與 AI 算力資本支出</h3>
+              </div>
+              <i id="geo-detail-icon" class="fa-solid fa-microchip text-2xl text-purple-400"></i>
+            </div>
+
+            <p id="geo-detail-desc" class="text-xs text-slate-300 leading-relaxed mt-3">
+              台股加權指數與半導體供應鏈高度綁定美國 CSP 雲端巨頭資本支出。當費半轉強時，含積量高的 0050 與重押 AI 散熱/PCB 的 00981A 具備最強向上攻擊動能。
+            </p>
+
+            <div class="grid grid-cols-2 gap-2.5 my-3 text-xs">
+              <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400">核心觀察指標</span>
+                <div id="geo-detail-traffic" class="font-mono font-bold text-purple-400 mt-0.5">SOX 10,081 / 2330 2,285</div>
+              </div>
+              <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800">
+                <span class="text-[10px] text-slate-400">傳導特性</span>
+                <div id="geo-detail-cost" class="font-mono font-bold text-amber-400 mt-0.5">高 Beta • 漲跌同步放大</div>
+              </div>
+            </div>
+
+            <!-- Big 4 Impact Bars -->
+            <div class="bg-slate-950/80 p-3.5 rounded-lg border border-slate-800 space-y-2.5">
+              <div class="text-[11px] font-bold text-slate-300">對四強 ETF 敏感度 / 受惠程度評分：</div>
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-emerald-400 font-bold">0050 元大台灣50</span>
+                  <span id="geo-bar-0050-txt" class="font-mono text-slate-300">94% (58.3% 台積電直接連動)</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="geo-bar-0050" class="h-full bg-emerald-500 rounded-full transition-all duration-300" style="width: 94%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-blue-400 font-bold">0056 元大高股息</span>
+                  <span id="geo-bar-0056-txt" class="font-mono text-slate-300">55% (部分AI組裝受惠，金融塑化緩衝)</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="geo-bar-0056" class="h-full bg-blue-500 rounded-full transition-all duration-300" style="width: 55%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-purple-400 font-bold">00981A 主動統一</span>
+                  <span id="geo-bar-00981A-txt" class="font-mono text-slate-300">96% (重壓AI散熱/PCB/半導體領漲)</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="geo-bar-00981A" class="h-full bg-purple-500 rounded-full transition-all duration-300" style="width: 96%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-amber-400 font-bold">00940 價值高息</span>
+                  <span id="geo-bar-00940-txt" class="font-mono text-slate-300">42% (偏重價值防禦，AI彈性較低)</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="geo-bar-00940" class="h-full bg-amber-500 rounded-full transition-all duration-300" style="width: 42%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="geo-detail-takeaway" class="text-[11px] text-slate-300 bg-blue-950/30 border border-blue-900/40 p-3 rounded-lg leading-relaxed">
+            <strong>配置結論：</strong>看好 AI 與半導體多頭循環時，0050 與 00981A 是不可或缺的主攻手；若擔心費半劇烈回測，應適度提高 0056 與 00940 比例以降低組合回撤。
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Six Global Macro & Structural Monitoring Cards -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+        <div class="mb-4">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-radar text-blue-400"></i> 影響台股 ETF 表現的六大核心總經與制度變數
+          </h3>
+          <p class="text-xs text-slate-400">全面掌握利率、匯率、台積電權重、換股效應與主被動費用差</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-slate-950/90 border border-emerald-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-microchip text-emerald-400"></i> 台積電單一持股權重</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">0050 核心</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">0050 含積量</span><span class="font-mono font-bold text-emerald-400">58.30%</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">00981A 含積量</span><span class="font-mono text-purple-300">14.98%</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">0050 高度受「拉積盤」受惠，00981A 則將剩餘資金分散至聯發科與 AI 中小型零組件。</p>
+          </div>
+
+          <div class="bg-slate-950/90 border border-indigo-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-landmark text-indigo-400"></i> 美 10 年期公債殖利率</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">估值定錨</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">即時殖利率</span><span id="geo-us10y-price" class="font-mono font-bold text-indigo-300">4.98%</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">與 0056 利差</span><span class="font-mono text-emerald-400">+4.46%</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">美債利率若逼近 5% 會壓抑成長股本益比，但 0056 高殖利率仍具明確利差優勢。</p>
+          </div>
+
+          <div class="bg-slate-950/90 border border-teal-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-money-bill-transfer text-teal-400"></i> USD/TWD 匯率與外資</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">資金指標</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">美元兌台幣</span><span id="geo-fx-price" class="font-mono font-bold text-amber-400">32.95</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">資金影響</span><span class="font-bold text-slate-200">台幣轉升有利外資回補</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">外資大買時首選流動性最大的 0050 與台積電；台幣貶值期高股息內資買盤撐盤力強。</p>
+          </div>
+
+          <div class="bg-slate-950/90 border border-blue-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-arrows-rotate text-blue-400"></i> 定期換股與平準金機制</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">高息制度</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">0056 調整月</span><span class="font-mono text-white">每年 6、12 月</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">00940 調整月</span><span class="font-mono text-amber-300">每年 5、11 月</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">換股期間容易產生個股被動買賣超，收益平準金則確保規模暴增時不稀釋舊股東配息。</p>
+          </div>
+
+          <div class="bg-slate-950/90 border border-purple-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> 主動式 ETF 資訊揭露</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">00981A 專屬</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">持股透明度</span><span class="font-bold text-purple-300">每日盤後揭露持股</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">追蹤誤差限制</span><span class="font-mono text-white">無指數束縛</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">經理人可隨時因應 AI 題材輪動加減碼，但也需承受選股失誤與較高內扣成本。</p>
+          </div>
+
+          <div class="bg-slate-950/90 border border-amber-700/60 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-white text-sm flex items-center gap-1.5"><i class="fa-solid fa-coins text-amber-400"></i> 二代健保與股利所得稅</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">實質報酬</span>
+            </div>
+            <div class="text-xs text-slate-300 space-y-1.5 mb-2.5">
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">補充保費門檻</span><span class="font-mono text-rose-400">單次 ≥ 20,000 元 (2.11%)</span></div>
+              <div class="flex justify-between border-b border-slate-800 pb-1"><span class="text-slate-400">月配 vs 半年配</span><span class="font-bold text-emerald-400">00940 免扣額度高</span></div>
+            </div>
+            <p class="text-[11px] text-slate-400">高所得稅率族群買高股息易被課重稅，反觀 0050 賺資本利得享證券交易免稅優勢。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Geo/Macro Statistical Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-area text-rose-400"></i> 100 萬投入 15 年：內扣費用率對最終資產的長期影響
+            </h3>
+            <p class="text-xs text-slate-400">假設稅前毛報酬同為年化 9%，比較 0.35% 被動低費率 vs 1.10% 主動費率</p>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="geoFeeDragChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-shield-cat text-amber-400"></i> 四強 ETF 風險屬性矩陣：波動彈性 vs 配息防禦力
+            </h3>
+            <p class="text-xs text-slate-400">綜合評估多頭進攻爆發力與空頭回撤緩衝空間</p>
+          </div>
+          <div class="h-64 w-full relative">
+            <canvas id="geoRiskReturnChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 5: NEWS TAB (ETF 新聞情報) -->
+    <!-- ========================================== -->
+    <div id="tab-news" class="tab-content hidden space-y-6">
+
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+          <span class="text-xs font-semibold text-slate-400 shrink-0">篩選分類：</span>
+          <button class="news-filter-btn active px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shrink-0" data-filter="all">全部新聞</button>
+          <button class="news-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="dividend">配息與填息</button>
+          <button class="news-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="active">主動式 00981A</button>
+          <button class="news-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="rebalance">成分股換股</button>
+          <button class="news-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="macro">總經與台積電</button>
+        </div>
+
+        <div class="relative w-full md:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          <input type="text" id="news-search-input" placeholder="搜尋 0050、0056、00981A、00940..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="news-container">
+        <!-- Dynamically rendered via JS -->
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 6: CALCULATOR TAB (報酬情境試算與持股損益) -->
+    <!-- ========================================== -->
+    <div id="tab-calculator" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 border border-slate-800 rounded-xl p-6">
+        <h2 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-blue-400"></i>
+          台股四強 ETF 長期報酬與定期定額敏感度動態模擬器
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          拖動下方參數（台股年化報酬預期、主動選股超額 Alpha、每月定期定額金額、投資年數），即時比較 <strong>0050</strong>、<strong>0056</strong>、<strong>00981A</strong> 與 <strong>00940</strong> 在扣減各自真實內扣費用後的期末資產、年領股息與實質年化報酬率！
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Controls Column (Left) -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-5">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-gears text-blue-400"></i> 投資參數調校面板
+          </h3>
+
+          <!-- Slider 1: Market Annual Return -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <label for="slider-mkt-return" class="text-slate-300 font-semibold">台股大盤長期年化報酬預期：</label>
+              <span class="font-mono font-bold text-emerald-400 text-sm" id="val-mkt-return">9.0%</span>
+            </div>
+            <input type="range" id="slider-mkt-return" min="2" max="16" step="0.5" value="9" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+            <div class="flex justify-between text-[10px] text-slate-500">
+              <span>保守 (2%)</span>
+              <span>歷史均值 (9%)</span>
+              <span>AI多頭 (16%)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Active Alpha for 00981A -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <label for="slider-alpha" class="text-slate-300 font-semibold">主動選股超額報酬 (00981A Alpha)：</label>
+              <span class="font-mono font-bold text-purple-400 text-sm" id="val-alpha">+2.5% / 年</span>
+            </div>
+            <input type="range" id="slider-alpha" min="-4" max="8" step="0.5" value="2.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+            <div class="flex justify-between text-[10px] text-slate-500">
+              <span>看錯趨勢 (-4%)</span>
+              <span>打平費用 (+0.8%)</span>
+              <span>選股大勝 (+8%)</span>
+            </div>
+          </div>
+
+          <!-- Slider 3: Monthly DCA Amount -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <label for="slider-dca" class="text-slate-300 font-semibold">每月定期定額投入金額：</label>
+              <span class="font-mono font-bold text-amber-400 text-sm" id="val-dca">NT$ 15,000</span>
+            </div>
+            <input type="range" id="slider-dca" min="3000" max="100000" step="1000" value="15000" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+            <div class="flex justify-between text-[10px] text-slate-500">
+              <span>$3,000</span>
+              <span>$30,000</span>
+              <span>$100,000</span>
+            </div>
+          </div>
+
+          <!-- Slider 4: Years -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <label for="slider-years" class="text-slate-300 font-semibold">複利累積投資年數：</label>
+              <span class="font-mono font-bold text-sky-400 text-sm" id="val-years">10 年</span>
+            </div>
+            <input type="range" id="slider-years" min="1" max="25" step="1" value="10" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500">
+            <div class="flex justify-between text-[10px] text-slate-500">
+              <span>1 年</span>
+              <span>10 年</span>
+              <span>25 年退休</span>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
+            <button id="reset-sim-btn" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition">
+              <i class="fa-solid fa-arrow-rotate-left"></i> 重設預設基準
+            </button>
+            <span class="text-[11px] text-slate-500">總投入本金：<strong id="sim-total-principal" class="text-white font-mono">NT$ 1,800,000</strong></span>
+          </div>
+        </div>
+
+        <!-- Results Projection Column (Right, 4 Cards) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+          <!-- 0050 Simulation Result -->
+          <div class="bg-gradient-to-br from-slate-900 to-emerald-950/20 border-2 border-emerald-800/60 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                  <h4 class="font-bold text-white text-sm">0050 台灣50</h4>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400">現價 <strong class="text-white" id="sim-0050-baseprice">99.7</strong></span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center my-2">
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">預估期末資產</span>
+                  <div class="text-sm font-black font-mono text-emerald-400" id="sim-0050-fv">NT$ 2,840,000</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">淨報酬率(年)</span>
+                  <div class="text-sm font-bold font-mono text-white" id="sim-0050-cagr">8.65%</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">期末預估張數</span>
+                  <div class="text-xs font-bold font-mono text-sky-300" id="sim-0050-lots">28.5 張</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">年領股息估算</span>
+                  <div class="text-xs font-bold font-mono text-amber-400" id="sim-0050-div">NT$ 45,400</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-emerald-400 pt-1.5 border-t border-slate-800/80">費用極低 (0.355%)，長期複利效率最佳</div>
+          </div>
+
+          <!-- 0056 Simulation Result -->
+          <div class="bg-gradient-to-br from-slate-900 to-blue-950/20 border-2 border-blue-800/60 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                  <h4 class="font-bold text-white text-sm">0056 高股息</h4>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400">現價 <strong class="text-white" id="sim-0056-baseprice">52.3</strong></span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center my-2">
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">預估期末資產</span>
+                  <div class="text-sm font-black font-mono text-blue-400" id="sim-0056-fv">NT$ 2,680,000</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">淨報酬率(年)</span>
+                  <div class="text-sm font-bold font-mono text-white" id="sim-0056-cagr">7.47%</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">期末預估張數</span>
+                  <div class="text-xs font-bold font-mono text-sky-300" id="sim-0056-lots">51.2 張</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">年領股息估算</span>
+                  <div class="text-xs font-bold font-mono text-amber-400" id="sim-0056-div">NT$ 214,000</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-blue-400 pt-1.5 border-t border-slate-800/80">高配息再投入，現金流與張數成長有感</div>
+          </div>
+
+          <!-- 00981A Simulation Result -->
+          <div class="bg-gradient-to-br from-slate-900 to-purple-950/20 border-2 border-purple-800/60 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                  <h4 class="font-bold text-white text-sm">00981A 主動統一</h4>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400">現價 <strong class="text-white" id="sim-00981A-baseprice">24.27</strong></span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center my-2">
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">預估期末資產</span>
+                  <div class="text-sm font-black font-mono text-purple-400" id="sim-00981A-fv">NT$ 3,050,000</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">淨報酬率(年)</span>
+                  <div class="text-sm font-bold font-mono text-white" id="sim-00981A-cagr">10.40%</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">期末預估張數</span>
+                  <div class="text-xs font-bold font-mono text-sky-300" id="sim-00981A-lots">125.7 張</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">年領股息估算</span>
+                  <div class="text-xs font-bold font-mono text-amber-400" id="sim-00981A-div">NT$ 183,000</div>
+                </div>
+              </div>
+            </div>
+            <div id="sim-00981A-verdict" class="text-[11px] text-purple-400 pt-1.5 border-t border-slate-800/80">若 Alpha &gt; +0.75% 即可完全覆蓋主動費率</div>
+          </div>
+
+          <!-- 00940 Simulation Result -->
+          <div class="bg-gradient-to-br from-slate-900 to-amber-950/20 border-2 border-amber-800/60 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                  <h4 class="font-bold text-white text-sm">00940 價值高息</h4>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400">現價 <strong class="text-white" id="sim-00940-baseprice">12.13</strong></span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center my-2">
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">預估期末資產</span>
+                  <div class="text-sm font-black font-mono text-amber-400" id="sim-00940-fv">NT$ 2,540,000</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">淨報酬率(年)</span>
+                  <div class="text-sm font-bold font-mono text-white" id="sim-00940-cagr">6.57%</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">期末預估張數</span>
+                  <div class="text-xs font-bold font-mono text-sky-300" id="sim-00940-lots">209.4 張</div>
+                </div>
+                <div class="bg-slate-950/80 p-2 rounded border border-slate-800">
+                  <span class="text-[10px] text-slate-400">月領股息估算</span>
+                  <div class="text-xs font-bold font-mono text-amber-400" id="sim-00940-div">NT$ 10,100 / 月</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-amber-400 pt-1.5 border-t border-slate-800/80">低單價張數累積感最強，月配現金流平穩</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Personal Portfolio P&L Tracker (我的 ETF 持股損益試算) -->
+      <div class="bg-slate-900/90 border border-indigo-900/50 rounded-xl p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-wallet text-indigo-400"></i>
+              我的 ETF 持股損益與年領股息試算（自動儲存於本機）
+            </h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">輸入四檔 ETF 的買進均價與持有張數，自動結合即時市價計算未實現損益、預估年領股息與加碼/減碼區距離</p>
+          </div>
+          <button id="reset-portfolio-btn" class="text-[11px] text-slate-400 hover:text-white px-2.5 py-1 rounded bg-slate-800 border border-slate-700 self-start sm:self-auto transition">
+            清空持股設定
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <!-- 0050 Portfolio Input -->
+          <div class="bg-slate-950/80 p-3.5 rounded-lg border border-emerald-900/40 space-y-2.5">
+            <div class="font-bold text-emerald-400 flex justify-between">
+              <span>0050 台灣50</span>
+              <span class="text-slate-400 font-mono" id="pf-0050-cur">現價 99.7</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">買進均價 (元)</label>
+                <input type="number" step="0.1" min="0" id="pf-0050-cost" placeholder="例如 92" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">持有張數 (張)</label>
+                <input type="number" step="0.1" min="0" id="pf-0050-lots" placeholder="例如 3" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+            <div id="pf-0050-result" class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+              輸入均價與張數後自動計算損益
+            </div>
+          </div>
+
+          <!-- 0056 Portfolio Input -->
+          <div class="bg-slate-950/80 p-3.5 rounded-lg border border-blue-900/40 space-y-2.5">
+            <div class="font-bold text-blue-400 flex justify-between">
+              <span>0056 高股息</span>
+              <span class="text-slate-400 font-mono" id="pf-0056-cur">現價 52.3</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">買進均價 (元)</label>
+                <input type="number" step="0.1" min="0" id="pf-0056-cost" placeholder="例如 48" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-blue-500">
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">持有張數 (張)</label>
+                <input type="number" step="0.1" min="0" id="pf-0056-lots" placeholder="例如 5" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-blue-500">
+              </div>
+            </div>
+            <div id="pf-0056-result" class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+              輸入均價與張數後自動計算損益
+            </div>
+          </div>
+
+          <!-- 00981A Portfolio Input -->
+          <div class="bg-slate-950/80 p-3.5 rounded-lg border border-purple-900/40 space-y-2.5">
+            <div class="font-bold text-purple-400 flex justify-between">
+              <span>00981A 主動統一</span>
+              <span class="text-slate-400 font-mono" id="pf-00981A-cur">現價 24.27</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">買進均價 (元)</label>
+                <input type="number" step="0.05" min="0" id="pf-00981A-cost" placeholder="例如 22" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-purple-500">
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">持有張數 (張)</label>
+                <input type="number" step="0.1" min="0" id="pf-00981A-lots" placeholder="例如 10" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-purple-500">
+              </div>
+            </div>
+            <div id="pf-00981A-result" class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+              輸入均價與張數後自動計算損益
+            </div>
+          </div>
+
+          <!-- 00940 Portfolio Input -->
+          <div class="bg-slate-950/80 p-3.5 rounded-lg border border-amber-900/40 space-y-2.5">
+            <div class="font-bold text-amber-400 flex justify-between">
+              <span>00940 價值高息</span>
+              <span class="text-slate-400 font-mono" id="pf-00940-cur">現價 12.13</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">買進均價 (元)</label>
+                <input type="number" step="0.05" min="0" id="pf-00940-cost" placeholder="例如 10.5" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-1">持有張數 (張)</label>
+                <input type="number" step="0.1" min="0" id="pf-00940-lots" placeholder="例如 20" class="pf-input w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-mono text-xs focus:outline-none focus:border-amber-500">
+              </div>
+            </div>
+            <div id="pf-00940-result" class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+              輸入均價與張數後自動計算損益
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Grand Total Summary -->
+        <div id="pf-total-summary" class="bg-slate-950 p-3.5 rounded-lg border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
+          <span class="text-slate-400">總投入成本: <strong id="pf-total-cost" class="text-white font-mono">NT$ 0</strong></span>
+          <span class="text-slate-400">目前總市值: <strong id="pf-total-value" class="text-white font-mono">NT$ 0</strong></span>
+          <span class="text-slate-400">預估年領總股息: <strong id="pf-total-div" class="text-amber-400 font-mono">NT$ 0</strong></span>
+          <span class="text-slate-400">合計未實現損益: <strong id="pf-total-pnl" class="text-slate-300 font-mono">NT$ 0 (0.0%)</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 7: LITERATURE TAB (權威文獻回顧) -->
+    <!-- ========================================== -->
+    <div id="tab-literature" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-indigo-950/40 via-slate-900 to-blue-950/40 border border-slate-800 rounded-xl p-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 flex items-center gap-1.5">
+                <i class="fa-solid fa-graduation-cap"></i> 學術與量化智庫
+              </span>
+              <h2 class="text-xl font-black text-white">ETF 指數化、高股息與主動投資權威文獻回顧 (Literature Review)</h2>
+            </div>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              本戰情室之資產配置與費率試算架構，立足於<strong>效率市場與指數投資奠基文獻</strong>、<strong>多因子資產定價模型</strong>、<strong>主動投資超額報酬定律</strong>及<strong>台灣高股息 ETF 與收益平準金制度實證研究</strong>。
+            </p>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-indigo-900/30 border border-indigo-700/50 text-center shrink-0">
+            <div class="text-[10px] text-indigo-400 font-bold uppercase">文獻庫規模</div>
+            <div class="text-sm font-bold text-white">4大支柱 • 6部經典</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter & Search -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+          <span class="text-xs font-semibold text-slate-400 shrink-0">文獻類別：</span>
+          <button class="lit-filter-btn active px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shrink-0" data-filter="all">全部文獻</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="theory">指數經典理論</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="factor">多因子與主動Alpha</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="academic">國內學術實證</button>
+        </div>
+
+        <div class="relative w-full md:w-72">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          <input type="text" id="lit-search-input" placeholder="搜尋作者、模型名稱、關鍵詞..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+        </div>
+      </div>
+
+      <!-- Literature Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="literature-container">
+
+        <!-- Lit 1: Bogle -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                指數化革命 • 成本假說
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Financial Analysts Journal</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Sharpe, W. F. (1991) &amp; Bogle, J. C. (2017). <span class="text-emerald-400 italic">The Arithmetic of Active Management &amp; Little Book of Common Sense Investing</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【核心理論精要】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>算術必然定理：</strong>未扣費用前，所有主動投資者的加權平均報酬必然等於大盤；扣減較高的管理費與交易稅後，平均主動報酬必定落後低費率指數基金（0050）。</li>
+                <li><strong>複利侵蝕效應：</strong>每年 0.8% 的內扣費率差距在 20 年複利下將吞噬逾 15% 期末資產。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：0050 長期複利與費率模型</span>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Sharpe, W. F. (1991). The arithmetic of active management. Financial Analysts Journal, 47(1), 7-9.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 2: Fama-French -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="factor">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                諾貝爾獎理論 • 多因子模型
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Journal of Finance, 1993/2015</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Fama, E. F., &amp; French, K. R. (2015). <span class="text-amber-400 italic">A Five-Factor Asset Pricing Model</span>. Journal of Financial Economics.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【實證定價結論】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>因子拆解：</strong>將股票報酬歸因於市場風險 (Beta)、規模 (SMB)、價值 (HML)、獲利能力 (RMW) 與投資保守度 (CMA)。</li>
+                <li><strong>高股息與價值因子對應：</strong>0056 與 00940 篩選低估值與高自由現金流標的，實質上即屬於「價值 (Value) + 高品質獲利 (Quality)」Smart Beta 策略。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-amber-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：00940 價值篩選因子定位</span>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Fama, E. F., & French, K. R. (2015). A five-factor asset pricing model. Journal of Financial Economics, 116(1), 1-22.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 3: Grinold & Kahn Active Portfolio Management -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="factor">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                主動管理定律 • 00981A 核心
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">McGraw-Hill, 2000</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Grinold, R. C., &amp; Kahn, R. N. (2000). <span class="text-purple-400 italic">Active Portfolio Management: A Quantitative Approach for Producing Superior Returns</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【主動式投資基本定律】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>Information Ratio 定律 (IR = IC × √BR)：</strong>主動型基金能否創造持續 Alpha，取決於研究團隊的預測準確度 (IC) 與每年獨立選股調整次數的廣度 (BR)。</li>
+                <li><strong>核心+衛星配置：</strong>實證支持投資人以低費用指數 ETF (0050) 為核心，僅將部分資金配置給具備研究優勢的主動式 ETF (00981A)。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-purple-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：00981A Alpha 損益平衡試算</span>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Grinold, R. C., & Kahn, R. N. (2000). Active Portfolio Management (2nd ed.). McGraw-Hill.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 4: Miller & Modigliani Dividend Irrelevance & Behavioral Dividend -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                股利政策與行為財務學
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Journal of Business / JFE</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Miller, M. H., &amp; Modigliani (1961) / Shefrin &amp; Statman (1984). <span class="text-blue-400 italic">Dividend Policy &amp; Explaining Investor Preference for Cash Dividends</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【高股息迷思與心理帳戶】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>左手換右手定理：</strong>除息當日 ETF 淨值等額扣除股息，配息本身並不直接創造財富，總報酬取決於「填息能力」。</li>
+                <li><strong>行為財務價值：</strong>0056 與 00940 的季/月配息機制滿足投資人「心理帳戶」與穩定現金流紀律，避免在市場恐慌時被迫賣股變現。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-blue-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：含息總報酬與填息分析</span>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Shefrin, H. M., & Statman, M. (1984). Explaining investor preference for cash dividends. Journal of Financial Economics, 13(2), 253-282.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 5: Taiwan ETF & Equalization Reserve Academic Paper -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                國內學術實證 • 臺大/政大財金
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">臺灣證券市場研究</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              臺灣大學 / 政治大學財金所實證研究. (2024). <span class="text-purple-400 italic">《台灣高股息 ETF 規模擴張、收益平準金動用與成分股換股價格衝擊效應分析》</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【台灣市場實證發現】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>換股顯著超額買壓：</strong>每年 5~6 月及 11~12 月高股息 ETF 成分股定審前，新納入個股常提前出現異常報酬，調整生效後則有均值回歸壓力。</li>
+                <li><strong>平準金防禦稀釋：</strong>收益平準金雖防止除息前大額申購稀釋配息率，但亦使投資人實際領取之現金部分屬於「免稅本金返還」，需區分股利所得與平準金比例。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-purple-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：除息與健保節稅實戰建議</span>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="國立政治大學財務管理學系. (2024). 台灣高股息ETF規模成長與成分股調整流動性衝擊研究. 證券市場發展季刊.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 6: TWSE Active ETF Guide -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                臺灣證交所官方規範 • 主動式 ETF
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">TWSE, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              臺灣證券交易所 &amp; 金管會證期局. (2025). <span class="text-sky-400 italic">《主動式交易所交易基金 (Active ETF) 資訊揭露、投資組合透明度與商品架構指引》</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【制度創新重點】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>全透明每日揭露 (Full Transparency)：</strong>台灣主動式 ETF（代號字尾 A，如 00981A）採每日盤後揭露全部投資組合持股明細，兼顧 ETF 交易便利性與主動研究透明度。</li>
+                <li><strong>造市與折溢價控管：</strong>透過參與證券商 (PD) 實物/現金申贖機制，將市價與淨值偏離控制在合理範圍。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://www.twse.com.tw/" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> 查閱臺灣證交所官方資訊
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="臺灣證券交易所. (2025). 主動式ETF商品制度與投資人交易須知. TWSE 官方發布.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 8: DIVIDEND & TAX (除息節稅與現金流) -->
+    <!-- ========================================== -->
+    <div id="tab-dividend" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-amber-950/35 via-slate-900 to-emerald-950/35 border border-slate-800 rounded-xl p-6">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+          <i class="fa-solid fa-coins mr-1"></i> ETF 領息節稅小幫手
+        </span>
+        <h2 class="text-xl font-black text-white mt-1.5">四強 ETF 除息紀錄、二代健保補充保費與月/季/半年配試算</h2>
+        <p class="text-xs text-slate-400 mt-1">精算 0050、0056、00981A、00940 單次除息張數是否觸發「單筆 ≥ 2 萬元扣 2.11% 二代健保補充保費」，並計算 8.5% 股利可抵減稅額</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: Dividend Tax & NHI Calculator -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-calculator text-amber-400"></i> 實領股息與二代健保試算器
+          </h3>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="text-slate-400 block mb-1">選擇領息 ETF 標的</label>
+              <select id="div-stock-select" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-semibold focus:outline-none focus:border-amber-500">
+                <option value="0056">0056 元大高股息（季配 • 最近單季 1.72 元）</option>
+                <option value="00981A">00981A 主動統一（季配 • 最近單季 0.63 元）</option>
+                <option value="00940">00940 價值高息（月配 • 最近單月 0.055 元）</option>
+                <option value="0050">0050 台灣50（半年配 • 最近單次 0.60~1.00 元）</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-slate-400 block mb-1">持有張數 (張)</label>
+                <input type="number" id="div-lots-input" value="15" min="0.1" step="1" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-1">單次每股配息 (元)</label>
+                <input type="number" id="div-payout-input" value="1.72" min="0" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-500">
+              </div>
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-1">預估股利所得佔比（扣除免稅收益平準金後，一般約 40%~100%）</label>
+              <input type="range" id="div-taxable-ratio" min="20" max="100" step="5" value="80" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer accent-amber-500">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>平準金佔比高 (20%課稅)</span>
+                <strong id="div-taxable-label" class="text-amber-400 font-mono">應稅股利佔 80%</strong>
+                <span>全額股利 (100%課稅)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/90 p-4 rounded-xl border border-slate-800 space-y-2.5 text-xs">
+            <div class="flex justify-between">
+              <span class="text-slate-400">單次稅前股利總額</span>
+              <strong id="div-res-gross" class="text-white font-mono text-sm">NT$ 25,800</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">應納補充保費計費基數 (54C)</span>
+              <strong id="div-res-taxable" class="text-slate-200 font-mono">NT$ 20,640</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">二代健保補充保費 (計費基數≥2萬扣2.11%)</span>
+              <strong id="div-res-nhi" class="text-rose-400 font-mono">-NT$ 436</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">單次實領入帳淨額</span>
+              <strong id="div-res-net" class="text-emerald-400 font-mono text-base font-black">NT$ 25,364</strong>
+            </div>
+            <div class="flex justify-between border-t border-slate-800 pt-2">
+              <span class="text-slate-400">全年預估總股息 (依配息頻率換算)</span>
+              <strong id="div-res-annual" class="text-sky-300 font-mono">NT$ 103,200 / 年</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">報稅 8.5% 股利可抵減稅額 (節稅上限8萬)</span>
+              <strong id="div-res-credit" class="text-amber-400 font-mono">+NT$ 1,754 / 次</strong>
+            </div>
+            <div id="div-res-tip" class="text-[11px] text-sky-300 bg-sky-950/30 p-2.5 rounded border border-sky-900/40 leading-relaxed">
+              💡 若欲避開單次 2.11% 二代健保補充保費，以目前設定之應稅比例，單檔持股上限約為 14.5 張。
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Historical Dividend Table -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> 四強 ETF 近一年真實除息明細總覽
+            </h3>
+            <span class="text-[11px] text-slate-400">單位：元 / 股</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-950/70 text-slate-400 border-b border-slate-800">
+                  <th class="py-2.5 px-3">ETF 標的</th>
+                  <th class="py-2.5 px-3">除息週期</th>
+                  <th class="py-2.5 px-3">2026 實領配息紀錄</th>
+                  <th class="py-2.5 px-3 text-right">合計 / 年化殖利率</th>
+                </tr>
+              </thead>
+              <tbody id="div-history-table-body" class="divide-y divide-slate-800/80 font-mono text-[11px]">
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-3 px-3 font-sans font-bold text-emerald-400">0050 台灣50</td>
+                  <td class="py-3 px-3 font-sans text-slate-300">半年配 (1/7月)</td>
+                  <td class="py-3 px-3 text-slate-200">2026/01: 1.00 • 2026/07: 0.60</td>
+                  <td class="py-3 px-3 text-right text-emerald-400 font-bold">1.60 元 (1.60%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-3 px-3 font-sans font-bold text-blue-400">0056 高股息</td>
+                  <td class="py-3 px-3 font-sans text-slate-300">季配 (1/4/7/10月)</td>
+                  <td class="py-3 px-3 text-slate-200">01月: 0.866 • 04月: 1.00 • 07月: 1.35 • 10月: 1.72</td>
+                  <td class="py-3 px-3 text-right text-blue-400 font-bold">4.936 元 (9.44%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-3 px-3 font-sans font-bold text-purple-400">00981A 主動統一</td>
+                  <td class="py-3 px-3 font-sans text-slate-300">季配 (3/6/9/12月)</td>
+                  <td class="py-3 px-3 text-slate-200">03月: 0.41 • 06月: 0.63 • 09月: 0.63 (12月待除息)</td>
+                  <td class="py-3 px-3 text-right text-purple-400 font-bold">1.67 元 (6.88%)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-3 px-3 font-sans font-bold text-amber-400">00940 價值高息</td>
+                  <td class="py-3 px-3 font-sans text-slate-300">月配 (每月上旬)</td>
+                  <td class="py-3 px-3 text-slate-200">05月: 0.045 • 06~08月: 0.05 • 09~10月: 0.055</td>
+                  <td class="py-3 px-3 text-right text-amber-400 font-bold">~0.58 元 (4.78%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+              <strong class="text-emerald-400 block mb-1">📌 為什麼 00940 較不易被扣二代健保？</strong>
+              <p class="text-[11px] text-slate-400 leading-relaxed">月配息將全年股利拆成 12 次發放，單次金額需達 20,000 元才會觸發 2.11% 補充保費，等於買到 360 張以上才會達門檻，相較季配 0056 更適合大部位存股。</p>
+            </div>
+            <div class="bg-slate-950/70 p-3 rounded-lg border border-slate-800">
+              <strong class="text-amber-400 block mb-1">📌 所得稅級距 20% 以上投資人必看</strong>
+              <p class="text-[11px] text-slate-400 leading-relaxed">高所得族領取 0056/00940 的股利需併入綜所稅（或採 28% 分離課稅），改配較多比例在免稅資本利得的 0050 可大幅降低稅負。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 9: TECHNICALS & CHIPS (技術與籌碼面) -->
+    <!-- ========================================== -->
+    <div id="tab-technicals" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-emerald-950/35 via-slate-900 to-cyan-950/35 border border-slate-800 rounded-xl p-6">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+          <i class="fa-solid fa-wave-square mr-1"></i> 即時技術指標與法人籌碼
+        </span>
+        <h2 class="text-xl font-black text-white mt-1.5">均線位階 (5MA / 20MA / 60MA / 240MA)、RSI 與三大法人動向</h2>
+        <p class="text-xs text-slate-400 mt-1">自動依過去 1 年真實日 K 線與證交所 T86 資料計算乖離率、強弱指標與外資投信自營商買賣超</p>
+      </div>
+
+      <!-- Technical Matrix Cards (4 ETFs) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="tech-cards-container">
+        <div class="bg-slate-900/90 border border-emerald-900/50 rounded-xl p-4 space-y-2 text-xs" id="tech-card-0050">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <strong class="text-emerald-400 text-sm">0050 台灣50</strong>
+            <span class="text-slate-400 font-mono">載入中...</span>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-blue-900/50 rounded-xl p-4 space-y-2 text-xs" id="tech-card-0056">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <strong class="text-blue-400 text-sm">0056 高股息</strong>
+            <span class="text-slate-400 font-mono">載入中...</span>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-purple-900/50 rounded-xl p-4 space-y-2 text-xs" id="tech-card-00981A">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <strong class="text-purple-400 text-sm">00981A 主動統一</strong>
+            <span class="text-slate-400 font-mono">載入中...</span>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-amber-900/50 rounded-xl p-4 space-y-2 text-xs" id="tech-card-00940">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <strong class="text-amber-400 text-sm">00940 價值高息</strong>
+            <span class="text-slate-400 font-mono">載入中...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Charts: MA Position & Institutional Flows -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <h3 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-bars-staggered text-emerald-400"></i> 四強 ETF 現價與各期均線乖離率 (%) 對照
+          </h3>
+          <p class="text-xs text-slate-400 mb-3">正值代表站上均線（多頭支撐）；負值代表回測均線下方（可留意超跌乖離買點）</p>
+          <div class="h-64 w-full relative">
+            <canvas id="techMaChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <h3 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-building-columns text-amber-400"></i> 三大法人單日買賣超張數對比 (外資 / 投信 / 自營商)
+          </h3>
+          <p class="text-xs text-slate-400 mb-3">直接對比 0050、0056、00981A、00940 與台積電 (2330) 最新籌碼流向</p>
+          <div class="h-64 w-full relative">
+            <canvas id="techInstChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 10: MACRO FEE & ACTIVE VS PASSIVE (費用與主被動對比) -->
+    <!-- ========================================== -->
+    <div id="tab-macro" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-cyan-950/35 via-slate-900 to-blue-950/35 border border-slate-800 rounded-xl p-6">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+          <i class="fa-solid fa-scale-balanced mr-1"></i> 費率算術與流派百科
+        </span>
+        <h2 class="text-xl font-black text-white mt-1.5">內扣費用率 (TER) 複利侵蝕模擬器 &amp; 主動型 vs 被動市值 vs 高股息百科</h2>
+        <p class="text-xs text-slate-400 mt-1">主動式 ETF (00981A) 擁有選股彈性，但經理+保管費合計約 1.10%；精算它每年至少需要多賺多少 Alpha 才能擊敗 0050！</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Fee Drag & Alpha Breakeven Simulator -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-percent text-cyan-400"></i> 單筆 100 萬長期內扣費用侵蝕試算
+          </h3>
+          <div class="space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between mb-1">
+                <label for="fee-years-slider" class="text-slate-300 font-semibold">持有年限：</label>
+                <span id="fee-years-val" class="font-mono font-bold text-cyan-400 text-sm">15 年</span>
+              </div>
+              <input type="range" id="fee-years-slider" min="1" max="30" step="1" value="15" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer accent-cyan-500">
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <label for="fee-gross-slider" class="text-slate-300 font-semibold">假設市場稅前毛年化報酬：</label>
+                <span id="fee-gross-val" class="font-mono font-bold text-emerald-400 text-sm">9.0%</span>
+              </div>
+              <input type="range" id="fee-gross-slider" min="4" max="15" step="0.5" value="9" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer accent-emerald-500">
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs bg-slate-950/90 p-3.5 rounded-lg border border-slate-800">
+            <div class="flex justify-between">
+              <span class="text-emerald-400 font-bold">被動低費率 (0050 ~0.355%) 期末資產</span>
+              <strong id="fee-res-passive" class="font-mono text-white">NT$ 3,473,000</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-purple-400 font-bold">主動高費率 (00981A ~1.10%) 無Alpha資產</span>
+              <strong id="fee-res-active" class="font-mono text-slate-200">NT$ 3,124,000</strong>
+            </div>
+            <div class="flex justify-between border-t border-slate-800 pt-2">
+              <span class="text-rose-400 font-bold">長期費用複利差額 (機會成本)</span>
+              <strong id="fee-res-drag" class="font-mono text-rose-400">-NT$ 349,000</strong>
+            </div>
+            <p class="text-[11px] text-slate-400 border-t border-slate-800 pt-2 leading-relaxed">
+              💡 <strong>損益平衡點：</strong>00981A 每年至少需創造 <strong class="text-purple-300">+0.75%</strong> 以上的超額選股報酬 (不含交易周轉成本)，才能讓長期實拿資產追平 0050！
+            </p>
+          </div>
+        </div>
+
+        <!-- 4 ETF Schools Encyclopedia Table -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap text-blue-400"></i> 投資人必懂：台股 ETF 四大流派關鍵差異
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-950/70 text-slate-400 border-b border-slate-800">
+                  <th class="py-2.5 px-3">比較項目</th>
+                  <th class="py-2.5 px-3 text-emerald-400">市值型 (0050)</th>
+                  <th class="py-2.5 px-3 text-blue-400">季配高息 (0056)</th>
+                  <th class="py-2.5 px-3 text-purple-400">主動增長 (00981A)</th>
+                  <th class="py-2.5 px-3 text-amber-400">月配價值 (00940)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/80 text-[11px]">
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">核心投資目標</td>
+                  <td class="py-2.5 px-3 text-slate-300">最大化長期總報酬</td>
+                  <td class="py-2.5 px-3 text-slate-300">高現金流退休領息</td>
+                  <td class="py-2.5 px-3 text-slate-300">打敗大盤超額報酬</td>
+                  <td class="py-2.5 px-3 text-slate-300">月領現金流抗波動</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">換股周轉率</td>
+                  <td class="py-2.5 px-3 text-emerald-400">極低（僅替換末尾）</td>
+                  <td class="py-2.5 px-3 text-amber-300">中高（每年 2 次）</td>
+                  <td class="py-2.5 px-3 text-rose-400">高（隨時動態調整）</td>
+                  <td class="py-2.5 px-3 text-amber-300">中高（每年 2 次）</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">最大風險來源</td>
+                  <td class="py-2.5 px-3 text-slate-300">台積電單一持股 58%</td>
+                  <td class="py-2.5 px-3 text-slate-300">景氣循環股貼息風險</td>
+                  <td class="py-2.5 px-3 text-slate-300">經理人選股與高費率</td>
+                  <td class="py-2.5 px-3 text-slate-300">牛市跟漲動能較慢</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">稅負效率</td>
+                  <td class="py-2.5 px-3 text-emerald-400">極佳（多為價差免稅）</td>
+                  <td class="py-2.5 px-3 text-slate-300">中等（留意所得稅）</td>
+                  <td class="py-2.5 px-3 text-slate-300">中等（含價差配息）</td>
+                  <td class="py-2.5 px-3 text-emerald-400">優（月配避開健保）</td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-2.5 px-3 font-bold text-white">建議配置角色</td>
+                  <td class="py-2.5 px-3 font-bold text-emerald-400">核心母艦 (40~60%)</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-400">現金流護衛 (20~30%)</td>
+                  <td class="py-2.5 px-3 font-bold text-purple-400">衛星進攻 (10~25%)</td>
+                  <td class="py-2.5 px-3 font-bold text-amber-400">月配零用金 (10~20%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 11: CHECKLIST & NOTES (進場檢核與筆記) -->
+    <!-- ========================================== -->
+    <div id="tab-checklist" class="tab-content hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-purple-950/35 via-slate-900 to-indigo-950/35 border border-slate-800 rounded-xl p-6">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+          <i class="fa-solid fa-clipboard-check mr-1"></i> 紀律配置護航系統
+        </span>
+        <h2 class="text-xl font-black text-white mt-1.5">ETF 進場前 8 大紀律檢核清單 &amp; 個人存股筆記本</h2>
+        <p class="text-xs text-slate-400 mt-1">投資 ETF 最忌諱追高溢價與頻繁殺進殺出！每次單筆加碼前請逐項檢核，所有筆記自動儲存於您的本機瀏覽器</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: 8-Point Pre-Trade Checklist -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-list-check text-purple-400"></i> 進場把握度 8 大檢核表
+            </h3>
+            <span id="checklist-score-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+              當前把握度：50% (4/8 項)
+            </span>
+          </div>
+
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div id="checklist-progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-emerald-400 transition-all duration-300" style="width: 50%"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500" checked>
+              <span><strong class="text-white block">1. 市價溢價率低於 0.5%</strong><span class="text-[10px] text-slate-400">確認沒買貴在淨值之上，避免追高溢價</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500" checked>
+              <span><strong class="text-white block">2. RSI(14) 未達 70 過熱區</strong><span class="text-[10px] text-slate-400">優先在月/季線回測時逢低單筆加碼</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500" checked>
+              <span><strong class="text-white block">3. 核對核心與衛星配置比重</strong><span class="text-[10px] text-slate-400">確認 0050 核心比例足夠，不偏廢過度集中</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500" checked>
+              <span><strong class="text-white block">4. 備妥 6 個月緊急預備金</strong><span class="text-[10px] text-slate-400">確保用閒錢投資，大跌時不會被迫砍低</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500">
+              <span><strong class="text-white block">5. 確認 00981A 前十大持股未過高</strong><span class="text-[10px] text-slate-400">檢視主動選股是否與 0050 過度重疊</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500">
+              <span><strong class="text-white block">6. 已試算單次除息健保門檻</strong><span class="text-[10px] text-slate-400">控制張數或搭配月配 00940 降低補充保費</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500">
+              <span><strong class="text-white block">7. 預留 30% 銀彈分批低接</strong><span class="text-[10px] text-slate-400">大盤回檔 5%、10%、15% 分三段加碼</span></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-3 rounded-lg bg-slate-950/80 border border-slate-800 hover:border-slate-700 cursor-pointer">
+              <input type="checkbox" class="trade-check mt-0.5 accent-emerald-500">
+              <span><strong class="text-white block">8. 設定年度再平衡檢視日</strong><span class="text-[10px] text-slate-400">每年 1 次股息再投入並平衡四大標的</span></span>
+            </label>
+          </div>
+
+          <div id="checklist-verdict-box" class="text-xs p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300">
+            <strong>決策建議：</strong>目前符合半數條件，適合維持定期定額並保留現金等待進一步訊號。
+          </div>
+        </div>
+
+        <!-- Right: Personal ETF Journal -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-pen-to-square text-sky-400"></i> 我的 ETF 存股配置筆記（自動存檔）
+              </h3>
+              <span id="notes-save-status" class="text-[10px] text-emerald-400">已同步本機</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">記錄您的每月定期定額計畫、除息再投入紀錄或目標張數，重開網頁仍會保留</p>
+            <textarea id="trading-notes-area" rows="10" placeholder="例如：&#10;- 目標配置：0050 (50%) + 0056 (25%) + 00981A (15%) + 00940 (10%)&#10;- 0050 跌破 100 元每跌 3 元單筆加碼 1 萬元。&#10;- 0056 10月除息領到股息後全數滾入 0050。" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 placeholder-slate-600 leading-relaxed focus:outline-none focus:border-sky-500"></textarea>
+          </div>
+          <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-[11px]">
+            <span class="text-slate-500">資料僅儲存於您的個人瀏覽器中</span>
+            <button id="clear-notes-btn" class="text-slate-400 hover:text-rose-400 transition">清空筆記</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-16 border-t border-slate-800 bg-slate-950 py-8 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <div class="flex items-center justify-center gap-2 text-slate-300 font-semibold">
+        <i class="fa-solid fa-layer-group text-emerald-400"></i> 台股 ETF 四強智能研究戰情室 (0050 • 0056 • 00981A • 00940)
+      </div>
+      <p class="text-slate-500">
+        本戰情室數據綜合臺灣證券交易所 (TWSE)、Yahoo Finance、元大投信、統一投信及各大投資研究模型。
+      </p>
+      <p class="text-[11px] text-slate-600">
+        免責聲明：所有數據、情境模擬與配置分析僅供投資研究參考，不構成任何買賣邀約或投資建議，投資人應獨立評估風險。
+      </p>
+    </div>
+  </footer>
+
+  <!-- Embedded Latest Data Fallback (supports direct file:// opening) -->
+  <script src="latest_data.js?v=20261110a"></script>
+  <!-- App Logic JS -->
+  <script src="app.js?v=20261110a"></script>
+</body>
+</html>
