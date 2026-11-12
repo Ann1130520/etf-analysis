@@ -1826,17 +1826,43 @@
 
       <!-- Personal Portfolio P&L Tracker (我的 ETF 持股損益試算) -->
       <div class="bg-slate-900/90 border border-indigo-900/50 rounded-xl p-5 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div>
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
               <i class="fa-solid fa-wallet text-indigo-400"></i>
               我的 ETF 持股損益與年領股息試算（自動儲存於本機）
             </h3>
-            <p class="text-[11px] text-slate-400 mt-0.5">輸入四檔 ETF 的買進均價與持有張數，自動結合即時市價計算未實現損益、預估年領股息與加碼/減碼區距離</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">輸入四檔 ETF 的買進均價與持有張數，自動結合即時市價、<strong class="text-sky-300">買賣券商手續費 (0.1425% × 折數)</strong> 與 <strong class="text-sky-300">ETF 證交稅 (0.1%)</strong> 計算含稅費淨損益</p>
           </div>
-          <button id="reset-portfolio-btn" class="text-[11px] text-slate-400 hover:text-white px-2.5 py-1 rounded bg-slate-800 border border-slate-700 self-start sm:self-auto transition">
-            清空持股設定
-          </button>
+          <div class="flex flex-wrap items-center gap-2 self-start lg:self-auto">
+            <label class="inline-flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-800 border border-slate-700 rounded px-2 py-1 cursor-pointer">
+              <input type="checkbox" id="pf-include-costs" class="pf-setting-input rounded text-indigo-500" checked>
+              <span>計入買賣手續費＋0.1%稅</span>
+            </label>
+            <div class="flex items-center gap-1 text-[11px] text-slate-300 bg-slate-800 border border-slate-700 rounded px-2 py-1">
+              <span>手續費折數</span>
+              <select id="pf-fee-discount" class="pf-setting-input bg-slate-900 text-white font-mono text-[11px] rounded px-1 py-0.5 border border-slate-700 focus:outline-none">
+                <option value="0.6" selected>6 折 (0.60)</option>
+                <option value="0.5">5 折 (0.50)</option>
+                <option value="0.38">3.8 折 (0.38)</option>
+                <option value="0.28">2.8 折 (0.28)</option>
+                <option value="0.2">2 折 (0.20)</option>
+                <option value="1.0">無折扣 (10折)</option>
+                <option value="0">0 元 (免手續費)</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-1 text-[11px] text-slate-300 bg-slate-800 border border-slate-700 rounded px-2 py-1">
+              <span>低消</span>
+              <select id="pf-min-fee" class="pf-setting-input bg-slate-900 text-white font-mono text-[11px] rounded px-1 py-0.5 border border-slate-700 focus:outline-none">
+                <option value="20" selected>20 元</option>
+                <option value="1">1 元 (零股/定額)</option>
+                <option value="0">0 元</option>
+              </select>
+            </div>
+            <button id="reset-portfolio-btn" class="text-[11px] text-slate-400 hover:text-white px-2.5 py-1 rounded bg-slate-800 border border-slate-700 transition">
+              清空持股設定
+            </button>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
@@ -1927,10 +1953,11 @@
 
         <!-- Portfolio Grand Total Summary -->
         <div id="pf-total-summary" class="bg-slate-950 p-3.5 rounded-lg border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
-          <span class="text-slate-400">總投入成本: <strong id="pf-total-cost" class="text-white font-mono">NT$ 0</strong></span>
+          <span class="text-slate-400">總投入成本(含買費): <strong id="pf-total-cost" class="text-white font-mono">NT$ 0</strong></span>
           <span class="text-slate-400">目前總市值: <strong id="pf-total-value" class="text-white font-mono">NT$ 0</strong></span>
+          <span class="text-slate-400">預估雙邊稅費: <strong id="pf-total-fees" class="text-rose-400 font-mono">-NT$ 0</strong></span>
           <span class="text-slate-400">預估年領總股息: <strong id="pf-total-div" class="text-amber-400 font-mono">NT$ 0</strong></span>
-          <span class="text-slate-400">合計未實現損益: <strong id="pf-total-pnl" class="text-slate-300 font-mono">NT$ 0 (0.0%)</strong></span>
+          <span class="text-slate-400"><span id="pf-total-pnl-label">預估淨損益(已扣稅費):</span> <strong id="pf-total-pnl" class="text-slate-300 font-mono">NT$ 0 (0.00%)</strong></span>
         </div>
       </div>
 
@@ -2935,6 +2962,6 @@
   <!-- Embedded Latest Data Fallback (supports direct file:// opening) -->
   <script src="latest_data.js?v=20261112a"></script>
   <!-- App Logic JS -->
-  <script src="app.js?v=20261112a"></script>
+  <script src="app.js?v=20261112b"></script>
 </body>
 </html>

@@ -265,7 +265,33 @@ function readPortfolioHoldings() {
   }
 }
 
-function getEtfActionDecision(code, s, inst, holding, macro) {
+const ETF_TAX_RATE = 0.001; // 台股 ETF 賣出證交稅 0.1%
+const BROKER_FEE_RATE = 0.001425; // 公定券商手續費率 0.1425%
+
+function calcBrokerFee(amount, discount = 0.6, minFee = 20) {
+  if (discount <= 0 || amount <= 0) return 0;
+  return Math.max(minFee, Math.floor(amount * BROKER_FEE_RATE * discount));
+}
+
+function computeEtfPositionMetrics(cost, lots, curPrice, settings = {}) {
+  const includeCosts = settings.includeCosts !== undefined ? Boolean(settings.includeCosts) : true;
+  const discount = settings.discount !== undefined ? Math.max(0, Number(settings.discount) || 0) : 0.6;
+  const minFee = settings.minFee !== undefined ? Math.max(0, Number(settings.minFee) || 0) : 20;
+
+  const invested = cost * lots * 1000;
+  const mktVal = curPrice * lots * 1000;
+  const buyFee = includeCosts ? calcBrokerFee(invested, discount, minFee) : 0;
+  const sellFee = includeCosts ? calcBrokerFee(mktVal, discount, minFee) : 0;
+  const sellTax = includeCosts ? Math.floor(mktVal * ETF_TAX_RATE) : 0;
+  const txCost = buyFee + sellFee + sellTax;
+  const costBasis = invested + buyFee;
+  const netProceeds = mktVal - sellFee - sellTax;
+  const pnl = netProceeds - costBasis;
+  const roi = costBasis > 0 ? (pnl / costBasis) * 100 : 0;
+  return { includeCosts, invested, mktVal, buyFee, sellFee, sellTax, txCost, costBasis, netProceeds, pnl, roi };
+}
+
+function getEtfActionDecision(code, s, inst, holding, macro, portfolioSettings = {}) {
   const meta = ETF_META[code];
   const price = Number(s.price) || liveMarketData[`price${code}`];
   const ma20 = Number(s.technicals?.ma20) || price;
@@ -279,7 +305,7 @@ function getEtfActionDecision(code, s, inst, holding, macro) {
 
   const cost = holding && parseFloat(holding.cost) > 0 ? parseFloat(holding.cost) : null;
   const lots = holding && parseFloat(holding.lots) > 0 ? parseFloat(holding.lots) : null;
-  const roi = cost ? ((price - cost) / cost) * 100 : null;
+  const roi = cost ? computeEtfPositionMetrics(cost, lots || 1, price, portfolioSettings).roi : null;
 
   let score = 50;
   if (price <= meta.buyMax) score += 26;
@@ -373,7 +399,7 @@ function renderOverviewActionAdvisor(data) {
   const holdings = readPortfolioHoldings();
   const decisions = ETF_CODES
     .filter(code => data.etfs[code]?.status === 'success')
-    .map(code => getEtfActionDecision(code, data.etfs[code], data.institutional?.[code], holdings[code], data.macro));
+    .map(code => getEtfActionDecision(code, data.etfs[code], data.institutional?.[code], holdings[code], data.macro, holdings._settings));
 
   if (decisions.length === 0) return;
 
@@ -1875,8 +1901,24 @@ function initMobileBenchmarkToggle() {
 function initPortfolioTracker() {
   const STORAGE_KEY = 'etf_big4_portfolio_v1';
 
+  const includeCostsEl = document.getElementById('pf-include-costs');
+  const discountEl = document.getElementById('pf-fee-discount');
+  const minFeeEl = document.getElementById('pf-min-fee');
+
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { saved = {}; }
+
+  if (saved._settings) {
+    if (includeCostsEl && typeof saved._settings.includeCosts === 'boolean') {
+      includeCostsEl.checked = saved._settings.includeCosts;
+    }
+    if (discountEl && saved._settings.discount !== undefined) {
+      discountEl.value = String(saved._settings.discount);
+    }
+    if (minFeeEl && saved._settings.minFee !== undefined) {
+      minFeeEl.value = String(saved._settings.minFee);
+    }
+  }
 
   ETF_CODES.forEach(code => {
     const costEl = document.getElementById(`pf-${code}-cost`);
@@ -1886,10 +1928,17 @@ function initPortfolioTracker() {
   });
 
   function calculatePortfolio() {
+    const includeCosts = includeCostsEl ? includeCostsEl.checked : true;
+    const discount = discountEl ? Math.max(0, parseFloat(discountEl.value) || 0) : 0.6;
+    const minFee = minFeeEl ? Math.max(0, parseInt(minFeeEl.value, 10) || 0) : 20;
+    const settings = { includeCosts, discount, minFee };
+
     let totalCost = 0;
     let totalValue = 0;
+    let totalFeesAndTax = 0;
     let totalDiv = 0;
-    const newSaved = {};
+    let totalPnlSum = 0;
+    const newSaved = { _settings: settings };
 
     ETF_CODES.forEach(code => {
       const costEl = document.getElementById(`pf-${code}-cost`);
@@ -1904,32 +1953,39 @@ function initPortfolioTracker() {
       if (!isNaN(cost) && cost > 0 && !isNaN(lots) && lots > 0) {
         const cur = liveMarketData[`price${code}`];
         const annualDivPerShare = liveMarketData[`div${code}`] || ETF_META[code].annualDiv;
-        const invested = cost * lots * 1000;
-        const mktVal = cur * lots * 1000;
         const estDiv = annualDivPerShare * lots * 1000;
-        const pnl = mktVal - invested;
-        const roi = ((cur - cost) / cost) * 100;
+        const m = computeEtfPositionMetrics(cost, lots, cur, settings);
 
-        totalCost += invested;
-        totalValue += mktVal;
+        totalCost += m.costBasis;
+        totalValue += m.mktVal;
+        totalFeesAndTax += m.txCost;
         totalDiv += estDiv;
+        totalPnlSum += m.pnl;
 
-        const isProfit = pnl >= 0;
-        const pnlClass = isProfit ? 'text-rose-400' : 'text-emerald-400';
+        const isProfit = m.pnl >= 0;
+        const pnlClass = isProfit ? 'text-rose-700' : 'text-emerald-700';
         const sign = isProfit ? '+' : '';
         const meta = ETF_META[code];
         const hint = cur >= meta.sellMin
-          ? '<span class="text-rose-400 font-bold">達再平衡區</span>'
-          : (cur <= meta.buyMax ? '<span class="text-emerald-400 font-bold">強力加碼區</span>' : `年息約 ${Math.round(estDiv).toLocaleString()}元`);
+          ? '<span class="text-rose-700 font-bold">達再平衡區</span>'
+          : (cur <= meta.buyMax ? '<span class="text-emerald-700 font-bold">強力加碼區</span>' : `年息約 ${Math.round(estDiv).toLocaleString()}元`);
+
+        const feeNote = includeCosts
+          ? `稅費 ${m.txCost.toLocaleString()}元 (手續${(m.buyFee + m.sellFee).toLocaleString()}/稅${m.sellTax.toLocaleString()})`
+          : '未計交易稅費';
 
         resEl.innerHTML = `
           <div class="flex justify-between">
-            <span>損益: <strong class="${pnlClass} font-mono">${sign}${Math.round(pnl).toLocaleString()}元</strong></span>
-            <span class="${pnlClass} font-mono font-bold">${sign}${roi.toFixed(1)}%</span>
+            <span>${includeCosts ? '淨損益:' : '損益:'} <strong class="${pnlClass} font-mono">${sign}${Math.round(m.pnl).toLocaleString()}元</strong></span>
+            <span class="${pnlClass} font-mono font-bold">${sign}${m.roi.toFixed(2)}%</span>
           </div>
-          <div class="text-[10px] text-slate-400 mt-0.5 flex justify-between">
-            <span>市值: ${Math.round(mktVal).toLocaleString()}元</span>
+          <div class="text-[10px] text-slate-600 mt-0.5 flex justify-between">
+            <span>市值: ${Math.round(m.mktVal).toLocaleString()}元</span>
             <span>${hint}</span>
+          </div>
+          <div class="text-[10px] text-slate-500 mt-0.5 flex justify-between">
+            <span>${feeNote}</span>
+            <span>${includeCosts ? '含買賣手續費＋0.1%稅' : '帳面價差'}</span>
           </div>
         `;
       } else {
@@ -1941,25 +1997,29 @@ function initPortfolioTracker() {
 
     const totCostEl = document.getElementById('pf-total-cost');
     const totValEl = document.getElementById('pf-total-value');
+    const totFeesEl = document.getElementById('pf-total-fees');
     const totDivEl = document.getElementById('pf-total-div');
     const totPnlEl = document.getElementById('pf-total-pnl');
+    const totPnlLabelEl = document.getElementById('pf-total-pnl-label');
     if (totCostEl) totCostEl.textContent = `NT$ ${Math.round(totalCost).toLocaleString()}`;
     if (totValEl) totValEl.textContent = `NT$ ${Math.round(totalValue).toLocaleString()}`;
+    if (totFeesEl) totFeesEl.textContent = includeCosts ? `-NT$ ${Math.round(totalFeesAndTax).toLocaleString()}` : 'NT$ 0 (未計入)';
     if (totDivEl) totDivEl.textContent = `NT$ ${Math.round(totalDiv).toLocaleString()} / 年`;
+    if (totPnlLabelEl) totPnlLabelEl.textContent = includeCosts ? '預估淨損益(已扣稅費):' : '合計未實現損益:';
     if (totPnlEl) {
-      const totalPnl = totalValue - totalCost;
-      const totalRoi = totalCost > 0 ? (totalPnl / totalCost) * 100 : 0;
-      const sign = totalPnl >= 0 ? '+' : '';
-      totPnlEl.textContent = `NT$ ${sign}${Math.round(totalPnl).toLocaleString()} (${sign}${totalRoi.toFixed(1)}%)`;
+      const totalRoi = totalCost > 0 ? (totalPnlSum / totalCost) * 100 : 0;
+      const sign = totalPnlSum >= 0 ? '+' : '';
+      totPnlEl.textContent = `NT$ ${sign}${Math.round(totalPnlSum).toLocaleString()} (${sign}${totalRoi.toFixed(2)}%)`;
       totPnlEl.className = totalCost === 0
-        ? 'text-slate-300 font-mono'
-        : (totalPnl >= 0 ? 'text-rose-400 font-mono font-bold' : 'text-emerald-400 font-mono font-bold');
+        ? 'text-slate-600 font-mono'
+        : (totalPnlSum >= 0 ? 'text-rose-700 font-mono font-bold' : 'text-emerald-700 font-mono font-bold');
     }
   }
 
   window.triggerPortfolioUpdate = calculatePortfolio;
-  document.querySelectorAll('.pf-input').forEach(el => {
-    el.addEventListener('input', () => {
+  document.querySelectorAll('.pf-input, .pf-setting-input').forEach(el => {
+    const evt = el.tagName === 'SELECT' || el.type === 'checkbox' ? 'change' : 'input';
+    el.addEventListener(evt, () => {
       calculatePortfolio();
       if (window.latestPayloadCache) {
         renderOverviewActionAdvisor(window.latestPayloadCache);
@@ -1976,8 +2036,14 @@ function initPortfolioTracker() {
         if (c) c.value = '';
         if (l) l.value = '';
       });
+      if (includeCostsEl) includeCostsEl.checked = true;
+      if (discountEl) discountEl.value = '0.6';
+      if (minFeeEl) minFeeEl.value = '20';
       localStorage.removeItem(STORAGE_KEY);
       calculatePortfolio();
+      if (window.latestPayloadCache) {
+        renderOverviewActionAdvisor(window.latestPayloadCache);
+      }
     });
   }
 
