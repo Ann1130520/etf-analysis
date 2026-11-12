@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="dark">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,12 +44,32 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css?v=20261110a">
+  <link rel="stylesheet" href="style.css?v=20261112a">
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-blue-600 selection:text-white">
+<body class="ocean-body sunny-ocean-theme text-slate-900 min-h-screen font-sans antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Fullscreen Sunny Coastal Seascape Backdrop -->
+  <div class="ocean-backdrop" aria-hidden="true">
+    <div class="ocean-sun"></div>
+    <div class="ocean-clouds"></div>
+    <div class="ocean-grid"></div>
+    <div class="ocean-rays"></div>
+    <div class="ocean-particles"></div>
+    <div class="ocean-waves">
+      <svg class="ocean-wave-svg ocean-wave-back" viewBox="0 0 2880 220" preserveAspectRatio="none">
+        <path fill="rgba(14, 165, 233, 0.25)" d="M0,110 C240,60 480,160 720,110 C960,60 1200,160 1440,110 C1680,60 1920,160 2160,110 C2400,60 2640,160 2880,110 L2880,220 L0,220 Z"/>
+      </svg>
+      <svg class="ocean-wave-svg ocean-wave-mid" viewBox="0 0 2880 220" preserveAspectRatio="none">
+        <path fill="rgba(56, 189, 248, 0.34)" d="M0,140 C240,95 480,185 720,140 C960,95 1200,185 1440,140 C1680,95 1920,185 2160,140 C2400,95 2640,185 2880,140 L2880,220 L0,220 Z"/>
+      </svg>
+      <svg class="ocean-wave-svg ocean-wave-front" viewBox="0 0 2880 220" preserveAspectRatio="none">
+        <path fill="rgba(255, 255, 255, 0.62)" d="M0,168 C240,132 480,204 720,168 C960,132 1200,204 1440,168 C1680,132 1920,204 2160,168 C2400,132 2640,204 2880,168 L2880,220 L0,220 Z"/>
+      </svg>
+    </div>
+  </div>
 
   <!-- Top Global Market & ETF Ticker Bar -->
-  <div class="bg-slate-900 border-b border-slate-800 text-xs py-1.5 px-4 sticky top-0 z-50 shadow-md backdrop-blur-md bg-opacity-95">
+  <div class="bg-white/85 border-b border-sky-200/90 text-xs py-1.5 px-4 sticky top-0 z-50 shadow-sm backdrop-blur-md">
     <div class="max-w-7xl mx-auto space-y-1.5">
       <!-- Row 1: 4 ETFs + Global Indices -->
       <div class="flex items-center space-x-2.5 overflow-x-auto no-scrollbar py-0.5">
@@ -149,11 +169,15 @@
         </div>
 
         <div class="flex items-center gap-2 shrink-0">
-          <span class="text-[11px] text-slate-400">更新: <span id="last-update-time">2026-11-10 22:56</span></span>
+          <button id="live-sync-toggle" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 transition" title="每15秒自動連線更新即時淨值與報價（點擊可暫停/恢復）">
+            <span id="live-sync-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="live-sync-label">即時連動 15s</span>
+          </button>
+          <span class="text-[11px] text-slate-400">更新: <span id="last-update-time">讀取中...</span></span>
           <button id="toggle-benchmark-bar" class="md:hidden px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:text-white text-[10px] border border-slate-700 transition">
             收合基準
           </button>
-          <button id="refresh-data-btn" class="p-1.5 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition" title="重新整理最新數據">
+          <button id="refresh-data-btn" class="p-1.5 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition" title="立即連線更新即時股價">
             <i class="fa-solid fa-arrows-rotate"></i>
           </button>
         </div>
@@ -162,7 +186,7 @@
   </div>
 
   <!-- Main Navigation Header -->
-  <header class="bg-gradient-to-r from-slate-900 via-ocean-900 to-slate-900 border-b border-slate-800/80">
+  <header class="bg-gradient-to-r from-white/85 via-sky-50/85 to-cyan-50/85 backdrop-blur-md border-b border-sky-200/90">
     <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
       <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
         <div class="flex items-center space-x-3">
@@ -173,20 +197,20 @@
             <div class="flex flex-wrap items-center gap-2">
               <h1 class="text-2xl font-black tracking-tight text-white">台股 ETF 四強情報戰情室</h1>
               <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1">
-                <i class="fa-solid fa-signal"></i> 市值 × 高息 × 主動 × 月配
+                <i class="fa-solid fa-signal"></i> 市值 × 高息 × 主動 × 買賣訊號
               </span>
               <button id="etf-cursor-badge" class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:scale-105 transition flex items-center gap-1" title="點擊切換四強 ETF 專屬鼠標">
                 <i class="fa-solid fa-rocket"></i> 鼠標：0050領航箭
               </button>
             </div>
             <p class="text-xs text-slate-400 mt-0.5">
-              元大台灣50 (0050) • 元大高股息 (0056) • 主動統一台股增長 (00981A) • 元大臺灣價值高息 (00940) • 買賣區間 • 複利試算
+              元大台灣50 (0050) • 元大高股息 (0056) • 主動統一台股增長 (00981A) • 元大臺灣價值高息 (00940) • 即時買賣建議 • 複利試算
             </p>
           </div>
         </div>
 
         <!-- Tab Navigation (6x2 Thematic Grid: Row 1 = 看盤與實戰買賣決策 / Row 2 = 選股邏輯、領息節稅與研究) -->
-        <nav class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800/80 w-full xl:w-auto">
+        <nav class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 bg-sky-100/75 p-1.5 rounded-xl border border-sky-200/90 w-full xl:w-auto">
           <!-- Row 1: 看盤與實戰買賣決策流 -->
           <button data-tab="overview" class="tab-btn active justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-white bg-blue-600 shadow-sm whitespace-nowrap">
             <i class="fa-solid fa-chart-pie"></i> 戰情總覽
@@ -197,7 +221,7 @@
           <button data-tab="technicals" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
             <i class="fa-solid fa-chart-column text-emerald-400"></i> 技術與籌碼面
           </button>
-          <button data-tab="signals" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-rose-300 bg-rose-950/40 border border-rose-700/60 hover:bg-rose-900/60 whitespace-nowrap">
+          <button data-tab="signals" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-rose-700 bg-rose-100/90 border border-rose-300 hover:bg-rose-200/90 whitespace-nowrap">
             <i class="fa-solid fa-traffic-light text-rose-400"></i> 買賣建議專區
           </button>
           <button data-tab="checklist" class="tab-btn justify-center px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
@@ -660,6 +684,79 @@
             <span>配息: <strong id="overview-00940-div" class="text-white">0.58元</strong></span>
             <span>殖利率: <strong id="overview-00940-yield" class="text-amber-400">4.78%</strong></span>
             <span>法人: <strong id="overview-00940-inst" class="text-rose-400 font-mono">+2,961張</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Rise/Fall Attribution Panel & Actionable Buy/Sell/Wait Advisor -->
+      <div id="overview-momentum-reason-card" class="bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-3.5 pb-3 border-b border-slate-800/80">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-magnifying-glass-chart text-sky-400"></i>
+              <span id="momentum-reason-title">即時漲跌原因解析：為什麼現在漲 / 為什麼現在跌？</span>
+            </h2>
+            <span id="momentum-verdict-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">盤面因素分析中...</span>
+          </div>
+          <div id="momentum-etf-pills" class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+            <span class="text-slate-400">即時同步盤價・籌碼・均線・新聞歸因</span>
+          </div>
+        </div>
+
+        <p id="momentum-summary-line" class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-3.5 bg-slate-950/70 px-3.5 py-2.5 rounded-lg border border-slate-800/80">
+          正在比對四強 ETF 即時淨值/市價變化、台積電與美股費半連動、三大法人進出與市場新聞動能...
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 space-y-1.5">
+            <div class="font-bold text-sky-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> 1. 族群與大盤連動
+            </div>
+            <p id="reason-market-box" class="text-slate-300 leading-relaxed text-[11px]">載入即時報價與加權/費半對照中...</p>
+          </div>
+          <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 space-y-1.5">
+            <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-users-viewfinder"></i> 2. 法人籌碼與技術面
+            </div>
+            <p id="reason-chip-tech-box" class="text-slate-300 leading-relaxed text-[11px]">載入三大法人買賣超與 20MA/RSI 中...</p>
+          </div>
+          <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 space-y-1.5">
+            <div class="font-bold text-amber-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-globe"></i> 3. 匯率・美債・風格輪動
+            </div>
+            <p id="reason-macro-box" class="text-slate-300 leading-relaxed text-[11px]">載入 USD/TWD、美10年債與台積電權重影響中...</p>
+          </div>
+          <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 space-y-1.5">
+            <div class="font-bold text-purple-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-newspaper"></i> 4. 即時消息面催化
+            </div>
+            <div id="reason-news-box" class="text-slate-300 leading-relaxed text-[11px] space-y-1">載入最新 ETF 新聞標題中...</div>
+          </div>
+        </div>
+
+        <!-- Actionable Buy / Sell / Wait Guidance -->
+        <div id="overview-action-advisor" class="mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+                <i class="fa-solid fa-chess-knight text-blue-400"></i> 現在該怎麼操作？（加碼 / 定投 / 停利 / 等即時建議）
+              </h3>
+              <span id="action-overall-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">策略計算中...</span>
+            </div>
+            <button type="button" onclick="document.querySelector('.tab-btn[data-tab=\'signals\']')?.click()" class="self-start md:self-auto px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-blue-600 text-white hover:opacity-90 transition flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> 查看完整買賣目標價區間
+            </button>
+          </div>
+
+          <p id="action-overall-summary" class="text-xs text-slate-200 leading-relaxed bg-blue-950/20 border border-sky-400/40 rounded-lg px-3.5 py-2.5">
+            正在結合即時市價區間、均線乖離與法人動向，為您整理「現在該加碼、續抱定投、還是部分再平衡」的具體做法...
+          </p>
+
+          <div id="action-advice-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 text-xs">
+            <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 text-slate-400">讀取 0050 操作建議中...</div>
+            <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 text-slate-400">讀取 0056 操作建議中...</div>
+            <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 text-slate-400">讀取 00981A 操作建議中...</div>
+            <div class="bg-slate-950/70 border border-slate-800 rounded-lg p-3 text-slate-400">讀取 00940 操作建議中...</div>
           </div>
         </div>
       </div>
@@ -1209,11 +1306,11 @@
           </div>
 
           <!-- Stylized Capital Flow Radar SVG -->
-          <div class="relative bg-slate-950 rounded-xl border border-slate-800/90 overflow-hidden p-2">
+          <div class="geo-map-frame relative rounded-xl border border-sky-300/70 overflow-hidden p-2">
             <svg viewBox="0 0 800 380" class="w-full h-auto select-none">
               <defs>
                 <pattern id="etfGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(51,65,85,0.22)" stroke-width="1"/>
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(2,132,199,0.12)" stroke-width="1"/>
                 </pattern>
                 <filter id="glowEtf">
                   <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
@@ -1223,60 +1320,60 @@
               <rect width="800" height="380" fill="url(#etfGrid)" />
 
               <!-- Central Hub: Taiwan ETF Market -->
-              <circle cx="400" cy="190" r="56" fill="rgba(30, 58, 138, 0.25)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,3"/>
-              <circle cx="400" cy="190" r="36" fill="#0f2442" stroke="#10b981" stroke-width="2"/>
-              <text x="400" y="186" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">台股 ETF</text>
-              <text x="400" y="203" text-anchor="middle" fill="#38bdf8" font-size="10">四強資金池</text>
+              <circle cx="400" cy="190" r="56" fill="rgba(255, 255, 255, 0.55)" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3"/>
+              <circle cx="400" cy="190" r="36" fill="#ffffff" stroke="#059669" stroke-width="2.2"/>
+              <text x="400" y="186" text-anchor="middle" fill="#0c2942" font-size="12" font-weight="bold">台股 ETF</text>
+              <text x="400" y="203" text-anchor="middle" fill="#0284c7" font-size="10" font-weight="bold">四強資金池</text>
 
               <!-- Connecting Transmission Lines -->
-              <path d="M 145,95 Q 270,115 355,168" fill="none" stroke="#a855f7" stroke-width="2.2" filter="url(#glowEtf)"/>
-              <path d="M 145,285 Q 270,260 355,212" fill="none" stroke="#f59e0b" stroke-width="2.2"/>
-              <path d="M 400,65 L 400,134" fill="none" stroke="#10b981" stroke-width="2.2"/>
-              <path d="M 655,95 Q 530,115 445,168" fill="none" stroke="#3b82f6" stroke-width="2.2"/>
-              <path d="M 655,285 Q 530,260 445,212" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="5,4"/>
-              <path d="M 400,315 L 400,246" fill="none" stroke="#14b8a6" stroke-width="2.2"/>
+              <path d="M 145,95 Q 270,115 355,168" fill="none" stroke="#9333ea" stroke-width="2.2" filter="url(#glowEtf)"/>
+              <path d="M 145,285 Q 270,260 355,212" fill="none" stroke="#d97706" stroke-width="2.2"/>
+              <path d="M 400,65 L 400,134" fill="none" stroke="#059669" stroke-width="2.2"/>
+              <path d="M 655,95 Q 530,115 445,168" fill="none" stroke="#2563eb" stroke-width="2.2"/>
+              <path d="M 655,285 Q 530,260 445,212" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="5,4"/>
+              <path d="M 400,315 L 400,246" fill="none" stroke="#0d9488" stroke-width="2.2"/>
 
               <!-- Hotspot 1: US SOX / AI CapEx -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="sox_ai" onclick="window.selectGeoHotspot && window.selectGeoHotspot('sox_ai')">
                 <circle cx="145" cy="95" r="26" fill="transparent"/>
                 <circle cx="145" cy="95" r="14" fill="rgba(168,85,247,0.28)" class="animate-ping" style="transform-box: fill-box; transform-origin: center;"/>
-                <circle cx="145" cy="95" r="9" fill="#a855f7" stroke="#fff" stroke-width="2"/>
-                <text x="145" y="70" text-anchor="middle" fill="#e9d5ff" font-size="11" font-weight="bold">費半與 AI 資本支出</text>
+                <circle cx="145" cy="95" r="9" fill="#9333ea" stroke="#fff" stroke-width="2"/>
+                <text x="145" y="70" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="bold">費半與 AI 資本支出</text>
               </g>
 
               <!-- Hotspot 2: Fed Rate & US 10Y -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="fed_yield" onclick="window.selectGeoHotspot && window.selectGeoHotspot('fed_yield')">
                 <circle cx="145" cy="285" r="26" fill="transparent"/>
-                <circle cx="145" cy="285" r="9" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
-                <text x="145" y="314" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="bold">美10年債與 Fed 利率</text>
+                <circle cx="145" cy="285" r="9" fill="#d97706" stroke="#fff" stroke-width="2"/>
+                <text x="145" y="314" text-anchor="middle" fill="#b45309" font-size="11" font-weight="bold">美10年債與 Fed 利率</text>
               </g>
 
               <!-- Hotspot 3: TSMC Weight -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="tsmc_core" onclick="window.selectGeoHotspot && window.selectGeoHotspot('tsmc_core')">
                 <circle cx="400" cy="65" r="26" fill="transparent"/>
-                <circle cx="400" cy="65" r="9" fill="#10b981" stroke="#fff" stroke-width="2"/>
-                <text x="400" y="42" text-anchor="middle" fill="#a7f3d0" font-size="11" font-weight="bold">台積電先進製程與權重</text>
+                <circle cx="400" cy="65" r="9" fill="#059669" stroke="#fff" stroke-width="2"/>
+                <text x="400" y="42" text-anchor="middle" fill="#047857" font-size="11" font-weight="bold">台積電先進製程與權重</text>
               </g>
 
               <!-- Hotspot 4: High Dividend Rebalance -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="etf_rebalance" onclick="window.selectGeoHotspot && window.selectGeoHotspot('etf_rebalance')">
                 <circle cx="655" cy="95" r="26" fill="transparent"/>
-                <circle cx="655" cy="95" r="9" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
-                <text x="655" y="70" text-anchor="middle" fill="#bfdbfe" font-size="11" font-weight="bold">5/11月高股息換股潮</text>
+                <circle cx="655" cy="95" r="9" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+                <text x="655" y="70" text-anchor="middle" fill="#1d4ed8" font-size="11" font-weight="bold">5/11月高股息換股潮</text>
               </g>
 
               <!-- Hotspot 5: USD/TWD & Foreign Flows -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="fx_foreign" onclick="window.selectGeoHotspot && window.selectGeoHotspot('fx_foreign')">
                 <circle cx="400" cy="315" r="26" fill="transparent"/>
-                <circle cx="400" cy="315" r="9" fill="#14b8a6" stroke="#fff" stroke-width="2"/>
-                <text x="400" y="344" text-anchor="middle" fill="#99f6e4" font-size="11" font-weight="bold">台幣匯率與外資期現貨</text>
+                <circle cx="400" cy="315" r="9" fill="#0d9488" stroke="#fff" stroke-width="2"/>
+                <text x="400" y="344" text-anchor="middle" fill="#0f766e" font-size="11" font-weight="bold">台幣匯率與外資期現貨</text>
               </g>
 
               <!-- Hotspot 6: Active Alpha vs Cost -->
               <g class="geo-hotspot" style="cursor: pointer;" data-chokepoint="active_alpha" onclick="window.selectGeoHotspot && window.selectGeoHotspot('active_alpha')">
                 <circle cx="655" cy="285" r="26" fill="transparent"/>
-                <circle cx="655" cy="285" r="9" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                <text x="655" y="314" text-anchor="middle" fill="#fecaca" font-size="11" font-weight="bold">主動選股 Alpha 與內扣</text>
+                <circle cx="655" cy="285" r="9" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+                <text x="655" y="314" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="bold">主動選股 Alpha 與內扣</text>
               </g>
             </svg>
           </div>
@@ -1854,12 +1951,14 @@
               <h2 class="text-xl font-black text-white">ETF 指數化、高股息與主動投資權威文獻回顧 (Literature Review)</h2>
             </div>
             <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-              本戰情室之資產配置與費率試算架構，立足於<strong>效率市場與指數投資奠基文獻</strong>、<strong>多因子資產定價模型</strong>、<strong>主動投資超額報酬定律</strong>及<strong>台灣高股息 ETF 與收益平準金制度實證研究</strong>。
+              以<strong>經典資產定價與指數理論</strong>、<strong>全球指數機構與市場微結構實證</strong>、<strong>國際頂尖同行評審期刊 (SSCI：JF / JFE / RFS / FAJ)</strong>與<strong>法人資產配置與評價模型</strong>為四大分類架構基礎（不限篇數上限，全面排除碩博士論文與掠奪性期刊，均附可查證之 DOI / 官方來源）。
             </p>
           </div>
-          <div class="px-3 py-1.5 rounded-lg bg-indigo-900/30 border border-indigo-700/50 text-center shrink-0">
-            <div class="text-[10px] text-indigo-400 font-bold uppercase">文獻庫規模</div>
-            <div class="text-sm font-bold text-white">4大支柱 • 6部經典</div>
+          <div class="flex items-center gap-2">
+            <div class="px-3.5 py-2 rounded-lg bg-indigo-900/30 border border-indigo-700/50 text-center shrink-0">
+              <div class="text-[10px] text-indigo-400 font-bold uppercase">4大支柱架構 • 持續擴充</div>
+              <div class="text-sm font-bold text-white" id="lit-scale-badge">已收錄 <span id="lit-total-count">16</span> 篇文獻</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1869,190 +1968,534 @@
         <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
           <span class="text-xs font-semibold text-slate-400 shrink-0">文獻類別：</span>
           <button class="lit-filter-btn active px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shrink-0" data-filter="all">全部文獻</button>
-          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="theory">指數經典理論</button>
-          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="factor">多因子與主動Alpha</button>
-          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="academic">國內學術實證</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="theory">經典理論</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="institution">國際智庫與機構實證</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="academic">國際 SSCI 期刊</button>
+          <button class="lit-filter-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white shrink-0" data-filter="valuation">法人評價與台股模型</button>
         </div>
 
         <div class="relative w-full md:w-72">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-          <input type="text" id="lit-search-input" placeholder="搜尋作者、模型名稱、關鍵詞..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+          <input type="text" id="lit-search-input" placeholder="搜尋作者、期刊名稱、關鍵詞..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
         </div>
       </div>
 
-      <!-- Literature Cards Grid -->
+      <!-- Literature Cards Grid (16 Peer-Reviewed SSCI & Authoritative Works) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="literature-container">
 
-        <!-- Lit 1: Bogle -->
+        <!-- Lit 1: Sharpe (1991) -->
         <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                指數化革命 • 成本假說
+                經典指數理論 • 諾貝爾獎得主
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">Financial Analysts Journal</span>
+              <span class="text-slate-400 font-mono text-[11px]">Financial Analysts Journal, 1991</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              Sharpe, W. F. (1991) &amp; Bogle, J. C. (2017). <span class="text-emerald-400 italic">The Arithmetic of Active Management &amp; Little Book of Common Sense Investing</span>.
+              Sharpe, W. F. (1991). <span class="text-emerald-400 italic">The Arithmetic of Active Management</span>. <span class="text-slate-300">47(1), 7–9.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
               <p><strong>【核心理論精要】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>算術必然定理：</strong>未扣費用前，所有主動投資者的加權平均報酬必然等於大盤；扣減較高的管理費與交易稅後，平均主動報酬必定落後低費率指數基金（0050）。</li>
-                <li><strong>複利侵蝕效應：</strong>每年 0.8% 的內扣費率差距在 20 年複利下將吞噬逾 15% 期末資產。</li>
+                <li><strong>主動管理算術定律：</strong>未扣成本前，被動投資者與主動投資者必然共享相同市場加權報酬；扣減費用後，高費用主動基金整體平均值必低於低費用大盤 ETF (0050)。</li>
+                <li><strong>費率決定下檔勝負：</strong>任何試圖跑贏 0050 的主動部位，必須先產生足夠覆蓋費率與週轉交易成本的正 Alpha。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：0050 長期複利與費率模型</span>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Sharpe, W. F. (1991). The arithmetic of active management. Financial Analysts Journal, 47(1), 7-9.">
+            <a href="https://doi.org/10.2469/faj.v47.n1.7" target="_blank" rel="noopener noreferrer" class="text-[11px] text-emerald-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.2469/faj.v47.n1.7
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Sharpe, W. F. (1991). The arithmetic of active management. Financial Analysts Journal, 47(1), 7–9. https://doi.org/10.2469/faj.v47.n1.7">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
-        <!-- Lit 2: Fama-French -->
-        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="factor">
+        <!-- Lit 2: Markowitz (1952) -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                現代投資組合理論 • Journal of Finance
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 1952</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Markowitz, H. (1952). <span class="text-indigo-400 italic">Portfolio Selection</span>. <span class="text-slate-300">7(1), 77–91.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【效率前緣與分散風險基石】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>均值-變異數最佳化：</strong>證明將低相關性資產（如台積電權重高達 58% 的 0050 搭配金融與傳產高股息 0056/00940）組合後，可在同等報酬下顯著壓低整體波動度。</li>
+                <li><strong>避免單押集中風險：</strong>為本戰情室「核心+衛星」多 ETF 資產權重配置與相關性追蹤提供數理依據。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1111/j.1540-6261.1952.tb01525.x" target="_blank" rel="noopener noreferrer" class="text-[11px] text-indigo-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/j.1540-6261.1952.tb01525.x
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Markowitz, H. (1952). Portfolio selection. The Journal of Finance, 7(1), 77–91. https://doi.org/10.1111/j.1540-6261.1952.tb01525.x">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 3: Fama & French (2015) Five-Factor -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                諾貝爾獎理論 • 多因子模型
+                國際 SSCI 頂刊 • Elsevier (JFE)
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">Journal of Finance, 1993/2015</span>
+              <span class="text-slate-400 font-mono text-[11px]">J. Financial Economics, 2015</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              Fama, E. F., &amp; French, K. R. (2015). <span class="text-amber-400 italic">A Five-Factor Asset Pricing Model</span>. Journal of Financial Economics.
+              Fama, E. F., &amp; French, K. R. (2015). <span class="text-amber-400 italic">A five-factor asset pricing model</span>. <span class="text-slate-300">116(1), 1–22.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
-              <p><strong>【實證定價結論】</strong></p>
+              <p><strong>【多因子 Smart Beta 定價實證】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>因子拆解：</strong>將股票報酬歸因於市場風險 (Beta)、規模 (SMB)、價值 (HML)、獲利能力 (RMW) 與投資保守度 (CMA)。</li>
-                <li><strong>高股息與價值因子對應：</strong>0056 與 00940 篩選低估值與高自由現金流標的，實質上即屬於「價值 (Value) + 高品質獲利 (Quality)」Smart Beta 策略。</li>
+                <li><strong>五因子拆解框架：</strong>以市場 Beta、規模 (SMB)、價值 (HML)、獲利能力 (RMW) 與投資保守度 (CMA) 解釋絕大多數跨截面股票預期報酬變異。</li>
+                <li><strong>對應 0056 / 00940 選股基因：</strong>臺灣價值高息 00940 納入自由現金流與本益比指標，實務即為「價值 (HML) + 高獲利品質 (RMW)」因子曝險。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <span class="text-[11px] text-amber-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：00940 價值篩選因子定位</span>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Fama, E. F., & French, K. R. (2015). A five-factor asset pricing model. Journal of Financial Economics, 116(1), 1-22.">
+            <a href="https://doi.org/10.1016/j.jfineco.2014.10.010" target="_blank" rel="noopener noreferrer" class="text-[11px] text-amber-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1016/j.jfineco.2014.10.010
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Fama, E. F., & French, K. R. (2015). A five-factor asset pricing model. Journal of Financial Economics, 116(1), 1–22. https://doi.org/10.1016/j.jfineco.2014.10.010">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
-        <!-- Lit 3: Grinold & Kahn Active Portfolio Management -->
-        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="factor">
+        <!-- Lit 4: Carhart (1997) -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                主動管理定律 • 00981A 核心
+                國際 SSCI 頂刊 • Journal of Finance
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">McGraw-Hill, 2000</span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 1997</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              Grinold, R. C., &amp; Kahn, R. N. (2000). <span class="text-purple-400 italic">Active Portfolio Management: A Quantitative Approach for Producing Superior Returns</span>.
+              Carhart, M. M. (1997). <span class="text-purple-400 italic">On Persistence in Mutual Fund Performance</span>. <span class="text-slate-300">52(1), 57–82.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
-              <p><strong>【主動式投資基本定律】</strong></p>
+              <p><strong>【四因子模型與動能持續性驗證】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>Information Ratio 定律 (IR = IC × √BR)：</strong>主動型基金能否創造持續 Alpha，取決於研究團隊的預測準確度 (IC) 與每年獨立選股調整次數的廣度 (BR)。</li>
-                <li><strong>核心+衛星配置：</strong>實證支持投資人以低費用指數 ETF (0050) 為核心，僅將部分資金配置給具備研究優勢的主動式 ETF (00981A)。</li>
+                <li><strong>動能因子 (UMD)：</strong>證實主動基金短中期績效持續性多半來自持有「強勢動能股」與較低週轉交易成本，而非永久神秘能力。</li>
+                <li><strong>評估 00981A 主動績效：</strong>提醒投資人檢視主動型 ETF 是否僅是押注 AI 動能 Beta，並必須嚴密監控其 1.1% 費用率與週轉損耗。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <span class="text-[11px] text-purple-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：00981A Alpha 損益平衡試算</span>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Grinold, R. C., & Kahn, R. N. (2000). Active Portfolio Management (2nd ed.). McGraw-Hill.">
+            <a href="https://doi.org/10.1111/j.1540-6261.1997.tb03808.x" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/j.1540-6261.1997.tb03808.x
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Carhart, M. M. (1997). On persistence in mutual fund performance. The Journal of Finance, 52(1), 57–82. https://doi.org/10.1111/j.1540-6261.1997.tb03808.x">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
-        <!-- Lit 4: Miller & Modigliani Dividend Irrelevance & Behavioral Dividend -->
+        <!-- Lit 5: French (2008) Cost of Active Investing -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                美國金融學會會長演說 • Journal of Finance
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 2008</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              French, K. R. (2008). <span class="text-purple-400 italic">Presidential Address: The Cost of Active Investing</span>. <span class="text-slate-300">63(4), 1537–1573.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【主動選股社會總成本計量】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>年均 0.67% 費率拖累實證：</strong>估算美股投資人為追求主動超額報酬，每年多支付相當於市值 0.67% 的研究、管理費與衝擊成本。</li>
+                <li><strong>直擊複利侵蝕模擬器：</strong>直接對應本戰情室「費用與主被動對比」試算：若主動 ETF 無法長期穩定產出 &gt;0.75% 淨 Alpha，長期複利終值將明顯落後 0050。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1111/j.1540-6261.2008.01368.x" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/j.1540-6261.2008.01368.x
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="French, K. R. (2008). Presidential address: The cost of active investing. The Journal of Finance, 63(4), 1537–1573. https://doi.org/10.1111/j.1540-6261.2008.01368.x">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 6: Fama & French (2010) Luck versus Skill -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                國際 SSCI 頂刊 • Journal of Finance
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 2010</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Fama, E. F., &amp; French, K. R. (2010). <span class="text-purple-400 italic">Luck versus Skill in the Cross-Section of Mutual Fund Returns</span>. <span class="text-slate-300">65(5), 1915–1947.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【運氣抑或真實選股實力？】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>拔靴法 (Bootstrap) 檢定結論：</strong>扣除費用與四因子曝險後，極少數主動管理團隊具備顯著超越統計運氣的正向 Net Alpha，極多數基金扣費後為負 Alpha。</li>
+                <li><strong>實戰啟示：</strong>驗證主動式 00981A 應定期檢視其超額報酬是否出自真實選股技巧，並將核心倉位穩固配置於 0050。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1111/j.1540-6261.2010.01598.x" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/j.1540-6261.2010.01598.x
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Fama, E. F., & French, K. R. (2010). Luck versus skill in the cross-section of mutual fund returns. The Journal of Finance, 65(5), 1915–1947. https://doi.org/10.1111/j.1540-6261.2010.01598.x">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 7: Berk & van Binsbergen (2015) -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                國際 SSCI 頂刊 • Elsevier (JFE)
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">J. Financial Economics, 2015</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Berk, J. B., &amp; van Binsbergen, J. H. (2015). <span class="text-purple-400 italic">Measuring skill in the mutual fund industry</span>. <span class="text-slate-300">118(1), 1–20.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【規模膨脹對主動 Alpha 的稀釋】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>價值創造 (Value Added) 指標：</strong>頂級經理人確實能自市場擷取超額美元價值，但當資金大量湧入使資產規模 (AUM) 膨脹時，規模報酬遞減將壓縮單位報酬率。</li>
+                <li><strong>追蹤主動 ETF 規模警訊：</strong>解釋為何必須持續觀察 00981A 與高股息 ETF 規模暴增後對中小型成分股的流動性衝擊。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1016/j.jfineco.2015.05.002" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1016/j.jfineco.2015.05.002
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Berk, J. B., & van Binsbergen, J. H. (2015). Measuring skill in the mutual fund industry. Journal of Financial Economics, 118(1), 1–20. https://doi.org/10.1016/j.jfineco.2015.05.002">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 8: Cremers & Petajisto (2009) Active Share -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                國際 SSCI 頂刊 • Oxford (RFS)
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Review of Financial Studies, 2009</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Cremers, K. J. M., &amp; Petajisto, A. (2009). <span class="text-purple-400 italic">How Active Is Your Fund Manager? A New Measure That Predicts Performance</span>. <span class="text-slate-300">22(9), 3329–3365.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【主動份額 (Active Share) 指標奠基作】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>識別「假主動真指數 (Closet Indexers)」：</strong>若主動基金持股與 0050 高度重疊卻收 1%+ 高費率，長期幾乎必輸；唯獨具備高度 Active Share（如 00981A 重押 AI 散熱/PCB）才具超額報酬機會。</li>
+                <li><strong>選股結構判讀依據：</strong>支撐本站「選股與成分股」橫向比較 00981A 與 0050 之持股差異與台積電權重配置。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1093/rfs/hhp057" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1093/rfs/hhp057
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Cremers, K. J. M., & Petajisto, A. (2009). How active is your fund manager? A new measure that predicts performance. The Review of Financial Studies, 22(9), 3329–3365. https://doi.org/10.1093/rfs/hhp057">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 9: Miller & Modigliani (1961) -->
         <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                股利政策與行為財務學
+                公司理財經典 • Journal of Business
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">Journal of Business / JFE</span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Business, 1961</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              Miller, M. H., &amp; Modigliani (1961) / Shefrin &amp; Statman (1984). <span class="text-blue-400 italic">Dividend Policy &amp; Explaining Investor Preference for Cash Dividends</span>.
+              Miller, M. H., &amp; Modigliani, F. (1961). <span class="text-blue-400 italic">Dividend Policy, Growth, and the Valuation of Shares</span>. <span class="text-slate-300">34(4), 411–433.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
-              <p><strong>【高股息迷思與心理帳戶】</strong></p>
+              <p><strong>【股利無關論與填息本質】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>左手換右手定理：</strong>除息當日 ETF 淨值等額扣除股息，配息本身並不直接創造財富，總報酬取決於「填息能力」。</li>
-                <li><strong>行為財務價值：</strong>0056 與 00940 的季/月配息機制滿足投資人「心理帳戶」與穩定現金流紀律，避免在市場恐慌時被迫賣股變現。</li>
+                <li><strong>左手換右手無套利證明：</strong>在無稅與無摩擦市場，發放現金股利本身不創造額外價值，ETF 除息當日淨值將等額扣除配息金額。</li>
+                <li><strong>總報酬優先於殖利率幻覺：</strong>驗證檢視 0056 / 00940 時不能只看表定配息率，更要計入「填息效率」與股利稅負成本。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <span class="text-[11px] text-blue-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：含息總報酬與填息分析</span>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Shefrin, H. M., & Statman, M. (1984). Explaining investor preference for cash dividends. Journal of Financial Economics, 13(2), 253-282.">
+            <a href="https://doi.org/10.1086/294442" target="_blank" rel="noopener noreferrer" class="text-[11px] text-blue-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1086/294442
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Miller, M. H., & Modigliani, F. (1961). Dividend policy, growth, and the valuation of shares. The Journal of Business, 34(4), 411–433. https://doi.org/10.1086/294442">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
-        <!-- Lit 5: Taiwan ETF & Equalization Reserve Academic Paper -->
+        <!-- Lit 10: Shefrin & Statman (1984) -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="theory">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                行為財務學奠基作 • Elsevier (JFE)
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">J. Financial Economics, 1984</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Shefrin, H. M., &amp; Statman, M. (1984). <span class="text-blue-400 italic">Explaining investor preference for cash dividends</span>. <span class="text-slate-300">13(2), 253–282.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【心理帳戶與自我控制理論】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>為何散戶熱愛月配/季配 ETF：</strong>投資人將「現金配息」歸類為可花用的心理帳戶，能避免在市場大跌時因焦慮恐慌而錯砍本金部位。</li>
+                <li><strong>台灣高股息熱潮心理機制：</strong>詮釋 0056 與 00940 如何透過紀律性現金流協助長期持有者度過空頭回檔。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1016/0304-405X(84)90025-4" target="_blank" rel="noopener noreferrer" class="text-[11px] text-blue-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1016/0304-405X(84)90025-4
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Shefrin, H. M., & Statman, M. (1984). Explaining investor preference for cash dividends. Journal of Financial Economics, 13(2), 253–282. https://doi.org/10.1016/0304-405X(84)90025-4">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 11: Hartzmark & Solomon (2019) Dividend Disconnect -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                國際 SSCI 頂刊 • Journal of Finance
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 2019</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Hartzmark, S. M., &amp; Solomon, D. H. (2019). <span class="text-amber-400 italic">The Dividend Disconnect</span>. <span class="text-slate-300">74(5), 2153–2199.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【高股息追捧下的定價失衡實證】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>免費股息錯覺 (Free Dividends Fallacy)：</strong>證實大量投資人誤將配息視為與價差獨立的額外收益，在低利率期間尤易過度追價高息股並降低股息再投入比例。</li>
+                <li><strong>提醒高息 ETF 追價風險：</strong>支撐本戰情室在 0056/00940 殖利率遭壓縮或大幅溢價時亮起減碼警示。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1111/jofi.12785" target="_blank" rel="noopener noreferrer" class="text-[11px] text-amber-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/jofi.12785
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Hartzmark, S. M., & Solomon, D. H. (2019). The dividend disconnect. The Journal of Finance, 74(5), 2153–2199. https://doi.org/10.1111/jofi.12785">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 12: Ben-David, Franzoni & Moussawi (2018) -->
         <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                國內學術實證 • 臺大/政大財金
+                ETF 流動性微結構 • Journal of Finance
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">臺灣證券市場研究</span>
+              <span class="text-slate-400 font-mono text-[11px]">The Journal of Finance, 2018</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              臺灣大學 / 政治大學財金所實證研究. (2024). <span class="text-purple-400 italic">《台灣高股息 ETF 規模擴張、收益平準金動用與成分股換股價格衝擊效應分析》</span>.
+              Ben-David, I., Franzoni, F., &amp; Moussawi, R. (2018). <span class="text-purple-400 italic">Do ETFs Increase Volatility?</span> <span class="text-slate-300">73(6), 2471–2535.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
-              <p><strong>【台灣市場實證發現】</strong></p>
+              <p><strong>【ETF 套利與成分股波動傳導】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>換股顯著超額買壓：</strong>每年 5~6 月及 11~12 月高股息 ETF 成分股定審前，新納入個股常提前出現異常報酬，調整生效後則有均值回歸壓力。</li>
-                <li><strong>平準金防禦稀釋：</strong>收益平準金雖防止除息前大額申購稀釋配息率，但亦使投資人實際領取之現金部分屬於「免稅本金返還」，需區分股利所得與平準金比例。</li>
+                <li><strong>非基本面需求衝擊：</strong>造市商與授權參與券商 (AP) 在進行 ETF 折溢價套利時，會把 ETF 端的散戶申贖情緒即時傳導至成分股日內波動率。</li>
+                <li><strong>台股高股息規模破千億之意義：</strong>解釋為何 0050、0056 與 00940 換股或外資大買賣超時，會同步放大權值成分股短線震盪。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <span class="text-[11px] text-purple-400"><i class="fa-solid fa-link mr-1"></i>支撐本站：除息與健保節稅實戰建議</span>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="國立政治大學財務管理學系. (2024). 台灣高股息ETF規模成長與成分股調整流動性衝擊研究. 證券市場發展季刊.">
+            <a href="https://doi.org/10.1111/jofi.12727" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1111/jofi.12727
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Ben-David, I., Franzoni, F., & Moussawi, R. (2018). Do ETFs increase volatility? The Journal of Finance, 73(6), 2471–2535. https://doi.org/10.1111/jofi.12727">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
-        <!-- Lit 6: TWSE Active ETF Guide -->
+        <!-- Lit 13: Israeli, Lee & Sridharan (2017) & Da & Shive (2018) -->
         <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="academic">
           <div>
             <div class="flex items-center justify-between text-xs mb-2">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
-                臺灣證交所官方規範 • 主動式 ETF
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                SSCI 期刊 • Springer (RAST) / Wiley (EFM)
               </span>
-              <span class="text-slate-400 font-mono text-[11px]">TWSE, 2025</span>
+              <span class="text-slate-400 font-mono text-[11px]">RAST, 2017 / EFM, 2018</span>
             </div>
             <h3 class="text-sm font-bold text-white mb-2 leading-snug">
-              臺灣證券交易所 &amp; 金管會證期局. (2025). <span class="text-sky-400 italic">《主動式交易所交易基金 (Active ETF) 資訊揭露、投資組合透明度與商品架構指引》</span>.
+              Israeli, D., Lee, C. M. C., &amp; Sridharan, S. A. (2017). <span class="text-purple-400 italic">Is there a dark side to exchange traded funds?</span> <span class="text-slate-300">22(4), 1048–1083.</span>
             </h3>
             <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
-              <p><strong>【制度創新重點】</strong></p>
+              <p><strong>【被動指數定價效率與齊漲齊跌效應】</strong></p>
               <ul class="list-disc list-inside text-slate-400 space-y-1">
-                <li><strong>全透明每日揭露 (Full Transparency)：</strong>台灣主動式 ETF（代號字尾 A，如 00981A）採每日盤後揭露全部投資組合持股明細，兼顧 ETF 交易便利性與主動研究透明度。</li>
-                <li><strong>造市與折溢價控管：</strong>透過參與證券商 (PD) 實物/現金申贖機制，將市價與淨值偏離控制在合理範圍。</li>
+                <li><strong>成分股定價效率研究：</strong>當 ETF 持股比例上升時，個股報酬共移性 (Co-movement, Da &amp; Shive, 2018) 提高，個股盈餘訊息反映速度略降，反而替主動研究機構創造選股縫隙。</li>
+                <li><strong>主被動互補依據：</strong>呼應為何在被動巨獸 0050 盛行下，00981A 仍能在 AI 中小型零組件發掘額外研究紅利。</li>
               </ul>
             </div>
           </div>
           <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-            <a href="https://www.twse.com.tw/" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-400 hover:underline flex items-center gap-1">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> 查閱臺灣證交所官方資訊
+            <a href="https://doi.org/10.1007/s11142-017-9400-8" target="_blank" rel="noopener noreferrer" class="text-[11px] text-purple-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1007/s11142-017-9400-8
             </a>
-            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="臺灣證券交易所. (2025). 主動式ETF商品制度與投資人交易須知. TWSE 官方發布.">
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Israeli, D., Lee, C. M. C., & Sridharan, S. A. (2017). Is there a dark side to exchange traded funds? An information perspective. Review of Accounting Studies, 22(4), 1048–1083. https://doi.org/10.1007/s11142-017-9400-8">
               <i class="fa-regular fa-copy"></i> 複製 APA 引文
             </button>
           </div>
         </div>
 
+        <!-- Lit 14: Barber, Lee, Liu & Odean (2009) Taiwan Stock Market -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="valuation">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                台股散戶實證頂刊 • Oxford (RFS)
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Review of Financial Studies, 2009</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Barber, B. M., Lee, Y.-T., Liu, Y.-J., &amp; Odean, T. (2009). <span class="text-rose-400 italic">Just How Much Do Individual Investors Lose by Trading? (Taiwan Evidence)</span>. <span class="text-slate-300">22(2), 609–632.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【台灣證券市場交易損耗震撼實證】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>台股頻繁短線交易代價：</strong>直接分析台灣證交所全部委託與成交紀錄，發現台灣個人投資者頻繁進出平均每年蒙受相當於 GDP 2.2% 的交易損耗與選時損失。</li>
+                <li><strong>為何推崇 ETF 定期定額與進場檢核：</strong>用嚴謹計量證據證明以低週轉指數 ETF (0050) + 紀律檢核清單取代盤中追漲殺跌的巨大複利優勢。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1093/rfs/hhn046" target="_blank" rel="noopener noreferrer" class="text-[11px] text-rose-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1093/rfs/hhn046
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Barber, B. M., Lee, Y.-T., Liu, Y.-J., & Odean, T. (2009). Just how much do individual investors lose by trading? The Review of Financial Studies, 22(2), 609–632. https://doi.org/10.1093/rfs/hhn046">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 15: Easley, Michayluk, O'Hara & Putnins (2021) & S&P SPIVA Scorecard -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="institution">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                國際智庫與期刊 • Oxford RoF / S&amp;P DJI
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">Review of Finance, 2021 / SPIVA</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              Easley, D., Michayluk, D., O'Hara, M., &amp; Putniņš, T. J. (2021). <span class="text-sky-400 italic">The Active World of Passive Investing</span> &amp; <span class="text-slate-300">S&amp;P SPIVA® Scorecard.</span>
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【被動投資背後的「主動選擇」與全球計分卡】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>因子 ETF 實質仍是主動決策：</strong>從「市值型 0050」切換至「預測高股息 0056」或「價值篩選 00940」，本質就是主動承擔特定產業與因子權重曝險。</li>
+                <li><strong>SPIVA 長期統計：</strong>歷年數據顯示逾 8 成主動管理基金在 10 年維度無法打敗大盤基準指數，凸顯設定 Alpha 停損標準之重要性。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://doi.org/10.1093/rof/rfab021" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> DOI: 10.1093/rof/rfab021
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="Easley, D., Michayluk, D., O'Hara, M., & Putniņš, T. J. (2021). The active world of passive investing. Review of Finance, 25(5), 1433–1471. https://doi.org/10.1093/rof/rfab021">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+        <!-- Lit 16: TWSE Active ETF & Equalization Reserve Official Regulatory Framework -->
+        <div class="lit-card bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition flex flex-col justify-between" data-category="valuation">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                臺灣證交所官方規範 • 主動式 ETF 與平準金
+              </span>
+              <span class="text-slate-400 font-mono text-[11px]">TWSE &amp; 金管會, 2024–2026</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 leading-snug">
+              臺灣證券交易所 (TWSE) &amp; 證期局. (2025). <span class="text-sky-400 italic">《主動式交易所交易基金 (Active ETF) 全透明揭露與收益平準金動用規範指引》</span>.
+            </h3>
+            <div class="text-xs text-slate-300 space-y-2 mb-4 leading-relaxed">
+              <p><strong>【制度規範與台股 ETF 評價準則】</strong></p>
+              <ul class="list-disc list-inside text-slate-400 space-y-1">
+                <li><strong>全透明每日揭露 (Full Transparency)：</strong>台灣主動式 ETF（字尾 A，如 00981A）採每日盤後揭露全部持股，使本戰情室能準確拆解其散熱/PCB 與台積電集中度。</li>
+                <li><strong>收益平準金課稅區分：</strong>規範高股息 ETF 必須揭露配息組成中「54C 股利所得」與「免稅收益平準金」比例，直接作為本戰情室二代健保 2.11% 補充保費精算核心。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <a href="https://www.twse.com.tw/zh/products/securities/etf/products/domestic.html" target="_blank" rel="noopener noreferrer" class="text-[11px] text-sky-400 hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> 查閱臺灣證交所 ETF 官方專區
+            </a>
+            <button class="copy-citation-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-[11px] flex items-center gap-1" data-citation="臺灣證券交易所. (2025). 主動式ETF商品制度、收益平準金揭露與投資人交易須知. 臺灣證券交易所官方發布.">
+              <i class="fa-regular fa-copy"></i> 複製 APA 引文
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Research Portal & Citation Guide (matches shipping version) -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 text-xs text-slate-300 leading-relaxed">
+        <h4 class="font-bold text-white mb-2 flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-magnifying-glass-location text-indigo-400"></i>
+          學術研究與延伸查詢指引 (Official Data Portals)
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+          <a href="https://www.sciencedirect.com/journal/journal-of-financial-economics" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition block group">
+            <div class="font-bold text-white group-hover:text-indigo-400 flex items-center justify-between">
+              <span>ScienceDirect / Journal of Financial Economics</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">檢索 Elsevier 頂尖財金 SSCI 期刊（多因子模型、行為股利與基金績效研究）</p>
+          </a>
+
+          <a href="https://www.spglobal.com/spdji/en/research-insights/spiva/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition block group">
+            <div class="font-bold text-white group-hover:text-blue-400 flex items-center justify-between">
+              <span>S&amp;P Dow Jones Indices SPIVA® 報告</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">追蹤全球及台灣主動式基金與大盤指數之 1/3/5/10 年勝率實證計分卡</p>
+          </a>
+
+          <a href="https://www.twse.com.tw/zh/products/securities/etf/products/domestic.html" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-amber-500/50 transition block group">
+            <div class="font-bold text-white group-hover:text-amber-400 flex items-center justify-between">
+              <span>臺灣證券交易所 (TWSE) ETF 專區</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">查詢台灣上市 ETF 最新受益人數、規模、追蹤誤差與收益平準金官方揭露</p>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -2475,23 +2918,23 @@
   </main>
 
   <!-- Footer -->
-  <footer class="mt-16 border-t border-slate-800 bg-slate-950 py-8 text-slate-400 text-xs">
+  <footer class="mt-16 border-t border-sky-200 bg-white/80 backdrop-blur-md py-8 text-slate-600 text-xs">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-      <div class="flex items-center justify-center gap-2 text-slate-300 font-semibold">
-        <i class="fa-solid fa-layer-group text-emerald-400"></i> 台股 ETF 四強智能研究戰情室 (0050 • 0056 • 00981A • 00940)
+      <div class="flex items-center justify-center gap-2 text-slate-700 font-semibold">
+        <i class="fa-solid fa-layer-group text-emerald-500"></i> 台股 ETF 四強智能研究戰情室 (0050 • 0056 • 00981A • 00940)
       </div>
       <p class="text-slate-500">
-        本戰情室數據綜合臺灣證券交易所 (TWSE)、Yahoo Finance、元大投信、統一投信及各大投資研究模型。
+        本戰情室數據綜合臺灣證券交易所 (TWSE)、鉅亨網即時報價、Yahoo Finance、元大投信、統一投信及各大投資研究模型。
       </p>
-      <p class="text-[11px] text-slate-600">
+      <p class="text-[11px] text-slate-500">
         免責聲明：所有數據、情境模擬與配置分析僅供投資研究參考，不構成任何買賣邀約或投資建議，投資人應獨立評估風險。
       </p>
     </div>
   </footer>
 
   <!-- Embedded Latest Data Fallback (supports direct file:// opening) -->
-  <script src="latest_data.js?v=20261110a"></script>
+  <script src="latest_data.js?v=20261112a"></script>
   <!-- App Logic JS -->
-  <script src="app.js?v=20261110a"></script>
+  <script src="app.js?v=20261112a"></script>
 </body>
 </html>
