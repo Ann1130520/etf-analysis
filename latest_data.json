@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-20 18:14:29",
+  "last_updated": "2026-11-20 22:59:19",
   "etfs": {
     "0050": {
       "symbol": "0050.TW",
@@ -211,23 +211,23 @@
     },
     "us": {
       "symbol": "^GSPC",
-      "price": 7175.83,
-      "prev_close": 7323.63,
-      "change": -147.8,
-      "change_percent": -2.02,
-      "high": 7415.64,
-      "low": 7173.63,
-      "volume": 3341008000,
+      "price": 7181.81,
+      "prev_close": 7175.83,
+      "change": 5.98,
+      "change_percent": 0.08,
+      "high": 7186.72,
+      "low": 7133.55,
+      "volume": 541528626,
       "status": "success"
     },
     "sox": {
       "symbol": "^SOX",
-      "price": 9419.72,
-      "prev_close": 9652.8,
-      "change": -233.08,
-      "change_percent": -2.41,
-      "high": 10109.88,
-      "low": 9412.19,
+      "price": 9155.66,
+      "prev_close": 9419.72,
+      "change": -264.06,
+      "change_percent": -2.8,
+      "high": 9182.75,
+      "low": 8977.11,
       "volume": 0,
       "status": "success"
     },
@@ -246,10 +246,10 @@
   "macro": {
     "usd_twd": {
       "symbol": "TWD=X",
-      "price": 32.91,
+      "price": 32.9,
       "prev_close": 32.93,
-      "change": -0.02,
-      "change_percent": -0.06,
+      "change": -0.03,
+      "change_percent": -0.09,
       "high": 33.04,
       "low": 32.87,
       "volume": 0,
@@ -257,12 +257,12 @@
     },
     "us_10y": {
       "symbol": "^TNX",
-      "price": 5.05,
-      "prev_close": 5.07,
-      "change": -0.02,
-      "change_percent": -0.39,
-      "high": 0.0,
-      "low": 0.0,
+      "price": 4.97,
+      "prev_close": 5.05,
+      "change": -0.08,
+      "change_percent": -1.58,
+      "high": 4.99,
+      "low": 4.97,
       "volume": 0,
       "status": "success"
     }
@@ -285,9 +285,9 @@
     "2330": {
       "date": "20261120",
       "foreign_lots": -11862.5,
-      "trust_lots": -3848.7,
+      "trust_lots": -3848.4,
       "dealer_lots": 4809.6,
-      "total_lots": -10901.5
+      "total_lots": -10901.2
     },
     "0056": {
       "date": "20261120",
@@ -745,7 +745,7 @@
           7580.07,
           7376.86,
           7561.67,
-          7175.83
+          7182.24
         ],
         "sox": [
           6406.43,
@@ -800,7 +800,7 @@
           10688.8,
           9390.25,
           10146.32,
-          9419.72
+          9155.66
         ],
         "jp": [
           50253.91,
@@ -1715,7 +1715,7 @@
           7580.07,
           7376.86,
           7561.67,
-          7175.83
+          7181.76
         ],
         "sox": [
           4955.8,
@@ -1822,7 +1822,7 @@
           10688.8,
           9390.25,
           10146.32,
-          9419.72
+          9155.66
         ],
         "jp": [
           38208.03,
@@ -2014,10 +2014,10 @@
     },
     {
       "id": "live-8",
-      "title": "40歲存0050，幾歲轉0056？達人揭最佳轉換年紀「100萬月領14萬」！00929配息率16%更香？00878、00919退休這樣搭",
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOQzJHd1JnMGJKeHdpa2dKbThobVVOQWZqbVdMejU3Nk5SekRld1M3eERHM0FEUldINW5NTjhhRHFXd1luc20zbTRpQ3JoRWJpUktqczA0X1ZmMXdVcGdtdk5PRi1TdjZPV1BQUS16SmxNVlM5WjJhUEFTU21BWm5mYw?oc=5",
-      "pubDate": "Wed, 04 Nov 2026 08:00:00 GMT",
-      "source": "今周刊",
+      "title": "00981A今配息！怎麼買？與0050成分股差異",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE14bk9zZVVkZUFVbkdSblVSVUF1MkhDTndnanZIUmtJanMxWXRRdS11eFJBU2ktMkI1bFU0dW5XSGRqd3pSblB0V05ualprdw?oc=5",
+      "pubDate": "Tue, 13 Oct 2026 07:00:00 GMT",
+      "source": "遠見雜誌",
       "sentiment": "bull",
       "sentimentLabel": "偏多焦點",
       "category": "dividend",
@@ -2025,9 +2025,9 @@
     },
     {
       "id": "live-9",
-      "title": "00940配息、成分股、怎麼買？00940最新換股與元大台灣價值高息ETF選股邏輯介紹｜高股息ETF月月配",
-      "link": "https://news.google.com/rss/articles/CBMiowRBVV95cUxPZFhlZWswUk93RDd6U2s0dDk4LVEzWllHak9VeVFPaEQ2N08zNDdWSS1PSVpwc3ZHOXNGdXlTTnM0eWJKTnM3d0hoY1JESk5EU3J0ZW5aZDBienVJS3R4X0U4eVo2RXl5d2hackJuRU55Y2VGc01xZXRjOTJYZTZCVTZ0Y3FPblFMZjB2TjEyVU1JeXpmcFVHcTlWMGRSVFVUWWJWQkhxMDRQZkdPRWhFRXdPbkxXenF6aWhMVDRWVFRndnVjSG14SnJrYXNadExOOFZZUG5OSTI3WnlGWFdVUDRNRlhPcmNyVUlhbWpoaGdDTmV6Qnh3MzRuR3hVTmdaNWV4YkM2YkJrRnpTMnZmaExWNHpqX0xRM3N1enlfMG55YWJ5Y2dyZUE4S2VkV092ODFYOGRBZTIzYjRaSzdsYkg4SmJqY1Q1NlZndEFtelVybTJfcjZib3FWRVlhelM4M3NjOE5FVU5fclZXNDhObGM5S043UmdSdGh2eVRnVG1pUEtsTVZvLTYtSGVseFlQQks5TGhueWtsbVRtcHloNU9nc3RLcERtSVhYVWdQZ1ZoUWdyaThjdDA0bU1PSm5TVG40R1JkeThWOTVHWW1ZX2dnMU8zaEFGTjhKSVFUeEZtQU45N3d3QUZMZ05nY1ZIMnd0RU1WYXc4ZzVMVm5Xc0lQUWdSTExoNkR5bjhINmpsZEl4aEgxNHBLMWtPSl9rQjNF?oc=5",
-      "pubDate": "Wed, 18 Nov 2026 06:23:59 GMT",
+      "title": "0050、00919、00878⋯2026年存股族最愛10檔ETF排行揭曉！配息、成分股、殖利率一文掌握｜豐雲學堂2026 年 11 月",
+      "link": "https://news.google.com/rss/articles/CBMiwgNBVV95cUxOUlNlS3lRM3BnMno2WXU1SXFKSndfdkhfUl8xazBXSFdWZFNlNDJGZFUtSGdEdnNMNG4wMDlHSkc4TW5oUGNWelZVMDBjazVtTE53V2w1Vmd0VWNBd1V4UVBsZFNPdjFxcXJxV3Jaa0haT29Ja1EtRmcxWlh0QTN4Q0JUb1FBVEVZMjRyWG5BWnQyS2ROOTZKeWFVZDR1YVQ0bFFpSFpkLUR5NXM0LVdZd1RzSUNQV2M1OVlJbDNQaExlZHkxMjdGeTczS3lEY3VmZTJuWXJwaE9qX1FIOUJyQUw1ODFlUzRqbUlMMVZkX3gtQ2hsUHZ1SWhsbmhRQklCZFh0WjJIV0ozYXkyQTg5cXJRNFh0MnVJSUp6UGpoRnc2b3pMaTMzeFlOSG9lbHhvSWhLN3JDbkFFWF91YUlzZTNSb191MDNTcE4tbVhvc252V0RMSUV1V3BrVkZfaUVaeFA4Sm15T2p2c3NEckhtWmRFak04S25lVUh3X1FKWnVJT1FnR2NUQmlUT0xyR2VFaWxCbTRVWGctcmw3elJxVmVaSk9ncS14XzZIYWtkN3lyZG9SanJQbWlpUHU4Qmd2NHc?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 02:06:27 GMT",
       "source": "永豐金證券",
       "sentiment": "bull",
       "sentimentLabel": "偏多焦點",
@@ -2058,9 +2058,9 @@
     },
     {
       "id": "live-12",
-      "title": "0050、00919、00878⋯2026年存股族最愛10檔ETF排行揭曉！配息、成分股、殖利率一文掌握｜豐雲學堂2026 年 11 月",
-      "link": "https://news.google.com/rss/articles/CBMiwgNBVV95cUxOUlNlS3lRM3BnMno2WXU1SXFKSndfdkhfUl8xazBXSFdWZFNlNDJGZFUtSGdEdnNMNG4wMDlHSkc4TW5oUGNWelZVMDBjazVtTE53V2w1Vmd0VWNBd1V4UVBsZFNPdjFxcXJxV3Jaa0haT29Ja1EtRmcxWlh0QTN4Q0JUb1FBVEVZMjRyWG5BWnQyS2ROOTZKeWFVZDR1YVQ0bFFpSFpkLUR5NXM0LVdZd1RzSUNQV2M1OVlJbDNQaExlZHkxMjdGeTczS3lEY3VmZTJuWXJwaE9qX1FIOUJyQUw1ODFlUzRqbUlMMVZkX3gtQ2hsUHZ1SWhsbmhRQklCZFh0WjJIV0ozYXkyQTg5cXJRNFh0MnVJSUp6UGpoRnc2b3pMaTMzeFlOSG9lbHhvSWhLN3JDbkFFWF91YUlzZTNSb191MDNTcE4tbVhvc252V0RMSUV1V3BrVkZfaUVaeFA4Sm15T2p2c3NEckhtWmRFak04S25lVUh3X1FKWnVJT1FnR2NUQmlUT0xyR2VFaWxCbTRVWGctcmw3elJxVmVaSk9ncS14XzZIYWtkN3lyZG9SanJQbWlpUHU4Qmd2NHc?oc=5",
-      "pubDate": "Mon, 14 Sep 2026 02:06:27 GMT",
+      "title": "9月配息ETF一表看！00919、00918、00981A、00929...除息日、配息金額與熱門高股息ETF比較！",
+      "link": "https://news.google.com/rss/articles/CBMiqgNBVV95cUxPLUY5X0p3a3Izdk5zRENzNmVwQVpEQVN0SkROT3A4MzJsQ1B4aURNeUNRdWFhWW1aSHVTS3FPTFJiaWE5UEJfbjVTX0RORUhFVG9NQ2xCNV84ZmZaV1hmeTZ1a3k1bHBEMHlFNFlSc09RM0d5REg5RS0yeXV6ZGtRV2dRQURxRnptR01xWEFxbE0zWXc0ZmEzWkExbTRSZ0RQUFB2TGxkelNfaTFGRVVQNXBVWFVHQ3NmYkZlbzBIZDl1cVhNODRzUm5BN1Q5ZnRuVTYxbnBpdEstdzJoRjdQdnNMOXE5X1AxSDZIbi05ME9fRGMxclRaMTdYVUJ5ZVZXTDBhMldNSlZIUGswSnFlT1VKM215T2IyTUVobDBJVFlCSFllamh6bzNaTVJ0d21ZTFhPQkdXWkxpeE9NdWdrUzhhWGIzZThaNWxuZHVwd0loMzZWVlBlblNjSUVnSEtLcDl5U2tUY09sZzQxbXpQckg1VlRLZmpKbUh6b18zN1FBX2M3bHc0aU4wZEFkLWpSMDJueHk1UG9wVHl5RE5MLTV6WWpWWV8tTUE?oc=5",
+      "pubDate": "Tue, 15 Sep 2026 08:38:31 GMT",
       "source": "永豐金證券",
       "sentiment": "bull",
       "sentimentLabel": "偏多焦點",
