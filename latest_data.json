@@ -1,30 +1,30 @@
 {
-  "last_updated": "2026-11-20 04:14:19",
+  "last_updated": "2026-11-20 16:12:34",
   "etfs": {
     "0050": {
       "symbol": "0050.TW",
-      "price": 90.2,
-      "prev_close": 94.0,
-      "change": -3.8,
-      "change_percent": -4.04,
-      "high": 94.5,
-      "low": 89.8,
-      "volume": 467675924,
+      "price": 84.45,
+      "prev_close": 94.1,
+      "change": -9.65,
+      "change_percent": -10.26,
+      "high": 88.05,
+      "low": 83.95,
+      "volume": 872914919,
       "status": "success",
       "technicals": {
-        "ma5": 97.6,
-        "ma20": 101.6,
-        "ma60": 106.96,
-        "ma240": 90.92,
-        "bias_20": -11.22,
-        "bias_60": -15.67,
-        "rsi14": 35.0,
+        "ma5": 94.3,
+        "ma20": 100.41,
+        "ma60": 106.62,
+        "ma240": 91.02,
+        "bias_20": -15.89,
+        "bias_60": -20.79,
+        "rsi14": 25.9,
         "trend": "均線下方弱勢整理"
       },
       "dividend_1y": {
         "total_amount": 1.6,
         "count": 2,
-        "trailing_yield_pct": 1.77,
+        "trailing_yield_pct": 1.89,
         "recent": [
           {
             "date": "2026-01-22",
@@ -39,28 +39,28 @@
     },
     "0056": {
       "symbol": "0056.TW",
-      "price": 47.41,
-      "prev_close": 49.92,
-      "change": -2.51,
-      "change_percent": -5.03,
-      "high": 49.18,
-      "low": 47.31,
-      "volume": 119343828,
+      "price": 44.31,
+      "prev_close": 49.48,
+      "change": -5.17,
+      "change_percent": -10.45,
+      "high": 46.37,
+      "low": 44.26,
+      "volume": 187935083,
       "status": "success",
       "technicals": {
-        "ma5": 51.07,
-        "ma20": 53.71,
-        "ma60": 55.34,
-        "ma240": 46.24,
-        "bias_20": -11.73,
-        "bias_60": -14.33,
-        "rsi14": 31.8,
+        "ma5": 49.46,
+        "ma20": 52.99,
+        "ma60": 55.21,
+        "ma240": 46.28,
+        "bias_20": -16.38,
+        "bias_60": -19.74,
+        "rsi14": 22.0,
         "trend": "均線下方弱勢整理"
       },
       "dividend_1y": {
         "total_amount": 4.936,
         "count": 4,
-        "trailing_yield_pct": 10.41,
+        "trailing_yield_pct": 11.14,
         "recent": [
           {
             "date": "2026-01-22",
@@ -83,28 +83,28 @@
     },
     "00981A": {
       "symbol": "00981A.TW",
-      "price": 20.23,
-      "prev_close": 21.53,
-      "change": -1.3,
-      "change_percent": -6.04,
-      "high": 21.99,
-      "low": 20.23,
-      "volume": 484916599,
+      "price": 18.58,
+      "prev_close": 22.05,
+      "change": -3.47,
+      "change_percent": -15.74,
+      "high": 19.41,
+      "low": 18.55,
+      "volume": 443222559,
       "status": "success",
       "technicals": {
-        "ma5": 22.96,
-        "ma20": 25.22,
-        "ma60": 28.44,
-        "ma240": 24.81,
-        "bias_20": -19.79,
-        "bias_60": -28.87,
-        "rsi14": 35.2,
+        "ma5": 21.87,
+        "ma20": 24.7,
+        "ma60": 28.27,
+        "ma240": 24.82,
+        "bias_20": -24.78,
+        "bias_60": -34.28,
+        "rsi14": 27.5,
         "trend": "均線下方弱勢整理"
       },
       "dividend_1y": {
         "total_amount": 1.67,
         "count": 3,
-        "trailing_yield_pct": 8.26,
+        "trailing_yield_pct": 8.99,
         "recent": [
           {
             "date": "2026-03-17",
@@ -123,28 +123,28 @@
     },
     "00940": {
       "symbol": "00940.TW",
-      "price": 11.34,
-      "prev_close": 11.8,
-      "change": -0.46,
-      "change_percent": -3.9,
-      "high": 11.79,
-      "low": 11.32,
-      "volume": 13594132,
+      "price": 10.63,
+      "prev_close": 11.73,
+      "change": -1.1,
+      "change_percent": -9.38,
+      "high": 11.09,
+      "low": 10.63,
+      "volume": 28899870,
       "status": "success",
       "technicals": {
-        "ma5": 12.0,
-        "ma20": 12.59,
-        "ma60": 12.87,
-        "ma240": 11.22,
-        "bias_20": -9.93,
-        "bias_60": -11.89,
-        "rsi14": 30.6,
+        "ma5": 11.68,
+        "ma20": 12.46,
+        "ma60": 12.84,
+        "ma240": 11.23,
+        "bias_20": -14.69,
+        "bias_60": -17.21,
+        "rsi14": 20.1,
         "trend": "均線下方弱勢整理"
       },
       "dividend_1y": {
         "total_amount": 0.59,
         "count": 12,
-        "trailing_yield_pct": 5.2,
+        "trailing_yield_pct": 5.55,
         "recent": [
           {
             "date": "2026-06-09",
@@ -177,22 +177,22 @@
   "tw_benchmarks": {
     "2330": {
       "symbol": "2330.TW",
-      "price": 2100.0,
-      "prev_close": 2170.0,
-      "change": -70.0,
-      "change_percent": -3.23,
-      "high": 2190.0,
-      "low": 2085.0,
-      "volume": 52381317,
+      "price": 2000.0,
+      "prev_close": 2100.0,
+      "change": -100.0,
+      "change_percent": -4.76,
+      "high": 2060.0,
+      "low": 1970.0,
+      "volume": 87213933,
       "status": "success",
       "technicals": {
-        "ma5": 2250.0,
-        "ma20": 2311.25,
-        "ma60": 2405.83,
-        "ma240": 2110.92,
-        "bias_20": -9.14,
-        "bias_60": -12.71,
-        "rsi14": 36.7,
+        "ma5": 2132.0,
+        "ma20": 2276.0,
+        "ma60": 2394.42,
+        "ma240": 2116.5,
+        "bias_20": -12.13,
+        "bias_60": -16.47,
+        "rsi14": 27.8,
         "trend": "均線下方弱勢整理"
       }
     }
@@ -200,32 +200,32 @@
   "global_indices": {
     "tw": {
       "symbol": "^TWII",
-      "price": 38426.89,
-      "prev_close": 40092.11,
-      "change": -1665.22,
-      "change_percent": -4.15,
-      "high": 40315.53,
-      "low": 38259.7,
+      "price": 38426.9,
+      "prev_close": 40194.91,
+      "change": -1768.01,
+      "change_percent": -4.4,
+      "high": 37646.13,
+      "low": 35738.68,
       "volume": 0,
       "status": "success"
     },
     "us": {
       "symbol": "^GSPC",
-      "price": 7185.67,
+      "price": 7175.83,
       "prev_close": 7323.63,
-      "change": -137.96,
-      "change_percent": -1.88,
+      "change": -147.8,
+      "change_percent": -2.02,
       "high": 7415.64,
       "low": 7173.63,
-      "volume": 2118432000,
+      "volume": 3341008000,
       "status": "success"
     },
     "sox": {
       "symbol": "^SOX",
-      "price": 9445.38,
+      "price": 9419.72,
       "prev_close": 9652.8,
-      "change": -207.42,
-      "change_percent": -2.15,
+      "change": -233.08,
+      "change_percent": -2.41,
       "high": 10109.88,
       "low": 9412.19,
       "volume": 0,
@@ -233,12 +233,12 @@
     },
     "jp": {
       "symbol": "^N225",
-      "price": 59444.21,
-      "prev_close": 58860.43,
-      "change": 583.78,
-      "change_percent": 0.99,
-      "high": 59660.61,
-      "low": 58750.53,
+      "price": 56436.65,
+      "prev_close": 59444.21,
+      "change": -3007.56,
+      "change_percent": -5.06,
+      "high": 58707.48,
+      "low": 56436.65,
       "volume": 0,
       "status": "success"
     }
@@ -246,12 +246,12 @@
   "macro": {
     "usd_twd": {
       "symbol": "TWD=X",
-      "price": 33.0,
-      "prev_close": 32.91,
-      "change": 0.09,
-      "change_percent": 0.27,
-      "high": 33.03,
-      "low": 32.89,
+      "price": 32.97,
+      "prev_close": 32.93,
+      "change": 0.04,
+      "change_percent": 0.12,
+      "high": 33.04,
+      "low": 32.92,
       "volume": 0,
       "status": "success"
     },
@@ -261,8 +261,8 @@
       "prev_close": 5.07,
       "change": -0.02,
       "change_percent": -0.39,
-      "high": 5.11,
-      "low": 5.04,
+      "high": 0.0,
+      "low": 0.0,
       "volume": 0,
       "status": "success"
     }
@@ -359,7 +359,7 @@
         "26/10/26",
         "26/11/02",
         "26/11/09",
-        "26/11/19"
+        "26/11/20"
       ],
       "raw": {
         "etf0050": [
@@ -415,7 +415,7 @@
           104.95,
           92.5,
           102.5,
-          90.2
+          84.45
         ],
         "etf0056": [
           35.0,
@@ -470,7 +470,7 @@
           55.85,
           49.91,
           53.0,
-          47.41
+          44.31
         ],
         "etf00981a": [
           14.83,
@@ -525,7 +525,7 @@
           26.66,
           21.46,
           24.7,
-          20.23
+          18.58
         ],
         "etf00940": [
           9.06,
@@ -580,7 +580,7 @@
           13.08,
           11.8,
           12.32,
-          11.34
+          10.63
         ],
         "tsmc": [
           1385.0,
@@ -635,7 +635,7 @@
           2370.0,
           2135.0,
           2350.0,
-          2100.0
+          2000.0
         ],
         "tw": [
           26434.94,
@@ -690,7 +690,7 @@
           45211.83,
           39701.64,
           43675.12,
-          38426.89
+          38426.9
         ],
         "us": [
           6602.99,
@@ -745,7 +745,7 @@
           7580.07,
           7376.86,
           7561.67,
-          7186.56
+          7175.83
         ],
         "sox": [
           6406.43,
@@ -800,7 +800,7 @@
           10688.8,
           9390.25,
           10146.32,
-          9448.13
+          9419.72
         ],
         "jp": [
           50253.91,
@@ -854,8 +854,8 @@
           63290.11,
           57434.77,
           61142.35,
-          59024.28,
-          59444.21
+          59444.21,
+          56436.65
         ]
       }
     },
@@ -965,7 +965,7 @@
         "26/10/26",
         "26/11/02",
         "26/11/09",
-        "26/11/19"
+        "26/11/20"
       ],
       "raw": {
         "etf0050": [
@@ -1073,7 +1073,7 @@
           104.95,
           92.5,
           102.5,
-          90.2
+          84.45
         ],
         "etf0056": [
           37.33,
@@ -1180,7 +1180,7 @@
           55.85,
           49.91,
           53.0,
-          47.41
+          44.31
         ],
         "etf00981a": [
           null,
@@ -1287,7 +1287,7 @@
           26.66,
           21.46,
           24.7,
-          20.23
+          18.58
         ],
         "etf00940": [
           9.49,
@@ -1394,7 +1394,7 @@
           13.08,
           11.8,
           12.32,
-          11.34
+          10.63
         ],
         "tsmc": [
           1040.0,
@@ -1501,7 +1501,7 @@
           2370.0,
           2135.0,
           2350.0,
-          2100.0
+          2000.0
         ],
         "tw": [
           22904.32,
@@ -1608,7 +1608,7 @@
           45211.83,
           39701.64,
           43675.12,
-          38426.89
+          38426.9
         ],
         "us": [
           5969.34,
@@ -1715,7 +1715,7 @@
           7580.07,
           7376.86,
           7561.67,
-          7186.59
+          7175.83
         ],
         "sox": [
           4955.8,
@@ -1822,7 +1822,7 @@
           10688.8,
           9390.25,
           10146.32,
-          9448.13
+          9419.72
         ],
         "jp": [
           38208.03,
@@ -1928,8 +1928,8 @@
           63290.11,
           57434.77,
           61142.35,
-          59024.28,
-          59444.21
+          59444.21,
+          56436.65
         ]
       }
     }
@@ -1948,39 +1948,6 @@
     },
     {
       "id": "live-2",
-      "title": "股災撞上配息大戲！主動型、市值型、高股息ETF誰是贏家？",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBROC1wczZSMTJBckpqRHBCN09YNjdob1RaNURrZkxzTEN4N2hXUjhmWDNPOGFkQS1yTnBoVzhhc2J3Y05NeDNtYlk2NEE2Nk9Wcm5jYW03Q20xWTVha1BV?oc=5",
-      "pubDate": "Thu, 19 Nov 2026 07:48:00 GMT",
-      "source": "工商時報",
-      "sentiment": "bull",
-      "sentimentLabel": "偏多焦點",
-      "category": "dividend",
-      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
-    },
-    {
-      "id": "live-3",
-      "title": "0056、00878、00919…大跌先挑誰買？這檔年化配息率15.4%，為何高股息ETF抗跌力差這麼多？他揭關鍵",
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOR1NOQVNIMjRROC1VdFgtRnNEYVI1WDRRUDlPYWpzQmg5bC05aHpEOVR1T1lNcGxseGQyTDlOUTFTOGFycHhZLWJ4aE9ITFp0c2pfR0dacHMwNUxCeC1GdjVfTWhxQlQ1aUFJR3BoNVN1VE1KSVJXNXk1Qi1xclhCcA?oc=5",
-      "pubDate": "Thu, 19 Nov 2026 04:27:54 GMT",
-      "source": "今周刊",
-      "sentiment": "bear",
-      "sentimentLabel": "波動觀察",
-      "category": "dividend",
-      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
-    },
-    {
-      "id": "live-4",
-      "title": "0056配息、成分股、除息日一次看！含除息交易攻略與0056、0050定期定額比較！？｜高股息ETF｜豐雲學堂2026 年 11 月",
-      "link": "https://news.google.com/rss/articles/CBMi6gNBVV95cUxOVS01T0E3OXYteC1lNzBZRll0aEpidVJLaUJ4c3R3NzhoZHZVak1RaWZxbzEydGdNaUtvQU5SYUZHZTYzWVhyZm5aNnpjc3ltMmxlR3pqY0J0b2ZZeWNKWTF1Qm1PTzRsZUVKNjJDQnNGR2JmVnFjQkJNX0dsOVlLbTBjLWZvZjV1X0pfWW1TRkJWSV9jUWhPbENGdjFSRU9vQi1kUXJTbDhSWTg4R0x4WnVLdmNOV3BZR010LWgzbXJ4U0gzeWY0NDJYeENIazNZd0N1b3dvUnRjYW8xY1F6Y1pXTFRsX2F6Rzg4VkpLeEFuRFlWUFRzMjFpSHg4Rm43eVF2TXlvdjRxQUd3dnl3M05mWmsyX0MwdldBVmdtcm5UZXNtUzRYTmhxYngzZ2xPWnVVaHBaZmg5dEI3aXRUS2o0UFVMdWRPU09KdnEweWNHYm5td2hoNWRHS2ptMWE1Y2E4NjhscFUzMkV1dzNVYVZ0YmFOcVBRRE52YUxNUzUxLXZzVGpmaWxuOG9JUEtKenJybGxIMHgxcDJFdmlTOVU0aXBnay16ZFA2Y0dEMWliaXFjd1VRcGhvcUxfaEdnQ0tkcWM3V1VIMUtaYy1ncjhaSTZwRXMzTy1RcVVXZGJrNUd2RmhCTFR3?oc=5",
-      "pubDate": "Mon, 19 Oct 2026 07:18:33 GMT",
-      "source": "永豐金證券",
-      "sentiment": "bull",
-      "sentimentLabel": "偏多焦點",
-      "category": "dividend",
-      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
-    },
-    {
-      "id": "live-5",
       "title": "0050三年報酬是高股息2倍！前0056投資人揭差距：領了配息卻少賺一大截| 存股族愛ETF | 股市",
       "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1UXzhaMW9OOTVabm5ORmxjUWh5REdFZU43R2xIYkg4dmZoZ0RpYldjVDBCUG1pc3pzaHJLcGVZZi15aWFyMm1lQVpjaTFxU0pEdGFB?oc=5",
       "pubDate": "Wed, 18 Nov 2026 02:17:25 GMT",
@@ -1991,7 +1958,18 @@
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     },
     {
-      "id": "live-6",
+      "id": "live-3",
+      "title": "0056配息、成分股、除息日一次看！含除息交易攻略與0056、0050定期定額比較！？｜高股息ETF｜豐雲學堂2026 年 11 月",
+      "link": "https://news.google.com/rss/articles/CBMi6gNBVV95cUxOVS01T0E3OXYteC1lNzBZRll0aEpidVJLaUJ4c3R3NzhoZHZVak1RaWZxbzEydGdNaUtvQU5SYUZHZTYzWVhyZm5aNnpjc3ltMmxlR3pqY0J0b2ZZeWNKWTF1Qm1PTzRsZUVKNjJDQnNGR2JmVnFjQkJNX0dsOVlLbTBjLWZvZjV1X0pfWW1TRkJWSV9jUWhPbENGdjFSRU9vQi1kUXJTbDhSWTg4R0x4WnVLdmNOV3BZR010LWgzbXJ4U0gzeWY0NDJYeENIazNZd0N1b3dvUnRjYW8xY1F6Y1pXTFRsX2F6Rzg4VkpLeEFuRFlWUFRzMjFpSHg4Rm43eVF2TXlvdjRxQUd3dnl3M05mWmsyX0MwdldBVmdtcm5UZXNtUzRYTmhxYngzZ2xPWnVVaHBaZmg5dEI3aXRUS2o0UFVMdWRPU09KdnEweWNHYm5td2hoNWRHS2ptMWE1Y2E4NjhscFUzMkV1dzNVYVZ0YmFOcVBRRE52YUxNUzUxLXZzVGpmaWxuOG9JUEtKenJybGxIMHgxcDJFdmlTOVU0aXBnay16ZFA2Y0dEMWliaXFjd1VRcGhvcUxfaEdnQ0tkcWM3V1VIMUtaYy1ncjhaSTZwRXMzTy1RcVVXZGJrNUd2RmhCTFR3?oc=5",
+      "pubDate": "Mon, 19 Oct 2026 07:18:33 GMT",
+      "source": "永豐金證券",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-4",
       "title": "0056、00878、00919選一檔還是都買？高股息月月配怎麼搭",
       "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBXTnZCTHpOd3dKeW9jY0pCbERDRnVyWGp4ODktNGdKbGJVaTA2SnMzeTI3SFk0WDQ3QkF4Q3FDeVRVQnBXSktIdjNUNkdVY1ktWXIzNjNXcjlvb2xmTjZtdnhUWUxhQQ?oc=5",
       "pubDate": "Mon, 02 Nov 2026 08:00:00 GMT",
@@ -2002,11 +1980,33 @@
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     },
     {
+      "id": "live-5",
+      "title": "0056、00878、00919…大跌先挑誰買？這檔年化配息率15.4%，為何高股息ETF抗跌力差這麼多？他揭關鍵",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOR1NOQVNIMjRROC1VdFgtRnNEYVI1WDRRUDlPYWpzQmg5bC05aHpEOVR1T1lNcGxseGQyTDlOUTFTOGFycHhZLWJ4aE9ITFp0c2pfR0dacHMwNUxCeC1GdjVfTWhxQlQ1aUFJR3BoNVN1VE1KSVJXNXk1Qi1xclhCcA?oc=5",
+      "pubDate": "Thu, 19 Nov 2026 04:27:54 GMT",
+      "source": "今周刊",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-6",
+      "title": "小編下班聊點錢》00981A漲像正2、跌變正3！手握500張竟蒸發500萬 達人揭配息迷思：瑤姐發脾氣連信徒都遭殃",
+      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5XMDAtdDhncUt5UzNmSHhSUmlCWGp4dmlYTHNqZ3JvblhNdGhrZkxzaTI0MWNBd3BZOG5maVkzUDh3S0FXb1NSWlFKSWxxWDlDUEZCZWJMNGpvaEJPdXhKQ2FCQTh4ZnZkVmc?oc=5",
+      "pubDate": "Mon, 16 Nov 2026 11:06:20 GMT",
+      "source": "旺得富理財網",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
       "id": "live-7",
-      "title": "2026 市值型 ETF 有哪些？排行榜一次看：規模、配息率、費用率比一比",
-      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE16d3o0VXJwY0ZIdnZKOHRrdGFrNVFhenpkdkR0VktXN1lHS0FOYW5oOGVaQ2ZFUVNqcmRwdndVV1dTRVI4NHRrRVFGWWxBb1hZOEEzUng3bzZJczZVbXA5TQ?oc=5",
-      "pubDate": "Tue, 17 Nov 2026 07:00:00 GMT",
-      "source": "經理人",
+      "title": "0050 ETF、連結基金誰划算？不配息績效竟落後 關鍵在現金部位",
+      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE55emRQYzh3ZHF6VGZkd0ZtaWlyOWstdmFrbUVSSFFyZVhCOTk5Yk1fSW0zc1ZjdXpMUXdHRjZFYjJKRTlFQV95ZXBvR0FYQ1R0VmQwYmFoajRaT3lGeml0X1F0WHMxazhWQ1ZCMGFTeGJjbDNyZkdhQlU3UQ?oc=5",
+      "pubDate": "Mon, 09 Nov 2026 08:00:00 GMT",
+      "source": "財訊",
       "sentiment": "bull",
       "sentimentLabel": "偏多焦點",
       "category": "dividend",
@@ -2014,13 +2014,13 @@
     },
     {
       "id": "live-8",
-      "title": "ETF大洗牌！同為配息型ETF 00998A近月績效竟逆勢超車00878、0056",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1mWUNYeWNCNy1Na0ZWNjMzQU9wYzJPbzhyS25PczlkSEFwM3FzbEkwMTB3eWt6THdlM1ZTRk9faTZlZHNrV1lGWE43M3d2VlpfdEtEVzNzdw?oc=5",
-      "pubDate": "Tue, 17 Nov 2026 01:45:05 GMT",
-      "source": "觀傳媒",
-      "sentiment": "bull",
-      "sentimentLabel": "偏多焦點",
-      "category": "dividend",
+      "title": "009816成分股新增2檔台塑集團股及景碩 2檔高息ETF成分股同步剔除聯發科",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5wYTNIYjJaZ2hXanBRRU10UThKODU5ZGtqbWJuOUN4eEthRTZxTHRiN3BxSWlFUlNEUzN1RTNub3ZBQWNsV3VNcjlWNFpwNTlqY1hpUEk0TDVhdzVBTVdr0gFkQVVfeXFMTjRYd1ljVlpoYTRScHlpaHJNTW5vZnJGZ0VaajE2YnFrSmRDampxYWJIUlh5TDVYbXRWMWU4d1dacU9rbUEyME1WaWRKN2pEQTV1MHlnbFhDZFQybnFrX2dkYjV0Ng?oc=5",
+      "pubDate": "Tue, 17 Nov 2026 09:54:23 GMT",
+      "source": "自由財經",
+      "sentiment": "neutral",
+      "sentimentLabel": "市場追蹤",
+      "category": "rebalance",
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     },
     {
@@ -2036,35 +2036,35 @@
     },
     {
       "id": "live-10",
-      "title": "小編下班聊點錢》00981A漲像正2、跌變正3！手握500張竟蒸發500萬 達人揭配息迷思：瑤姐發脾氣連信徒都遭殃",
-      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5XMDAtdDhncUt5UzNmSHhSUmlCWGp4dmlYTHNqZ3JvblhNdGhrZkxzaTI0MWNBd3BZOG5maVkzUDh3S0FXb1NSWlFKSWxxWDlDUEZCZWJMNGpvaEJPdXhKQ2FCQTh4ZnZkVmc?oc=5",
-      "pubDate": "Mon, 16 Nov 2026 11:06:20 GMT",
-      "source": "旺得富理財網",
-      "sentiment": "bear",
-      "sentimentLabel": "波動觀察",
+      "title": "00940配息、成分股、怎麼買？00940最新換股與元大台灣價值高息ETF選股邏輯介紹｜高股息ETF月月配",
+      "link": "https://news.google.com/rss/articles/CBMiowRBVV95cUxPZFhlZWswUk93RDd6U2s0dDk4LVEzWllHak9VeVFPaEQ2N08zNDdWSS1PSVpwc3ZHOXNGdXlTTnM0eWJKTnM3d0hoY1JESk5EU3J0ZW5aZDBienVJS3R4X0U4eVo2RXl5d2hackJuRU55Y2VGc01xZXRjOTJYZTZCVTZ0Y3FPblFMZjB2TjEyVU1JeXpmcFVHcTlWMGRSVFVUWWJWQkhxMDRQZkdPRWhFRXdPbkxXenF6aWhMVDRWVFRndnVjSG14SnJrYXNadExOOFZZUG5OSTI3WnlGWFdVUDRNRlhPcmNyVUlhbWpoaGdDTmV6Qnh3MzRuR3hVTmdaNWV4YkM2YkJrRnpTMnZmaExWNHpqX0xRM3N1enlfMG55YWJ5Y2dyZUE4S2VkV092ODFYOGRBZTIzYjRaSzdsYkg4SmJqY1Q1NlZndEFtelVybTJfcjZib3FWRVlhelM4M3NjOE5FVU5fclZXNDhObGM5S043UmdSdGh2eVRnVG1pUEtsTVZvLTYtSGVseFlQQks5TGhueWtsbVRtcHloNU9nc3RLcERtSVhYVWdQZ1ZoUWdyaThjdDA0bU1PSm5TVG40R1JkeThWOTVHWW1ZX2dnMU8zaEFGTjhKSVFUeEZtQU45N3d3QUZMZ05nY1ZIMnd0RU1WYXc4ZzVMVm5Xc0lQUWdSTExoNkR5bjhINmpsZEl4aEgxNHBLMWtPSl9rQjNF?oc=5",
+      "pubDate": "Wed, 18 Nov 2026 06:23:59 GMT",
+      "source": "永豐金證券",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
       "category": "dividend",
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     },
     {
       "id": "live-11",
-      "title": "009816成分股新增2檔台塑集團股及景碩 2檔高息ETF成分股同步剔除聯發科",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5wYTNIYjJaZ2hXanBRRU10UThKODU5ZGtqbWJuOUN4eEthRTZxTHRiN3BxSWlFUlNEUzN1RTNub3ZBQWNsV3VNcjlWNFpwNTlqY1hpUEk0TDVhdzVBTVdr0gFkQVVfeXFMTjRYd1ljVlpoYTRScHlpaHJNTW5vZnJGZ0VaajE2YnFrSmRDampxYWJIUlh5TDVYbXRWMWU4d1dacU9rbUEyME1WaWRKN2pEQTV1MHlnbFhDZFQybnFrX2dkYjV0Ng?oc=5",
-      "pubDate": "Tue, 17 Nov 2026 09:54:23 GMT",
-      "source": "自由財經",
-      "sentiment": "neutral",
-      "sentimentLabel": "市場追蹤",
-      "category": "rebalance",
+      "title": "0056配息1.72元何時入帳？11/11發放與一張領息試算",
+      "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBuMVJiWm1jamFrVk5ucG9hWnd2RTMyWVREZHhVRWtZSU5Gb1BZY1BrT0hGMXE4WTBKR3dReWFpWGJ6bG9wRlg3M0NyOFl3Nmd2Q05MbHJB?oc=5",
+      "pubDate": "Tue, 03 Nov 2026 08:00:00 GMT",
+      "source": "口袋證券",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     },
     {
       "id": "live-12",
-      "title": "0050股價逼90元、009816「不配息的0050」不到14元…現在買誰好？孫太：它績效勝出還有一優勢",
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxONGFqRkFNNjJZU1Q4MWJDMmpNX2VMU3VyWUhpOFA1VjBBVVp3aUZadWY5R1VQRnZjeHA3cEctazlnLVAxVm5FSFNtLWhYbHRXLWRna094VVdkcHFYY2RUUFJ2MlZaWWhmU2d1WXVuZHZ5NE92UVZMc2IyV3ZzVmtiUQ?oc=5",
-      "pubDate": "Thu, 19 Nov 2026 02:58:00 GMT",
-      "source": "今周刊",
-      "sentiment": "bull",
-      "sentimentLabel": "偏多焦點",
-      "category": "dividend",
+      "title": "高股息ETF差很大！0056、00878、00919選股權重不同4大類型優缺點一次看| 存股族愛ETF | 股市",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5mVEFUMXE1NE5RaTN4RndKZkRIZnhjczRQY3hxTXlxcGpZak9jZEdPTGVxVG9NTTdSNGprWDNMN0FDNXlrVS0xVE9yZkVHMnRqUEo0?oc=5",
+      "pubDate": "Fri, 13 Nov 2026 08:03:21 GMT",
+      "source": "UDN",
+      "sentiment": "neutral",
+      "sentimentLabel": "市場追蹤",
+      "category": "rebalance",
       "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
     }
   ]
