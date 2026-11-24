@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-24 18:43:53",
+  "last_updated": "2026-11-24 20:45:16",
   "etfs": {
     "0050": {
       "symbol": "0050.TW",
@@ -246,10 +246,10 @@
   "macro": {
     "usd_twd": {
       "symbol": "TWD=X",
-      "price": 32.93,
+      "price": 32.91,
       "prev_close": 32.95,
-      "change": -0.02,
-      "change_percent": -0.06,
+      "change": -0.04,
+      "change_percent": -0.12,
       "high": 32.99,
       "low": 32.76,
       "volume": 0,
