@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-27 00:31:40",
+  "last_updated": "2026-11-27 05:08:43",
   "etfs": {
     "0050": {
       "symbol": "0050.TW",
@@ -246,12 +246,12 @@
   "macro": {
     "usd_twd": {
       "symbol": "TWD=X",
-      "price": 32.95,
+      "price": 32.94,
       "prev_close": 32.92,
-      "change": 0.03,
-      "change_percent": 0.09,
+      "change": 0.02,
+      "change_percent": 0.06,
       "high": 33.22,
-      "low": 32.92,
+      "low": 32.91,
       "volume": 0,
       "status": "success"
     },
@@ -1934,5 +1934,138 @@
       }
     }
   },
-  "live_news": []
+  "live_news": [
+    {
+      "id": "live-1",
+      "title": "高股息ETF配息會縮水嗎？台股回檔從淨值組成與3大指標看懂續航力，附0056、00878、00919實測數據",
+      "link": "https://news.google.com/rss/articles/CBMimgRBVV95cUxNMFgwUWoyUmtaU0lPYjhyX3BaajdvNldJeS1IMmFmRzg1Uzh2NTFOTVp2MnNHbTFGWVpQVWNfQlpUWnVST0pBbjdBV2htUFpHRUs5cXdaUUliWEZ1cUEtX21tSTBSU3lCUG1tUEZuUzlNcW9IcHRyUlFZdk5TTXlVRDctNXowejlweE40YllReml4T3FQQVlNVUlZajJIQkQwSTNDY25aZTVhdkNSd2FuNVQ1Y0kzZmQ4WnhRRkdONVg3bUI2QVg0UzI0OWxxUzRUQXFYSVoyVlhtam5nN2NpcWVHNFExZnNXOENsY2hCZnlpbkVGaldiQTdwMTI1Q1ZQYWtON2E1Sm56QzlsZUIxTmZJTG1SbmhJMGRHeHBfU1UzaUF5WUp5SnlnYk9zMzhGaFBTZXNHamw0RjdTdEdjZ3pzSGY2eE8wSU5vUzNTOHAyS3pkT2VwZ2ZFVl9JaHlkaVdfQXhvaWk0TmJDQkUzODJLRDJhVVJPM282RHNYZDVTdXNwNDRSZ2RucjI5WHlYSXlKdTVTRVpBVzZwUXg1SmpRWnJ3TGFZWTl3S21hdWQ5a2tEUF9ZV1RiRmhfa19Kdng1dFptQWNaYkNma2NnRTJCencyQ0d0SHViYlhXVDFaanhNZkxBcTFrRnpHTFJNMkEwZHlDaDd3RnZhZEJ2elpHQjd3bVV6SWFhejdMVW96LWVUdHZWTm9n?oc=5",
+      "pubDate": "Thu, 26 Nov 2026 06:55:00 GMT",
+      "source": "永豐金證券",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-2",
+      "title": "高股息ETF真比市值型抗跌？實測0050、00878、00919、0056：拉長3年報酬差1倍 | 存股族愛ETF | 股市",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBJejc0eExTaURPanlLSHB4b0lsZG8tNG1uMFRYVnAzNm1zMFN4LTJYNnBMWnVmalNicFdTQ2lINVdsdW9fQXV6ZU5CQUNXcTFzQ0V3?oc=5",
+      "pubDate": "Thu, 26 Nov 2026 03:41:12 GMT",
+      "source": "UDN",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "macro",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-3",
+      "title": "12/10 除息 00940(元大台灣價值高息) 配息快報｜每單位配發 0.06 元-ETF股長",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPWldNaHJGaTkwOVRhNXp1R194aFdwNko3REhqTVZkY0lpa1hndWFVdDdXeERhN0xxN00yM09XTVloQlFYcGdEeHg3cF9QVmw0ZU51TzhQT0xPTXZwNXp4ajdtUXM5S1pNLXhEdk80RjVSZjd4YnctUjc1RWNjOU1xZg?oc=5",
+      "pubDate": "Thu, 26 Nov 2026 10:00:50 GMT",
+      "source": "CMoney投資網誌",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-4",
+      "title": "0056、00878、00919，存300萬就能安穩退休？老手拆解高股息配息真相：月領3萬、5萬、10萬本金究竟要多少",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPbm5LUk54QWZ2VWh2V0FMZnJTMzJOdFA4eDJGcVdINkN0azY1R2ZRWGNDZnA0b0o2SVRqVjhIWWtyTXZNYjM4SEpfVnAzNzQweXNHUVVUbThqWl9hWTJFTlhTWjR4VU50SjEyVlJibnJOTXdpWUJGRnlKMjFfRTduZQ?oc=5",
+      "pubDate": "Tue, 24 Nov 2026 01:57:00 GMT",
+      "source": "今周刊",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-5",
+      "title": "1表看》981A、918、919、929、999A...5檔12月除息 口袋還剩多少錢？手握360張達人精算嚇一跳：「這檔」再配1次成絕響",
+      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE0xckhQTHVnN0NSVldLdS1mb3ZsYTdQSHRDaDJDWE9TcXZWVGlvX3ZtWFJPRzNOblpzc2EwelQyU3Q1VmFkZ0lRZl9SVWdGb1NVeklyREplcnpWalBJVy1GLUViV1FuSkwwcXc?oc=5",
+      "pubDate": "Wed, 25 Nov 2026 21:15:27 GMT",
+      "source": "旺得富理財網",
+      "sentiment": "neutral",
+      "sentimentLabel": "市場追蹤",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-6",
+      "title": "爸媽65歲已免繳健保費，領ETF股息卻還要扣錢？健保署揭關鍵門檻 | 魏甫丞 | 風生活",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5FQXQ3cE0yRHVwTGh1NzBfZmpJWmNXelNJNWVmZVVDS2huY2pGcjQ5Ri1Fd2U3dzR5WUl4d0RKaWNBcHdBTjhHT2JKVllTYVRT?oc=5",
+      "pubDate": "Thu, 26 Nov 2026 01:30:00 GMT",
+      "source": "Storm.mg",
+      "sentiment": "neutral",
+      "sentimentLabel": "市場追蹤",
+      "category": "macro",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-7",
+      "title": "0056、00878、00919選一檔還是都買？高股息月月配怎麼搭",
+      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBXTnZCTHpOd3dKeW9jY0pCbERDRnVyWGp4ODktNGdKbGJVaTA2SnMzeTI3SFk0WDQ3QkF4Q3FDeVRVQnBXSktIdjNUNkdVY1ktWXIzNjNXcjlvb2xmTjZtdnhUWUxhQQ?oc=5",
+      "pubDate": "Mon, 02 Nov 2026 08:00:00 GMT",
+      "source": "口袋證券",
+      "sentiment": "neutral",
+      "sentimentLabel": "市場追蹤",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-8",
+      "title": "00981A 統一台股增長主動式 ETF｜成分股？配息？優缺點？",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPNmFnYlB3QjI5blJaemVjbnZXYk5IemRTUGZPYUREaXJFWWpvazFRQTBreVFmUWl5QlJaaG9LTUFVSW91b0NqUEFYUmNWQjY4aGp3OWEwMDRIcWdYVG9JVTdFenRYaXZHZHpWanRNT0xpWGJac0cxdnBJRkduejFDTWt1NFM2cHRCRWN3M2dvYTl5TnNkWWRSeHcwTGJLRl9fTlFGRFFvTUhjLTdTX2ZUS1gyaDhuQjdvTlpXWU5USQ?oc=5",
+      "pubDate": "Mon, 13 Jul 2026 07:00:00 GMT",
+      "source": "StockFeel 股感",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-9",
+      "title": "「巨嬰」00940連6配0.045元！12檔ETF本周除息一表看 「這檔」年化配息率飆10%超香",
+      "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOQXNRWmpYSTVTeEVwZkdJX1BLZmx2Z1hsaFphYXNIbzdwTVlXb3RaVFNlQnNhQ3Z5bjZxbEJjQ2JBQTRmYkY4LUtfMzlpYzNnNGJOOEdPbkt3OHZGcXN3WVQyQmhFRmhrZmRKbEU2UFh5NU56WlBvWW5vWDZGZ18tN2d2UHpTdkFxd1ZDU1RBMHUzamw1TmlCTXlld3hPVjBvOG1zREEza1gxenpsTm16U2lkMXpGX1E2dWU4ektHa1VreUtGdTVVX1dKck50RGtUOURRRlNGbEl1NTFONzEwT1o4eU9SQzJwS2pPTnEzcEdRWTB0VGtiZ2JyYWlYUU5GbFZwVQ?oc=5",
+      "pubDate": "Sun, 03 May 2026 07:00:00 GMT",
+      "source": "Yahoo股市",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-10",
+      "title": "高配息還是拚總報酬？台股暴漲暴跌掀ETF選擇題009816掛牌以來含息總報酬近38%勝0050、006208",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9IdE5Kbm9EQ2dZdTByY2NhNWp2bExKTk9GTXhrZ3MybjN0dG8welF0Z2VBSUp0NVNDR0I1LXR3UFlpWEp5S3NwbHViemhlbjdOR1BtdVh2UQ?oc=5",
+      "pubDate": "Wed, 25 Nov 2026 05:11:08 GMT",
+      "source": "觀傳媒",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-11",
+      "title": "0050、00919、00878⋯2026年存股族最愛10檔ETF排行揭曉！配息、成分股、殖利率一文掌握｜豐雲學堂2026 年 11 月",
+      "link": "https://news.google.com/rss/articles/CBMiwgNBVV95cUxOUlNlS3lRM3BnMno2WXU1SXFKSndfdkhfUl8xazBXSFdWZFNlNDJGZFUtSGdEdnNMNG4wMDlHSkc4TW5oUGNWelZVMDBjazVtTE53V2w1Vmd0VWNBd1V4UVBsZFNPdjFxcXJxV3Jaa0haT29Ja1EtRmcxWlh0QTN4Q0JUb1FBVEVZMjRyWG5BWnQyS2ROOTZKeWFVZDR1YVQ0bFFpSFpkLUR5NXM0LVdZd1RzSUNQV2M1OVlJbDNQaExlZHkxMjdGeTczS3lEY3VmZTJuWXJwaE9qX1FIOUJyQUw1ODFlUzRqbUlMMVZkX3gtQ2hsUHZ1SWhsbmhRQklCZFh0WjJIV0ozYXkyQTg5cXJRNFh0MnVJSUp6UGpoRnc2b3pMaTMzeFlOSG9lbHhvSWhLN3JDbkFFWF91YUlzZTNSb191MDNTcE4tbVhvc252V0RMSUV1V3BrVkZfaUVaeFA4Sm15T2p2c3NEckhtWmRFak04S25lVUh3X1FKWnVJT1FnR2NUQmlUT0xyR2VFaWxCbTRVWGctcmw3elJxVmVaSk9ncS14XzZIYWtkN3lyZG9SanJQbWlpUHU4Qmd2NHc?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 02:06:27 GMT",
+      "source": "永豐金證券",
+      "sentiment": "bull",
+      "sentimentLabel": "偏多焦點",
+      "category": "dividend",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    },
+    {
+      "id": "live-12",
+      "title": "0056股價跌停破45元，00878、00919殺8%能買？高息ETF抗跌部隊出列！大跌3招布局：別再只喊早知道",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOUDFWQ3NqSXdzcFZhM1VBRkgzNGV5Tko3Y2VFV2p2RmRpNC11dk8xUHRTaGhOUEJoWFpMZTQ0U0hqZW0zMXg1eTRMb2ZrMDJ5SEl3LUY0TTBsOXg4c3Z6MkFHNjBNb2x2V3BMbllmd2g4YTRpTHlfUEFjeFBXS1pYVQ?oc=5",
+      "pubDate": "Wed, 25 Nov 2026 03:12:48 GMT",
+      "source": "今周刊",
+      "sentiment": "bear",
+      "sentimentLabel": "波動觀察",
+      "category": "macro",
+      "impact": "即時追蹤四強 ETF（0050、0056、00981A、00940）成分股權重與資金籌碼脈動"
+    }
+  ]
 }
